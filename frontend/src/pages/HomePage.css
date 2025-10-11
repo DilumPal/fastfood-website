@@ -1,0 +1,130 @@
+/* --- Placeholder Colors --- */
+/* Define CSS variables for easy maintenance */
+:root {
+  --color-primary: #0A0A0A;
+  --color-secondary: #F8F8F8;
+  --color-electric-blue: #00F0FF;
+  --color-hot-pink: #FF007F;
+  --color-zesty-lime: #C7FF00;
+}
+
+/* --- Global Container and Typography --- */
+.home-container {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-primary);
+  color: var(--color-secondary);
+  min-height: 100vh;
+}
+
+/* --- Hero Section --- */
+.hero {
+  /* Use a relative URL if the image is in the public folder */
+  background-image: url('../../public/images/velocity-hub-bg.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+}
+
+/* Overlay for the Hero (use a pseudo-element) */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 0; /* Ensure the content is above the overlay */
+}
+
+.headline {
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 0 10px var(--color-primary);
+  z-index: 1; /* Keep text above overlay */
+}
+
+.sub-headline {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: white;
+  text-shadow: 0 0 10px var(--color-primary);
+  margin-bottom: 40px;
+  z-index: 1;
+}
+
+/* --- Button Group --- */
+.button-group {
+  display: flex;
+  gap: 20px;
+  z-index: 1;
+}
+
+.button-group a {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary); /* Dark text on bright button */
+}
+
+.menu-button {
+  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+}
+
+.order-button {
+  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+}
+
+.about-button {
+  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
+  border: 2px solid var(--color-electric-blue);
+  color: var(--color-primary);
+}
+
+/* --- Features Section --- */
+.features {
+  display: flex;
+  justify-content: space-around;
+  gap: 30px;
+  padding: 80px 50px;
+}
+
+.feature-card {
+  width: 30%;
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(255, 255, 255, 0.685);
+  color: var(--color-primary);
+}
+
+.icon-placeholder {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+/* Specific border colors for features */
+.feature-card.velocity {
+    border-bottom: 5px solid var(--color-electric-blue);
+    background: linear-gradient(45deg, rgba(231, 235, 2, 0.671), rgba(1, 223, 1, 0.719));
+}
+.feature-card.freshness {
+    border-bottom: 5px solid var(--color-hot-pink);
+    background: linear-gradient(45deg, rgba(255, 115, 0, 0.822), rgba(255, 238, 0, 0.733));
+}
+.feature-card.atmosphere {
+    border-bottom: 5px solid var(--color-zesty-lime);
+    background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
+}
