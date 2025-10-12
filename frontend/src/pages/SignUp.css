@@ -1,0 +1,122 @@
+/* Placeholder Colors from HomePage.css */
+:root {
+  --color-primary: #0A0A0A;
+  --color-secondary: #F8F8F8;
+  --color-electric-blue: #00F0FF;
+  --color-hot-pink: #FF007F;
+  --color-zesty-lime: #C7FF00;
+}
+
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+}
+
+.signup-box {
+  background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.3); /* Subtle blue glow */
+  width: 100%;
+  max-width: 400px;
+  color: var(--color-secondary);
+}
+
+.signup-title {
+  text-align: center;
+  color: var(--color-electric-blue);
+  margin-bottom: 30px;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: var(--color-zesty-lime);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #333;
+  border-radius: 5px;
+  background-color: #252525;
+  color: var(--color-secondary);
+  font-size: 1rem;
+  box-sizing: border-box; /* Include padding in width */
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-electric-blue);
+  box-shadow: 0 0 5px rgba(0, 240, 255, 0.5);
+}
+
+.signup-button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+  cursor: pointer;
+  transition: opacity 0.3s, transform 0.3s;
+  margin-top: 10px;
+}
+
+.signup-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.login-prompt {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 0.9rem;
+}
+
+.login-link {
+  color: var(--color-electric-blue);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.login-link:hover {
+  color: var(--color-hot-pink);
+}
+
+/* Success/Error Messages */
+.message {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.success {
+    background-color: rgba(199, 255, 0, 0.2); /* Zesty Lime tint */
+    color: var(--color-zesty-lime);
+    border: 1px solid var(--color-zesty-lime);
+}
+
+.error {
+    background-color: rgba(255, 0, 127, 0.2); /* Hot Pink tint */
+    color: var(--color-hot-pink);
+    border: 1px solid var(--color-hot-pink);
+}

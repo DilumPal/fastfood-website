@@ -1,38 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 // IMPORT THE SEPARATE CSS FILE HERE
-import './HomePage.css'; 
+import './HomePage.css';
 
 
 const HomePage = () => {
   return (
     // 1. Replaced style={styles.container} with className="home-container"
     <div className="home-container">
-      
+      {/* 5. Added a simple header for the business name */}
+      <header className="main-header">
+        <div className="logo-letters1">🥯🧀🥞🌭🍔🍟🍕🥪</div>
+        <div className="logo">YumZone</div>
+        <div className="logo-letters2">🌮🌯🍣🍝🍜🥧🍩🍪</div>
+      </header>
+
       {/* 2. Replaced style={styles.hero} with className="hero" */}
       <div className="hero">
         <h1 className="headline">Your Crave, Accelerated.</h1>
         <h2 className="sub-headline">Freshness Meets Velocity. Every Time.</h2>
 
         <div className="button-group">
-          
+
           {/* 3. Applied class names to links */}
-          <Link 
-            to="/menu" 
+          <Link
+            to="/menu"
             className="menu-button"
           >
             OUR MENU
           </Link>
-          
-          <Link 
-            to="/order" 
+
+          <Link
+            to="/order"
             className="order-button"
           >
             PLACE ORDER
           </Link>
-          
-          <Link 
-            to="/about" 
+
+          <Link
+            to="/about"
             className="about-button"
           >
             ABOUT US
@@ -42,7 +48,7 @@ const HomePage = () => {
 
       {/* 4. Feature Zones */}
       <div className="features">
-        
+
         {/* Added class names for card and specific border style */}
         <div className="feature-card velocity">
           <div className="icon-placeholder" style={{ color: 'var(--color-electric-blue)'}}>⚡</div>
@@ -62,7 +68,7 @@ const HomePage = () => {
           <p>More than a meal—it's an experience. Come for the speed, stay for the vibrant atmosphere.</p>
         </div>
       </div>
-      
+
     </div>
   );
 };
