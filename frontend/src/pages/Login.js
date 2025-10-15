@@ -24,7 +24,7 @@ const Login = () => {
     setIsError(false);
 
     try {
-      // Use the confirmed absolute path to your login.php script
+      // Confirmed URL structure: http://localhost/fastfood-website/api/login.php
       const response = await fetch('http://localhost/fastfood-website/api/login.php', {
         method: 'POST',
         headers: {
@@ -36,7 +36,7 @@ const Login = () => {
         }),
       });
 
-      const data = await response.json();
+      const data = await response.json(); 
 
       if (data.success) {
         setMessage(data.message);
@@ -46,12 +46,14 @@ const Login = () => {
           navigate('/'); 
         }, 1500);
       } else {
-        setMessage(data.message || 'Login failed. Please try again.');
+        // This will display the specific error returned by PHP (e.g., 'Invalid email or password.')
+        setMessage(data.message || 'Login failed. Please try again.'); 
         setIsError(true);
       }
     } catch (error) {
       console.error('Network Error:', error);
-      setMessage('A network error occurred. Please check your connection.');
+      // Fallback message if the network call fails completely (should be rare now)
+      setMessage('A network error occurred. Check console for details. (Error Type: ' + error.name + ')');
       setIsError(true);
     }
   };

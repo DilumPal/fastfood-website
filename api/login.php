@@ -6,37 +6,22 @@ ob_start();
 error_reporting(0); 
 
 header('Content-Type: application/json');
-// Allow access from your React development server
 header('Access-Control-Allow-Origin: *'); 
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(200);
+    exit;
+}
+
 // --- 1. Database Configuration ---
 $servername = "localhost";
 $username = "root"; 
-$password = ""; // Double-check your MySQL root password here!
-$dbname = "fastfood_db"; // Double-check your database name!
+$password = ""; // ADJUST THIS IF YOUR MYSQL PASSWORD IS NOT EMPTY
+$dbname = "fastfood_db";
 
-// --- 2. Get JSON Input ---
-$input = file_get_contents('php://input');
-$data = json_decode($input, true);
-
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($data)) {
-    ob_clean();
-    echo json_encode(['success' => false, 'message' => 'Invalid request method or missing data.']);
-    exit;
-}
-
-$email = $data['email'] ?? '';
-$password = $data['password'] ?? '';
-
-if (empty($email) || empty($password)) {
-    ob_clean();
-    echo json_encode(['success' => false, 'message' => 'Please fill in both email and password.']);
-    exit;
-}
-
-// --- 3. Establish Database Connection ---
+// --- 2. Establish Database Connection ---
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
@@ -45,7 +30,27 @@ if ($conn->connect_error) {
     exit;
 }
 
-// --- 4. Retrieve Hashed Password ---
+// --- 3. Read JSON Input ---
+$input = file_get_contents('php://input');
+$data = json_decode($input, true);
+
+if (!$data) {
+    ob_clean();
+    echo json_encode(['success' => false, 'message' => 'No JSON data received.']);
+    exit;
+}
+
+$email = trim($data['email'] ?? '');
+$password = trim($data['password'] ?? '');
+
+// --- 4. Validation ---
+if (empty($email) || empty($password)) {
+    ob_clean();
+    echo json_encode(['success' => false, 'message' => 'Please fill in both email and password.']);
+    exit;
+}
+
+// --- 5. Retrieve Hashed Password ---
 $stmt = $conn->prepare("SELECT id, password_hash, full_name FROM users WHERE email = ?");
 
 // CRITICAL FIX 2: Check for failure in preparing the statement
@@ -60,7 +65,7 @@ $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->store_result();
 
-// --- 5. Verify User and Password ---
+// --- 6. Verify User and Password ---
 if ($stmt->num_rows === 1) {
     $stmt->bind_result($user_id, $hashed_password, $full_name);
     $stmt->fetch();
@@ -81,4 +86,6 @@ $stmt->close();
 $conn->close();
 ob_clean(); // Clean buffer before sending
 echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
+
+ob_end_flush();
 ?>
