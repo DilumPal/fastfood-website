@@ -78,13 +78,27 @@
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    /* Match your sign-up/home page button gradient */
+    
+    /* Correct syntax for the gradient background */
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    color: var(--color-primary);
+    
+    /* Using var(--color-primary) for dark text */
+    color: var(--color-primary); 
+    
+    /* CORRECTED TRANSITION */
+    /* Use 'all' or specifically transition properties that can change smoothly. */
+    /* Transitioning 'background' for a gradient often causes the visual "snap". */
+    transition: all 0.3s ease; 
+    
+    /* Alternatively, you can remove the transition on background entirely,
+       and only transition the color if you expect it to change. */
 }
 
 .login-button:hover {
+    /* When hovering, the gradient changes smoothly due to transition: all */
     background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-hot-pink));
+    /* You can add a subtle transform here for a nice effect */
+    transform: scale(1.02);
 }
 
 /* --- Link to Sign Up Prompt --- */
