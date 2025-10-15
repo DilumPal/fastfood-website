@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Import your new home page component
 import HomePage from './pages/HomePage';
 import SignUp from './pages/SignUp';
+import Login from './pages/Login'; 
 
 // Assuming you will create these page components later
 // import MenuPage from './pages/MenuPage'; 
@@ -19,6 +20,7 @@ function App() {
         {/* 2. Set HomePage as the primary component for the root path ("/") */}
         <Route path="/" element={<HomePage />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         
         {/* Add a route for Login which the signup page links to */}
         {/* <Route path="/login" element={<LoginPage />} /> */}

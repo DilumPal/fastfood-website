@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './SignUp.css';
+import './Login.css'; // Import the new CSS file
 
-const SignUp = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
     password: '',
-    confirmPassword: ''
   });
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
@@ -25,21 +23,14 @@ const SignUp = () => {
     setMessage('');
     setIsError(false);
 
-    if (formData.password !== formData.confirmPassword) {
-      setMessage('Passwords do not match!');
-      setIsError(true);
-      return;
-    }
-
     try {
-      const response = await fetch('http://localhost/fastfood-website/api/signup.php', { // Replace with your actual PHP path
+      // Use the confirmed absolute path to your login.php script
+      const response = await fetch('http://localhost/fastfood-website/api/login.php', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // Send only necessary data to the backend
         body: JSON.stringify({
-          fullName: formData.fullName,
           email: formData.email,
           password: formData.password,
         }),
@@ -48,15 +39,14 @@ const SignUp = () => {
       const data = await response.json();
 
       if (data.success) {
-        setMessage('Sign-up successful! Redirecting to login...');
+        setMessage(data.message);
         setIsError(false);
-        // Navigate or redirect the user after a brief delay
+        // Navigate to the Home Page (/) upon successful login
         setTimeout(() => {
-          // Navigate to the Home Page (/) upon successful registration
           navigate('/'); 
         }, 1500);
       } else {
-        setMessage(data.message || 'Sign-up failed. Please try again.');
+        setMessage(data.message || 'Login failed. Please try again.');
         setIsError(true);
       }
     } catch (error) {
@@ -67,9 +57,9 @@ const SignUp = () => {
   };
 
   return (
-    <div className="signup-container">
-      <div className="signup-box">
-        <h1 className="signup-title">Create Your YumZone Account</h1>
+    <div className="login-container">
+      <div className="login-box">
+        <h1 className="login-title">Log Into Your YumZone Account</h1>
         
         {/* Display response message */}
         {message && (
@@ -78,20 +68,8 @@ const SignUp = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="signup-form">
+        <form onSubmit={handleSubmit} className="login-form">
           
-          <div className="form-group">
-            <label htmlFor="fullName">Full Name</label>
-            <input
-              type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
             <input
@@ -113,34 +91,20 @@ const SignUp = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              minLength="8"
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-              minLength="8"
-            />
-          </div>
-
-          <button type="submit" className="signup-button">
-            Sign Up
+          <button type="submit" className="login-button">
+            Log In
           </button>
         </form>
 
-        <p className="login-prompt">
-          Already have an account? <Link to="/login" className="login-link">Log In</Link>
+        <p className="signup-prompt">
+          Don't have an account? <Link to="/signup" className="signup-link">Sign Up</Link>
         </p>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default Login;

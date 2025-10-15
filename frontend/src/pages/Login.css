@@ -1,0 +1,128 @@
+/* --- Reusing colors from HomePage.css --- */
+:root {
+    --color-primary: #0A0A0A;
+    --color-secondary: #F8F8F8;
+    --color-electric-blue: #00F0FF;
+    --color-hot-pink: #FF007F;
+    --color-zesty-lime: #C7FF00;
+}
+
+/* --- Container and Box Styling (Similar to SignUp) --- */
+.login-container {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--color-primary);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-box {
+    background-color: #1a1a1a;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 30px rgba(0, 240, 255, 0.2);
+    width: 100%;
+    max-width: 400px;
+    color: var(--color-secondary);
+}
+
+.login-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-align: center;
+    /* Use a gradient similar to your home page buttons */
+    background-image: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Form Group Styling --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--color-secondary);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    background-color: #2a2a2a;
+    color: var(--color-secondary);
+    font-size: 1rem;
+    box-sizing: border-box; /* Include padding in width */
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--color-electric-blue);
+    box-shadow: 0 0 5px var(--color-electric-blue);
+}
+
+/* --- Login Button Styling --- */
+.login-button {
+    width: 100%;
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-top: 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    /* Match your sign-up/home page button gradient */
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+    color: var(--color-primary);
+    transition: background 0.3s ease;
+}
+
+.login-button:hover {
+    background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-hot-pink));
+}
+
+/* --- Link to Sign Up Prompt --- */
+.signup-prompt {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.signup-link {
+    color: var(--color-electric-blue);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.signup-link:hover {
+    color: var(--color-hot-pink);
+}
+
+/* --- Message Styling --- */
+.message {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.message.error {
+    background-color: rgba(255, 0, 127, 0.1); /* Hot Pink light background */
+    color: var(--color-hot-pink); /* Hot Pink text */
+    border: 1px solid var(--color-hot-pink);
+}
+
+.message.success {
+    background-color: rgba(0, 240, 255, 0.1); /* Electric Blue light background */
+    color: var(--color-electric-blue); /* Electric Blue text */
+    border: 1px solid var(--color-electric-blue);
+}
