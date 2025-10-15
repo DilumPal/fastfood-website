@@ -53,7 +53,6 @@ if (empty($email) || empty($password)) {
 // --- 5. Retrieve Hashed Password ---
 $stmt = $conn->prepare("SELECT id, password_hash, full_name FROM users WHERE email = ?");
 
-// CRITICAL FIX 2: Check for failure in preparing the statement
 if ($stmt === false) {
     ob_clean(); // Clean buffer before sending
     echo json_encode(['success' => false, 'message' => 'Failed to prepare statement. SQL Error: ' . $conn->error]);
@@ -67,24 +66,29 @@ $stmt->store_result();
 
 // --- 6. Verify User and Password ---
 if ($stmt->num_rows === 1) {
+    // Bind results including the user's full name
     $stmt->bind_result($user_id, $hashed_password, $full_name);
     $stmt->fetch();
     
-    // CRITICAL STEP: Use password_verify to check the submitted password against the hash
     if (password_verify($password, $hashed_password)) {
-        // Login successful
+        // Login successful - return user data (userId and fullName are critical)
         $stmt->close();
         $conn->close();
-        ob_clean(); // Clean buffer before sending
-        echo json_encode(['success' => true, 'message' => 'Login successful. Welcome ' . $full_name . '!', 'userId' => $user_id]);
+        ob_clean();
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Login successful. Welcome ' . $full_name . '!', 
+            'userId' => $user_id,
+            'fullName' => $full_name // CRITICAL: Return full name for the React state
+        ]);
         exit;
     }
 }
 
-// Login failed (either no user found or password was incorrect)
+// Login failed 
 $stmt->close();
 $conn->close();
-ob_clean(); // Clean buffer before sending
+ob_clean();
 echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
 
 ob_end_flush();

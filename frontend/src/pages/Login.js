@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './Login.css'; // Import the new CSS file
+import { useAuth } from '../context/AuthContext'; // Import useAuth
+import './Login.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth(); // Get the login function from context
 
   const handleChange = (e) => {
     setFormData({
@@ -24,7 +26,6 @@ const Login = () => {
     setIsError(false);
 
     try {
-      // Confirmed URL structure: http://localhost/fastfood-website/api/login.php
       const response = await fetch('http://localhost/fastfood-website/api/login.php', {
         method: 'POST',
         headers: {
@@ -36,23 +37,25 @@ const Login = () => {
         }),
       });
 
-      const data = await response.json(); 
+      const data = await response.json();
 
       if (data.success) {
         setMessage(data.message);
         setIsError(false);
+        
+        // CRITICAL: Call the login function and pass user data
+        login({ id: data.userId, fullName: data.fullName });
+
         // Navigate to the Home Page (/) upon successful login
         setTimeout(() => {
           navigate('/'); 
         }, 1500);
       } else {
-        // This will display the specific error returned by PHP (e.g., 'Invalid email or password.')
-        setMessage(data.message || 'Login failed. Please try again.'); 
+        setMessage(data.message || 'Login failed. Please try again.');
         setIsError(true);
       }
     } catch (error) {
       console.error('Network Error:', error);
-      // Fallback message if the network call fails completely (should be rare now)
       setMessage('A network error occurred. Check console for details. (Error Type: ' + error.name + ')');
       setIsError(true);
     }
@@ -63,7 +66,6 @@ const Login = () => {
       <div className="login-box">
         <h1 className="login-title">Log Into Your YumZone Account</h1>
         
-        {/* Display response message */}
         {message && (
           <div className={`message ${isError ? 'error' : 'success'}`}>
             {message}

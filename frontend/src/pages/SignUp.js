@@ -32,12 +32,11 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('http://localhost/fastfood-website/api/signup.php', { // Replace with your actual PHP path
+      const response = await fetch('http://localhost/fastfood-website/api/signup.php', { // Ensure path is correct
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        // Send only necessary data to the backend
         body: JSON.stringify({
           fullName: formData.fullName,
           email: formData.email,
@@ -48,12 +47,12 @@ const SignUp = () => {
       const data = await response.json();
 
       if (data.success) {
-        setMessage('Sign-up successful! Redirecting to login...');
+        setMessage(data.message + " Redirecting to Login...");
         setIsError(false);
-        // Navigate or redirect the user after a brief delay
+        
+        // Redirect to login after successful sign-up
         setTimeout(() => {
-          // Navigate to the Home Page (/) upon successful registration
-          navigate('/'); 
+          navigate('/login'); 
         }, 1500);
       } else {
         setMessage(data.message || 'Sign-up failed. Please try again.');
@@ -61,7 +60,7 @@ const SignUp = () => {
       }
     } catch (error) {
       console.error('Network Error:', error);
-      setMessage('A network error occurred. Please check your connection.');
+      setMessage('A network error occurred. Check console for details. (Error Type: ' + error.name + ')');
       setIsError(true);
     }
   };
@@ -71,7 +70,6 @@ const SignUp = () => {
       <div className="signup-box">
         <h1 className="signup-title">Create Your YumZone Account</h1>
         
-        {/* Display response message */}
         {message && (
           <div className={`message ${isError ? 'error' : 'success'}`}>
             {message}

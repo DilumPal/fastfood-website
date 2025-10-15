@@ -1,41 +1,27 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+// CRITICAL: Import the AuthProvider you are creating
+import { AuthProvider } from './context/AuthContext'; 
 
-// Import your new home page component
+// Import your page components
 import HomePage from './pages/HomePage';
+import Login from './pages/Login';
 import SignUp from './pages/SignUp';
-import Login from './pages/Login'; 
-
-// Assuming you will create these page components later
-// import MenuPage from './pages/MenuPage'; 
-// import OrderPage from './pages/OrderPage';
-// import AboutPage from './pages/AboutPage';
+// import other pages (e.g., Menu, Order, About)
 
 function App() {
   return (
-    // 1. BrowserRouter allows the app to use routing
-    <Router>
-      <Routes>
-        
-        {/* 2. Set HomePage as the primary component for the root path ("/") */}
-        <Route path="/" element={<HomePage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-        
-        {/* Add a route for Login which the signup page links to */}
-        {/* <Route path="/login" element={<LoginPage />} /> */}
-        
-        {/* 3. Placeholder Routes for your buttons (Menu, Order, About Us) */}
-        {/* You will replace the <div>...</div> with the actual imported component later */}
-        <Route path="/menu" element={<div>Menu Page Coming Soon!</div>} />
-        <Route path="/order" element={<div>Order/Checkout Page</div>} />
-        <Route path="/about" element={<div>About Us Page Content</div>} />
-        
-        {/* Optional: A route to catch any undefined path */}
-        <Route path="*" element={<div>404 Page Not Found</div>} />
-        
-      </Routes>
-    </Router>
+    // CRITICAL: Wrap the entire Router with AuthProvider
+    <AuthProvider> 
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          {/* Add other routes here */}
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

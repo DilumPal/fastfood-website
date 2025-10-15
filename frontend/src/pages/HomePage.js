@@ -1,54 +1,101 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-// IMPORT THE SEPARATE CSS FILE HERE
-import './HomePage.css';
-
+import { useAuth } from '../context/AuthContext'; // CRITICAL: Import useAuth (Adjust path if needed)
+import './HomePage.css'; 
 
 const HomePage = () => {
+  // CRITICAL: Get the authentication state and functions from context
+  const { isAuthenticated, logout, user } = useAuth(); 
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const AuthButtons = () => {
+    // If the user is authenticated (logged in)
+    if (isAuthenticated) {
+      // Show Profile/Welcome and Log Out
+      return (
+        <>
+          <Link 
+            to="/profile" 
+            className="order-button"
+            // Display first name or generic "USER" 
+            style={{ minWidth: '150px' }} 
+          >
+            WELCOME, {user?.fullName?.split(' ')[0]?.toUpperCase() || 'USER'}
+          </Link>
+          
+          <button 
+            onClick={handleLogout} 
+            className="about-button" 
+          >
+            LOG OUT
+          </button>
+        </>
+      );
+    } else {
+      // If the user is not authenticated (logged out)
+      // Show Log In and Sign Up
+      return (
+        <>
+          <Link 
+            to="/login" 
+            className="order-button"
+          >
+            LOG IN
+          </Link>
+          <Link 
+            to="/signup" 
+            className="menu-button" 
+          >
+            SIGN UP
+          </Link>
+        </>
+      );
+    }
+  };
+
   return (
-    // 1. Replaced style={styles.container} with className="home-container"
     <div className="home-container">
-      {/* 5. Added a simple header for the business name */}
       <header className="main-header">
         <div className="logo-letters1">🥯🧀🥞🌭🍔🍟🍕🥪</div>
         <div className="logo">YumZone</div>
         <div className="logo-letters2">🌮🌯🍣🍝🍜🥧🍩🍪</div>
       </header>
-
-      {/* 2. Replaced style={styles.hero} with className="hero" */}
       <div className="hero">
         <h1 className="headline">Your Crave, Accelerated.</h1>
         <h2 className="sub-headline">Freshness Meets Velocity. Every Time.</h2>
 
         <div className="button-group">
-
-          {/* 3. Applied class names to links */}
-          <Link
-            to="/menu"
-            className="menu-button"
-          >
+          
+          {/* Static Buttons (Always Visible) */}
+          <Link to="/menu" className="menu-button">
             OUR MENU
           </Link>
-
-          <Link
-            to="/order"
+          
+          <Link 
+            to="/order" 
             className="order-button"
           >
             PLACE ORDER
           </Link>
-
-          <Link
-            to="/about"
+          
+          <Link 
+            to="/about" 
             className="about-button"
           >
             ABOUT US
           </Link>
+
+          {/* Conditional Authentication Buttons */}
+          <AuthButtons />
         </div>
       </div>
 
       {/* 4. Feature Zones */}
       <div className="features">
-
+        
         {/* Added class names for card and specific border style */}
         <div className="feature-card velocity">
           <div className="icon-placeholder" style={{ color: 'var(--color-electric-blue)'}}>⚡</div>
@@ -68,7 +115,7 @@ const HomePage = () => {
           <p>More than a meal—it's an experience. Come for the speed, stay for the vibrant atmosphere.</p>
         </div>
       </div>
-
+      
     </div>
   );
 };
