@@ -81,7 +81,6 @@
     /* Match your sign-up/home page button gradient */
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
     color: var(--color-primary);
-    transition: background 0.3s ease;
 }
 
 .login-button:hover {
