@@ -66,7 +66,7 @@
   /* Reduced top padding slightly to account for the new header */
   padding: 80px 20px 100px 20px;
   text-align: center;
-  position: relative;
+  position: relative; /* CRITICAL: To position absolute children */
 }
 
 /* Overlay for the Hero (use a pseudo-element) */
@@ -79,6 +79,66 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0);
   z-index: 0; /* Ensure the content is above the overlay */
+}
+
+/* --- NEW: Top UI Elements Container --- */
+.top-ui-elements {
+    position: absolute;
+    top: 20px; /* Space below the sticky header */
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center; /* Default for centering welcome message */
+    z-index: 5; /* Above other hero content */
+    padding: 0 20px;
+}
+
+/* --- NEW: Welcome Message (Top Middle) --- */
+.welcome-message {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-zesty-lime);
+    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
+    background-color: rgba(10, 10, 10, 0.5);
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+/* --- NEW: Auth Corner (Top Right) --- */
+.auth-corner {
+    position: absolute;
+    right: 20px; /* Align to the right edge of the hero */
+    display: flex;
+    gap: 10px;
+}
+
+.auth-corner-button {
+    padding: 8px 15px; /* Smaller padding for corner buttons */
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    color: var(--color-primary);
+}
+
+.log-in-button {
+    background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+}
+
+.sign-up-button {
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+}
+
+.log-out-button {
+    background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
+    border: 2px solid var(--color-electric-blue);
+    color: var(--color-primary);
 }
 
 .headline {
@@ -98,13 +158,16 @@
   z-index: 1;
 }
 
-/* --- Button Group --- */
+/* --- Button Group (Main Buttons in the middle) --- */
 .button-group {
   display: flex;
   gap: 20px;
   z-index: 1;
+  /* CRITICAL: The main button group is now centered as before, 
+     but the auth buttons are no longer part of it. */
 }
 
+/* Base button styles from original */
 .button-group a {
   padding: 15px 30px;
   font-size: 1.1rem;

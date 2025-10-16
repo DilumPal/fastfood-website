@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // CRITICAL: Import useAuth (Adjust path if needed)
+import { useAuth } from '../context/AuthContext';
 import './HomePage.css'; 
 
 const HomePage = () => {
@@ -11,49 +11,50 @@ const HomePage = () => {
     logout();
   };
 
-  const AuthButtons = () => {
-    // If the user is authenticated (logged in)
+  // NEW: Component for the Top-Right Authentication Links/Buttons
+  const AuthCorner = () => {
     if (isAuthenticated) {
-      // Show Profile/Welcome and Log Out
+      // Show Log Out
       return (
-        <>
-          <Link 
-            to="/profile" 
-            className="order-button"
-            // Display first name or generic "USER" 
-            style={{ minWidth: '150px' }} 
-          >
-            WELCOME, {user?.fullName?.split(' ')[0]?.toUpperCase() || 'USER'}
-          </Link>
-          
-          <button 
-            onClick={handleLogout} 
-            className="about-button" 
-          >
-            LOG OUT
-          </button>
-        </>
+        <button 
+          onClick={handleLogout} 
+          className="auth-corner-button log-out-button" 
+        >
+          LOG OUT
+        </button>
       );
     } else {
-      // If the user is not authenticated (logged out)
       // Show Log In and Sign Up
       return (
         <>
           <Link 
             to="/login" 
-            className="order-button"
+            className="auth-corner-button log-in-button"
           >
             LOG IN
           </Link>
           <Link 
             to="/signup" 
-            className="menu-button" 
+            className="auth-corner-button sign-up-button" 
           >
             SIGN UP
           </Link>
         </>
       );
     }
+  };
+  
+  // NEW: Component for the Top-Middle Welcome Message
+  const WelcomeMessage = () => {
+    if (isAuthenticated) {
+      // Display first name or generic "USER" 
+      return (
+        <div className="welcome-message">
+          WELCOME, {user?.fullName?.split(' ')[0]?.toUpperCase() || 'USER'}!
+        </div>
+      );
+    }
+    return null; // Nothing to display if not logged in
   };
 
   return (
@@ -63,13 +64,22 @@ const HomePage = () => {
         <div className="logo">YumZone</div>
         <div className="logo-letters2">🌮🌯🍣🍝🍜🥧🍩🍪</div>
       </header>
+      
+      {/* NEW: Place AuthCorner and WelcomeMessage outside the main header and button group */}
       <div className="hero">
+        <div className="top-ui-elements">
+            <WelcomeMessage />
+            <div className="auth-corner">
+                <AuthCorner />
+            </div>
+        </div>
+
         <h1 className="headline">Your Crave, Accelerated.</h1>
         <h2 className="sub-headline">Freshness Meets Velocity. Every Time.</h2>
 
+        {/* The main action buttons are now the only elements in this group */}
         <div className="button-group">
           
-          {/* Static Buttons (Always Visible) */}
           <Link to="/menu" className="menu-button">
             OUR MENU
           </Link>
@@ -87,9 +97,6 @@ const HomePage = () => {
           >
             ABOUT US
           </Link>
-
-          {/* Conditional Authentication Buttons */}
-          <AuthButtons />
         </div>
       </div>
 

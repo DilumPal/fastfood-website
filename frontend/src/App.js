@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import MenuPage from './pages/MenuPage';
 // import other pages (e.g., Menu, Order, About)
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/menu" element={<MenuPage />} />
           {/* Add other routes here */}
         </Routes>
       </Router>
