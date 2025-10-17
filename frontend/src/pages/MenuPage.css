@@ -41,10 +41,25 @@
 
 /* --- Grid for Items --- */
 .category-items-grid {
-    display: grid;
-    /* Responsive layout: minimum card width of 280px */
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    display: flex; /* <-- KEY CHANGE: Switch from grid to flex */
+    
+    /* REMOVED: grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
+    
+    /* Add properties for horizontal layout and scrolling */
+    flex-wrap: nowrap; /* <-- Prevents items from wrapping to the next line */
+    overflow-x: auto; /* <-- Enables horizontal scrolling when content exceeds width */
+    padding-bottom: 20px; /* Space for scrollbar */
+    
+    /* Optional: Hide scrollbar for a cleaner look */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    
     gap: 30px;
+}
+
+/* Styles to hide default scrollbar in Webkit browsers (Chrome, Safari) */
+.category-items-grid::-webkit-scrollbar {
+    display: none;
 }
 
 /* --- Menu Card Styles --- */
@@ -55,8 +70,12 @@
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
+    width: 320px; /* Fixed width for uniform look */
+    min-height: 500px; /* Ensures all cards are tall enough, even if content is short */
+    max-height: 500px; /* Prevents cards from growing taller */
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .menu-card:hover {
@@ -172,4 +191,77 @@
 
 .add-to-order-btn:hover {
     opacity: 0.9;
+}
+
+/* --- Add this new section to MenuPage.css --- */
+
+/* --- Search Bar Container --- */
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    padding: 10px 0;
+}
+
+/* --- Search Input Styling --- */
+.search-input-group {
+    display: flex;
+    width: 100%;
+    max-width: 650px; /* Limits the search bar width */
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    position: relative; /* To position the suggestions list */
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 15px 20px;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--color-primary); /* Dark text */
+    background-color: var(--color-secondary, #F8F8F8); /* Light background */
+    outline: none;
+}
+
+.search-go-btn {
+    background-color: var(--color-zesty-lime, #C7FF00); /* Bright button */
+    color: var(--color-primary, #0A0A0A);
+    border: none;
+    padding: 0 25px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-go-btn:hover {
+    background-color: #a8d600; /* Slightly darker lime */
+}
+
+/* --- Suggestions Dropdown --- */
+.suggestions-dropdown {
+    position: absolute;
+    top: 100%; /* Position right below the input */
+    left: 0;
+    right: 0;
+    background-color: var(--color-secondary, #F8F8F8);
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.suggestion-item {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: var(--color-primary);
+    transition: background-color 0.2s;
+    font-size: 1rem;
+}
+
+.suggestion-item:hover {
+    background-color: #eee;
 }
