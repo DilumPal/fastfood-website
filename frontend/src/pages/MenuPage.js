@@ -146,6 +146,10 @@ const MenuPage = () => {
     
     return (
         <div className="menu-container">
+            {/* --- NEW: Home Button Link --- */}
+            <a href="/" className="home-button">
+                &larr; Back to Home
+            </a>
             <h1 className="menu-page-title">The YumZone Menu</h1>
             <p className="menu-page-subtitle">Freshness delivered with velocity.</p>
 

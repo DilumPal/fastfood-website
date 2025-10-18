@@ -265,3 +265,25 @@
 .suggestion-item:hover {
     background-color: #eee;
 }
+
+/* --- New Home Button Style --- */
+.home-button {
+    position: absolute; /* Position relative to the nearest positioned ancestor (usually body or .menu-container if it has 'position: relative') */
+    top: 25px;
+    left: 25px;
+    padding: 5px 10px;
+    background-color: rgb(12, 235, 12);
+    color: rgb(0, 0, 0);
+    text-decoration: none; /* Remove underline */
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    z-index: 20; /* Ensure it stays above other elements like suggestions */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.home-button:hover {
+    background-color: rgb(255, 255, 255); /* Slightly darker pink */
+    transform: scale(1.05);
+}
