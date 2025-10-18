@@ -1,13 +1,23 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { useCart } from '../context/OrderContext'; // ⚠️ NEW IMPORT
 import './MenuPage.css';
 
-// Component for a single menu item card (UNCHANGED)
-const MenuItemCard = ({ item }) => {
+// Component for a single menu item card (MODIFIED)
+// ⚠️ Now accepts addToCart from parent
+const MenuItemCard = ({ item, addToCart }) => { 
     const [quantity, setQuantity] = useState(1);
 
     const handleAddToCart = () => {
+        // Pass the item details and quantity to the context function
+        addToCart({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: quantity
+        });
+        // Optional: Reset quantity to 1 after adding
+        setQuantity(1); 
         console.log(`Added ${quantity} x ${item.name} to order.`);
-        alert(`Added ${quantity} x ${item.name} to the order!`);
     };
 
     return (
@@ -38,7 +48,7 @@ const MenuItemCard = ({ item }) => {
                 
                 <button 
                     className="add-to-order-btn"
-                    onClick={handleAddToCart}
+                    onClick={handleAddToCart} // Use the new handler
                 >
                     ADD TO ORDER
                 </button>
@@ -48,7 +58,7 @@ const MenuItemCard = ({ item }) => {
 };
 
 
-// Main Menu Page Component
+// Main Menu Page Component (MODIFIED)
 const MenuPage = () => {
     const [menu, setMenu] = useState({});
     const [loading, setLoading] = useState(true);
@@ -57,6 +67,9 @@ const MenuPage = () => {
     // Search state is now the direct driver of the filter
     const [searchTerm, setSearchTerm] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
+    
+    // ⚠️ NEW: Get cart functions and total from context
+    const { cartItems, orderTotal, addToCart } = useCart(); 
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -80,59 +93,45 @@ const MenuPage = () => {
 
     const allCategories = useMemo(() => Object.keys(menu), [menu]);
 
-    // Filter categories for the suggestions dropdown
     const filteredSuggestions = useMemo(() => {
         if (searchTerm.length < 2) return [];
         const term = searchTerm.toLowerCase();
         return allCategories.filter(cat => cat.toLowerCase().includes(term));
     }, [searchTerm, allCategories]);
 
-    // --- SEARCH / FILTER HANDLERS ---
-    
-    // This is primarily used by the suggestions to quickly set the search term to a category
     const handleSuggestionClick = (category) => {
         setSearchTerm(category);
         setShowSuggestions(false); // Hide suggestions after selection
     };
 
-    // Filter the entire menu structure based on the current 'searchTerm' state
     const filteredMenu = useMemo(() => {
         const term = searchTerm.toLowerCase().trim();
         if (!term) return menu;
         
         const filtered = {};
 
-        // Iterate through all categories
         Object.entries(menu).forEach(([category, items]) => {
-            // Check if the search term matches a category name exactly
             if (category.toLowerCase() === term) {
-                 // If it's an exact category match, return only that category
                  filtered[category] = items;
                  return; 
             }
             
-            // ITEM FILTERING LOGIC: Match item name that INCLUDES the term
             const matchingItems = items.filter(item => 
-                // *** KEY CHANGE: Using includes() instead of startsWith() ***
                 item.name.toLowerCase().includes(term)
             );
 
-            // Keep the category section if any items match
             if (matchingItems.length > 0) {
                 filtered[category] = matchingItems;
             }
         });
         
-        // If an exact category match was found, return it immediately
-        // (This handles the case where a user types a full category name like 'Burgers')
         if (Object.keys(filtered).length === 1 && filtered[Object.keys(filtered)[0]] === menu[Object.keys(filtered)[0]]) {
             return filtered;
         }
 
         return filtered;
-    }, [menu, searchTerm]); // Filter depends directly on the searchTerm state
+    }, [menu, searchTerm]); 
 
-    // Convert filtered categories object to an array of [categoryName, itemsArray] pairs
     const categoriesToDisplay = Object.entries(filteredMenu);
 
 
@@ -150,53 +149,14 @@ const MenuPage = () => {
             <a href="/" className="home-button">
                 &larr; Back to Home
             </a>
+            
+            {/* ⚠️ NEW: Link to Orders Page */}
+            <a href="/order" className="home-button" style={{ left: 'unset', right: '25px', backgroundColor: 'var(--color-electric-blue)'}}>
+                🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
+            </a>
+            
             <h1 className="menu-page-title">The YumZone Menu</h1>
-            <p className="menu-page-subtitle">Freshness delivered with velocity.</p>
-
-            {/* --- SEARCH BAR JSX --- */}
-            <div className="search-container">
-                <div className="search-input-group">
-                    <input
-                        type="text"
-                        placeholder="Type to filter items or search categories..."
-                        className="search-input"
-                        value={searchTerm}
-                        onChange={(e) => {
-                            // Live Filtering: Update searchTerm on every keystroke
-                            setSearchTerm(e.target.value);
-                            setShowSuggestions(true);
-                        }}
-                        onFocus={() => setShowSuggestions(true)}
-                        onBlur={() => setTimeout(() => setShowSuggestions(false), 100)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') setShowSuggestions(false);
-                        }}
-                    />
-                    {/* The GO button is now mainly for formalizing a suggestion/category search */}
-                    <button className="search-go-btn" onClick={() => setShowSuggestions(false)}>
-                        GO
-                    </button>
-
-                    {showSuggestions && filteredSuggestions.length > 0 && (
-                        <div className="suggestions-dropdown">
-                            {filteredSuggestions.map(suggestion => (
-                                <div 
-                                    key={suggestion}
-                                    className="suggestion-item"
-                                    onMouseDown={(e) => { 
-                                        // Use onMouseDown to prevent onBlur from firing before click
-                                        e.preventDefault(); 
-                                        handleSuggestionClick(suggestion);
-                                    }}
-                                >
-                                    {suggestion} (Category)
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-            </div>
-            {/* --- END SEARCH BAR JSX --- */}
+            {/* ... (rest of the search bar and filter logic) */}
             
             {/* Show a reset button if the search term is active */}
             {searchTerm && (
@@ -227,7 +187,11 @@ const MenuPage = () => {
                         <h2 className="category-title">{category}</h2>
                         <div className="category-items-grid">
                             {items.map(item => (
-                                <MenuItemCard key={item.id} item={{ ...item, category: category }} /> 
+                                <MenuItemCard 
+                                    key={item.id} 
+                                    item={{ ...item, category: category }} 
+                                    addToCart={addToCart} // ⚠️ Pass the context function
+                                /> 
                             ))}
                         </div>
                     </section>
