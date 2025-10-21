@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useCart } from '../context/OrderContext'; // ⚠️ NEW IMPORT
 import './MenuPage.css';
+import { Link } from 'react-router-dom';
 
 // Component for a single menu item card (MODIFIED)
 // ⚠️ Now accepts addToCart from parent
@@ -146,14 +147,14 @@ const MenuPage = () => {
     return (
         <div className="menu-container">
             {/* --- NEW: Home Button Link --- */}
-            <a href="/" className="home-button">
+            <Link to="/" className="home-button">
                 &larr; Back to Home
-            </a>
+            </Link>
             
             {/* ⚠️ NEW: Link to Orders Page */}
-            <a href="/order" className="home-button" style={{ left: 'unset', right: '25px', backgroundColor: 'var(--color-electric-blue)'}}>
+            <Link to="/order" className="home-button" style={{ left: 'unset', right: '25px', backgroundColor: 'var(--color-electric-blue)'}}>
                 🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
-            </a>
+            </Link>
             
             <h1 className="menu-page-title">The YumZone Menu</h1>
             {/* ... (rest of the search bar and filter logic) */}
