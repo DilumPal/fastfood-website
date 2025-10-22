@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
+import PaymentPage from './pages/PaymentPage';
 // import other pages (e.g., Menu, Order, About)
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/order" element={<OrdersPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
           {/* Add other routes here */}
         </Routes>
       </Router>
