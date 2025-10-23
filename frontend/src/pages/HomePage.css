@@ -132,14 +132,26 @@
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
 }
 
+.log-in-button:hover{
+  transform: scale(1.05);
+}
+
 .sign-up-button {
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+}
+
+.sign-up-button:hover{
+  transform: scale(1.05);
 }
 
 .log-out-button {
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
     border: 2px solid var(--color-electric-blue);
     color: var(--color-primary);
+}
+
+.log-out-button:hover{
+  transform: scale(1.05);
 }
 
 .headline {
@@ -185,14 +197,26 @@
   background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
 }
 
+.menu-button:hover{
+  transform: scale(1.05);
+}
+
 .order-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+}
+
+.order-button:hover{
+  transform: scale(1.05);
 }
 
 .about-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
   border: 2px solid var(--color-electric-blue);
   color: var(--color-primary);
+}
+
+.about-button:hover{
+  transform: scale(1.05);
 }
 
 /* --- Features Section --- */

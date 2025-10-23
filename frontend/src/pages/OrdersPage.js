@@ -52,6 +52,7 @@ const OrdersPage = () => {
     const { user, isAuthenticated } = useAuth(); 
     
     const navigate = useNavigate();
+    const [isHovered, setIsHovered] = useState(false);
 
     // The handleCheckout function MUST NOT be async, and MUST NOT include functions in state
     const handleCheckout = () => { 
@@ -123,6 +124,8 @@ const OrdersPage = () => {
                         {/* PLACE ORDER BUTTON */}
                         <button 
                             onClick={handleCheckout} // Now calls the non-async navigator
+                            onMouseEnter={() => setIsHovered(true)}
+                            onMouseLeave={() => setIsHovered(false)}
                             style={{ 
                                 marginTop: '20px', 
                                 padding: '15px 30px',
@@ -132,7 +135,9 @@ const OrdersPage = () => {
                                 borderRadius: '50px',
                                 cursor: 'pointer',
                                 background: 'linear-gradient(45deg, var(--color-electric-blue, #4d88ff), var(--color-hot-pink, #ff007f))', 
-                                color: 'white' 
+                                color: 'white',
+                                transform: isHovered ? 'scale(1.05)' : 'scale(1)',
+                                transition: 'transform 0.2s ease-in-out'
                             }}
                         >
                             PROCEED TO PAYMENT

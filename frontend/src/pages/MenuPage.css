@@ -163,6 +163,7 @@
 
 .quantity-control button:hover {
     background-color: #e6006f; /* Slightly darker pink */
+    transform: scale(1.05);
 }
 
 .quantity-control input {
@@ -191,6 +192,7 @@
 
 .add-to-order-btn:hover {
     opacity: 0.9;
+    transform: scale(1.05);
 }
 
 /* --- Add this new section to MenuPage.css --- */
