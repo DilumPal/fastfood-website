@@ -101,6 +101,7 @@ try {
     $conn->commit();
 
     echo json_encode(["success" => true, "order_id" => $order_id]);
+    exit();
 
 } catch (Exception $e) {
     // Rollback transaction on error

@@ -48,6 +48,7 @@
   font-size: 3.5rem;
   font-weight: 900;
   background: linear-gradient(50deg, yellow, orange); /* gradient colors */
+  text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
   -webkit-background-clip: text;  /* clips gradient to text shape */
   -webkit-text-fill-color: transparent; /* makes text itself transparent so gradient shows */
   
