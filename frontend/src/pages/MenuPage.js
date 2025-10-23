@@ -13,21 +13,21 @@ const MenuItemCard = ({ item, addToCart }) => {
     const navigate = useNavigate();
 
     const handleAddToCart = () => {
-  if (!isAuthenticated) {
-    alert("Please login to add items to your order 😊");
-    navigate('/login');
-    return;
-  }
+        if (!isAuthenticated) {
+            alert("Please login to add items to your order 😊");
+            navigate('/login');
+            return;
+        }
 
-  addToCart({
-    id: item.id,
-    name: item.name,
-    price: item.price,
-    quantity: quantity
-  });
+        addToCart({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: quantity
+        });
 
-  setQuantity(1);
-};
+        setQuantity(1);
+    };
 
 
     return (
@@ -117,6 +117,21 @@ const MenuPage = () => {
         setShowSuggestions(false); // Hide suggestions after selection
     };
 
+    // --- NEW: Handlers for Search Bar ---
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+        // Show suggestions only if the search term is not empty
+        setShowSuggestions(event.target.value.trim().length > 0); 
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault(); // Prevents page reload
+        setSearchTerm(searchTerm.trim()); 
+        setShowSuggestions(false); // Hide suggestions on explicit submission
+    };
+    // --- END NEW HANDLERS ---
+
+
     const filteredMenu = useMemo(() => {
         const term = searchTerm.toLowerCase().trim();
         if (!term) return menu;
@@ -165,21 +180,54 @@ const MenuPage = () => {
             
             {/* ⚠️ NEW: Link to Orders Page */}
             {isAuthenticated && (
-  <Link
-    to="/order"
-    className="home-button"
-    style={{
-      left: 'unset',
-      right: '25px',
-      backgroundColor: 'var(--color-electric-blue)'
-    }}
-  >
-    🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
-  </Link>
-)}
+                <Link
+                    to="/order"
+                    className="home-button"
+                    style={{
+                        left: 'unset',
+                        right: '25px',
+                        backgroundColor: 'var(--color-electric-blue)'
+                    }}
+                >
+                    🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
+                </Link>
+            )}
             
             <h1 className="menu-page-title">The YumZone Menu</h1>
-            {/* ... (rest of the search bar and filter logic) */}
+            <p className="menu-page-subtitle">Your cravings, satisfied instantly.</p> {/* Added subtitle for better context */}
+
+            {/* --- NEW: Search Bar JSX --- */}
+            <div className="search-container">
+                <form className="search-input-group" onSubmit={handleSearchSubmit}>
+                    <input
+                        type="text"
+                        placeholder="Search for items or categories (e.g., Burgers, Cola, Spicy)"
+                        className="search-input"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                        onFocus={() => searchTerm && setShowSuggestions(true)}
+                        // Use a slight delay on blur to allow a click on a suggestion before the dropdown hides
+                        onBlur={() => setTimeout(() => setShowSuggestions(false), 150)} 
+                    />
+                    <button type="submit" className="search-go-btn">GO</button>
+
+                    {/* Suggestions Dropdown */}
+                    {showSuggestions && filteredSuggestions.length > 0 && (
+                        <div className="suggestions-dropdown">
+                            {filteredSuggestions.map((category) => (
+                                <div 
+                                    key={category}
+                                    className="suggestion-item"
+                                    onClick={() => handleSuggestionClick(category)}
+                                >
+                                    Category: **{category}**
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </form>
+            </div>
+            {/* --- END Search Bar JSX --- */}
             
             {/* Show a reset button if the search term is active */}
             {searchTerm && (
