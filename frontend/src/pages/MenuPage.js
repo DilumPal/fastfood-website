@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useCart } from '../context/OrderContext'; // ⚠️ NEW IMPORT
+import { useAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import './MenuPage.css';
 import { Link } from 'react-router-dom';
 
@@ -7,19 +9,26 @@ import { Link } from 'react-router-dom';
 // ⚠️ Now accepts addToCart from parent
 const MenuItemCard = ({ item, addToCart }) => { 
     const [quantity, setQuantity] = useState(1);
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
 
     const handleAddToCart = () => {
-        // Pass the item details and quantity to the context function
-        addToCart({
-            id: item.id,
-            name: item.name,
-            price: item.price,
-            quantity: quantity
-        });
-        // Optional: Reset quantity to 1 after adding
-        setQuantity(1); 
-        console.log(`Added ${quantity} x ${item.name} to order.`);
-    };
+  if (!isAuthenticated) {
+    alert("Please login to add items to your order 😊");
+    navigate('/login');
+    return;
+  }
+
+  addToCart({
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    quantity: quantity
+  });
+
+  setQuantity(1);
+};
+
 
     return (
         <div className="menu-card">
@@ -64,6 +73,9 @@ const MenuPage = () => {
     const [menu, setMenu] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
+
     
     // Search state is now the direct driver of the filter
     const [searchTerm, setSearchTerm] = useState('');
@@ -152,9 +164,19 @@ const MenuPage = () => {
             </Link>
             
             {/* ⚠️ NEW: Link to Orders Page */}
-            <Link to="/order" className="home-button" style={{ left: 'unset', right: '25px', backgroundColor: 'var(--color-electric-blue)'}}>
-                🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
-            </Link>
+            {isAuthenticated && (
+  <Link
+    to="/order"
+    className="home-button"
+    style={{
+      left: 'unset',
+      right: '25px',
+      backgroundColor: 'var(--color-electric-blue)'
+    }}
+  >
+    🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
+  </Link>
+)}
             
             <h1 className="menu-page-title">The YumZone Menu</h1>
             {/* ... (rest of the search bar and filter logic) */}

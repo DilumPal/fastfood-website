@@ -11,26 +11,28 @@ import SignUp from './pages/SignUp';
 import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
 import PaymentPage from './pages/PaymentPage';
+import ProtectedRoute from "./components/ProtectedRoute";
+
 // import other pages (e.g., Menu, Order, About)
 
 function App() {
   return (
     // CRITICAL: Wrap the entire Router with AuthProvider
-    <AuthProvider>
-      <OrderProvider> 
+    <OrderProvider>
+    <AuthProvider> 
       <Router>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/menu" element={<MenuPage />} />
-          <Route path="/order" element={<OrdersPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/order" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
+          <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
           {/* Add other routes here */}
         </Routes>
       </Router>
-      </OrderProvider>
     </AuthProvider>
+    </OrderProvider>
   );
 }
 

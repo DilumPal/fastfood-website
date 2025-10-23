@@ -1,6 +1,8 @@
 // frontend/src/context/AuthContext.js
 
 import React, { createContext, useState, useEffect, useContext } from 'react';
+import { useCart } from "./OrderContext";
+
 
 // Create the Context object
 const AuthContext = createContext();
@@ -14,6 +16,7 @@ export const AuthProvider = ({ children }) => {
   
   // State to hold user info (optional, but good practice)
   const [user, setUser] = useState(null);
+  const { clearCart } = useCart();
 
   // Effect to sync state with localStorage whenever isAuthenticated changes
   useEffect(() => {
@@ -26,11 +29,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setIsAuthenticated(false);
-    setUser(null);
-    localStorage.removeItem('isLoggedIn');
-    // You might also want to clear any specific user tokens here
-  };
+  setIsAuthenticated(false);
+  setUser(null);
+  localStorage.removeItem("isLoggedIn");
+  clearCart(); // ✅ clear cart
+};
+
 
   return (
     <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
