@@ -12,6 +12,7 @@ import MenuPage from './pages/MenuPage';
 import OrdersPage from './pages/OrdersPage';
 import PaymentPage from './pages/PaymentPage';
 import ProtectedRoute from "./components/ProtectedRoute";
+import AboutPage from './pages/AboutPage';
 
 // import other pages (e.g., Menu, Order, About)
 
@@ -28,6 +29,7 @@ function App() {
           <Route path="/menu" element={<MenuPage />} />
           <Route path="/order" element={<ProtectedRoute><OrdersPage /></ProtectedRoute>} />
           <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
+          <Route path="/about" element={<AboutPage/>}/>
           {/* Add other routes here */}
         </Routes>
       </Router>
