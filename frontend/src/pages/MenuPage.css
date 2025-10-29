@@ -210,6 +210,12 @@
     background-color: #e6006f; 
 }
 
+.customize-btn:active {
+  background-color: #e6006f; /* Darker blue when clicked */
+  /* You can add more visual feedback here, like a slight scale change: */
+  transform: scale(0.98);
+}
+
 /* --- Add to Order Button Styling (Modified) --- */
 .add-to-order-btn-small { /* Style for the ADD button */
     /* Use the bright gradient for the primary action (Add to Order) */
@@ -219,6 +225,12 @@
 
 .add-to-order-btn-small:hover {
     opacity: 0.8;
+}
+
+.add-to-order-btn-small:active {
+  background-color: #0056b3; /* Darker blue when clicked */
+  /* You can add more visual feedback here, like a slight scale change: */
+  transform: scale(0.98);
 }
 
 /* ⚠️ REMOVED/RENAMED: Old .add-to-order-btn section */
