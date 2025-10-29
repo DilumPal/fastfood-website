@@ -175,25 +175,54 @@
     background-color: var(--color-secondary);
 }
 
-/* --- Add to Order Button --- */
-.add-to-order-btn {
+/* --- Button Group Container --- */
+.card-button-group { /* ⚠️ NEW: Flex container for the two buttons */
+    display: flex;
+    gap: 10px; /* Space between the two buttons */
     width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    cursor: pointer;
-    /* Use a bright, contrasting gradient */
-    background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-electric-blue)); 
-    color: var(--color-primary);
-    transition: opacity 0.3s;
+    margin-top: 15px; /* Adds space above the buttons, pushes them to the bottom */
 }
 
-.add-to-order-btn:hover {
-    opacity: 0.9;
-    transform: scale(1.05);
+/* Base style for both buttons */
+.menu-card-btn {
+    padding: 12px 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem; /* Slightly smaller font to fit */
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+    flex-grow: 1; /* Both buttons take equal space */
 }
+
+.menu-card-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* --- Customize Button Styling --- */
+.customize-btn { /* Style for the new Customize button */
+    background-color: var(--color-hot-pink, #FF007F); /* Use Hot Pink for Customize */
+    color: white;
+}
+
+.customize-btn:hover {
+    background-color: #e6006f; 
+}
+
+/* --- Add to Order Button Styling (Modified) --- */
+.add-to-order-btn-small { /* Style for the ADD button */
+    /* Use the bright gradient for the primary action (Add to Order) */
+    background: linear-gradient(45deg, var(--color-zesty-lime, #C7FF00), var(--color-electric-blue, #00F0FF)); 
+    color: var(--color-primary, #0A0A0A);
+}
+
+.add-to-order-btn-small:hover {
+    opacity: 0.8;
+}
+
+/* ⚠️ REMOVED/RENAMED: Old .add-to-order-btn section */
+/* You should remove the old .add-to-order-btn block entirely from the original file. */
 
 /* --- Add this new section to MenuPage.css --- */
 

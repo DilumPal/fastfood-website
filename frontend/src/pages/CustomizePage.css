@@ -1,0 +1,406 @@
+/* CustomizePage.css */
+
+/* --- Page-Level Styles --- */
+.customize-page-container {
+    padding: 20px;
+    background-color: var(--color-primary, #0A0A0A); /* Dark background */
+    color: var(--color-secondary, #F8F8F8); /* Light text */
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    position: relative; /* For absolute positioning of nav buttons */
+}
+
+.menu-page-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--color-zesty-lime, #C7FF00);
+    margin-bottom: 5px;
+    text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
+}
+
+.menu-page-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: rgba(248, 248, 248, 0.7);
+    margin-bottom: 50px;
+}
+
+
+/* --- Nav Button Adjustment --- */
+.customize-nav-btn {
+    position: absolute; 
+    top: 25px;
+    padding: 10px 15px;
+    background-color: var(--color-hot-pink, #FF007F);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    z-index: 20;
+}
+
+.customize-nav-btn:hover {
+    background-color: #e6006f;
+}
+
+/* --- Main Grid Layout --- */
+.customize-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 2/3rds for options, 1/3rd for summary */
+    gap: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+@media (max-width: 1024px) {
+    .customize-grid {
+        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+    }
+}
+
+/* --- Card Styles (Containers) --- */
+.custom-card {
+    background-color: var(--color-secondary, #F8F8F8); /* Light card background */
+    color: var(--color-primary, #0A0A0A); /* Dark text on light card */
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.card-header-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-hot-pink, #FF007F);
+    margin-bottom: 5px;
+}
+
+.card-header-subtitle {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+
+/* --- 1. Item Preview Card --- */
+.item-preview-card {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.preview-image-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.preview-description {
+    font-size: 1rem;
+    color: #444;
+    margin: 5px 0 10px 0;
+}
+
+.base-price {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-electric-blue);
+}
+
+
+/* --- 2. Combo Selector --- */
+.combo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.combo-option {
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.combo-option:hover {
+    border-color: var(--color-hot-pink);
+}
+
+.combo-option.selected {
+    border-color: var(--color-zesty-lime, #C7FF00);
+    background-color: #e8ffe0;
+    box-shadow: 0 0 8px rgba(199, 255, 0, 0.5);
+}
+
+.combo-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.combo-name {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.combo-badge {
+    background-color: var(--color-electric-blue);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+
+/* --- 3. Ingredient Card --- */
+.ingredient-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+}
+
+.ingredient-option {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 100px;
+    position: relative;
+}
+
+.ingredient-option:hover {
+    border-color: var(--color-hot-pink);
+}
+
+.ingredient-option.selected {
+    border-color: var(--color-hot-pink, #FF007F);
+    background-color: #ffe0f0;
+    box-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+}
+
+.ingredient-emoji {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.ingredient-details {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.ingredient-name {
+    font-weight: 600;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.ingredient-price {
+    font-size: 0.8rem;
+    color: var(--color-electric-blue);
+    font-weight: 500;
+}
+
+.check-mark {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: var(--color-zesty-lime);
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+/* --- Right Column - Summary --- */
+.customize-summary-container {
+    padding-top: 20px;
+}
+
+.sticky-summary {
+    position: sticky;
+    top: 100px; /* Aligns with the top of the viewport when scrolling */
+    padding: 25px;
+}
+
+.summary-title {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--color-primary);
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    font-size: 1rem;
+}
+
+.summary-label {
+    color: #444;
+}
+
+.summary-separator {
+    border: none;
+    border-top: 1px dashed #ccc;
+    margin: 15px 0;
+}
+
+.total-row {
+    padding-top: 15px;
+}
+
+.total-label {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.total-price {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--color-zesty-lime, #C7FF00);
+}
+
+/* Quantity Control in Summary */
+.quantity-control-row .quantity-control {
+    border: none;
+    background-color: #eee;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control-row .quantity-control input {
+    width: 40px;
+    background-color: transparent;
+    text-align: center;
+    border: none;
+    outline: none;
+    font-weight: bold;
+}
+
+.quantity-control-row .quantity-control button {
+    background-color: var(--color-hot-pink);
+    color: white;
+    border: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.quantity-control-row .quantity-control button:hover {
+    background-color: #e6006f;
+}
+
+.quantity-display {
+    width: 30px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--color-primary);
+}
+
+
+/* Add to Cart Button */
+.add-to-cart-btn {
+    width: 100%;
+    padding: 15px;
+    margin-top: 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    /* Use the bright gradient for the final action */
+    background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-electric-blue)); 
+    color: var(--color-primary);
+    transition: opacity 0.3s, transform 0.2s;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.add-to-cart-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+
+/* Customizations List */
+.summary-customizations {
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
+.list-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.list-title.added {
+    color: var(--color-electric-blue);
+}
+
+.list-title.removed {
+    color: var(--color-hot-pink);
+}
+
+.badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.custom-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.added-badge {
+    background-color: var(--color-zesty-lime);
+    color: var(--color-primary);
+}
+
+.removed-badge {
+    background-color: #f8e0e0;
+    color: var(--color-hot-pink);
+    border: 1px solid var(--color-hot-pink);
+}

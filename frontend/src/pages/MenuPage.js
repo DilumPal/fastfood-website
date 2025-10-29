@@ -29,6 +29,23 @@ const MenuItemCard = ({ item, addToCart }) => {
         setQuantity(1);
     };
 
+    const handleCustomize = () => {
+        if (!isAuthenticated) {
+            alert("Please login to add items to your order 😊");
+            navigate('/login');
+            return;
+        }
+
+        navigate('/customize', { 
+            state: { 
+                item: { 
+                    ...item, 
+                    quantity: quantity // Pass the currently selected quantity
+                } 
+            } 
+        });
+    };
+
 
     return (
         <div className="menu-card">
@@ -56,12 +73,21 @@ const MenuItemCard = ({ item, addToCart }) => {
                     </div>
                 </div>
                 
-                <button 
-                    className="add-to-order-btn"
-                    onClick={handleAddToCart} // Use the new handler
-                >
-                    ADD TO ORDER
-                </button>
+                <div className="card-button-group">
+                    <button 
+                        className="menu-card-btn customize-btn" // New class for customization
+                        onClick={handleCustomize}
+                    >
+                        CUSTOMIZE
+                    </button>
+                    
+                    <button 
+                        className="menu-card-btn add-to-order-btn-small" // New class for ADD
+                        onClick={handleAddToCart}
+                    >
+                        ADD
+                    </button>
+                </div>
             </div>
         </div>
     );
@@ -74,7 +100,7 @@ const MenuPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
     
     // Search state is now the direct driver of the filter
