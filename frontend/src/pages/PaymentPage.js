@@ -1,7 +1,7 @@
 // PaymentPage.js
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useCart } from '../context/OrderContext'; // ⚠️ NEW IMPORT: To clear cart on success
+import { useCart } from '../context/OrderContext'; 
 import './MenuPage.css'; // Re-use styles
 
 // NOTE: If you installed react-credit-cards, uncomment the imports:
@@ -17,6 +17,10 @@ const PaymentPage = () => {
     
     // Get clearCart function from context
     const { clearCart } = useCart(); 
+
+    // ⚠️ FIX 1: Add state variables for phone and address
+    const [customerPhone, setCustomerPhone] = useState(orderData.customer_phone || ''); 
+    const [customerAddress, setCustomerAddress] = useState(orderData.customer_address || ''); 
 
     const [cardNumber, setCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
@@ -50,13 +54,23 @@ const PaymentPage = () => {
         return digits;
     };
 
-    // ⚠️ MODIFIED: Ensure proper error handling and cart clearing
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setIsProcessing(true);
 
-        // --- Front-End Validation (Fake Card Logic) ---
+        // --- Front-End Validation for Card Details ---
+        if (customerPhone.trim() === '') {
+             setError('Phone Number is required.');
+             setIsProcessing(false);
+             return;
+        }
+        if (customerAddress.trim() === '') {
+             setError('Delivery Address is required.');
+             setIsProcessing(false);
+             return;
+        }
+        
         if (cardNumber.replace(/\s/g, '').length !== 16) {
             setError('Card Number must be 16 digits.');
             setIsProcessing(false);
@@ -82,11 +96,15 @@ const PaymentPage = () => {
             return;
         }
         
-        // --- Successful Front-End Validation ---
-        
-        // Prepare final data including payment details
+        // --- Prepare final data including payment details ---
         const submissionData = {
+            // ⚠️ FIX 2: Add phone and address to the submission data
+            customer_phone: customerPhone,
+            customer_address: customerAddress,
+            
+            // Existing order data
             ...orderData,
+            
             payment_details: {
                 last_four_digits: cardNumber.replace(/\s/g, '').slice(-4),
                 payment_method: 'Credit Card',
@@ -96,8 +114,6 @@ const PaymentPage = () => {
 
         // 5. Call the modified backend API (submit_order.php)
         try {
-            // ⚠️ Ensure this URL is correct for your local server setup
-            // This is the crucial part that was likely failing because the backend wasn't expecting the new data structure or the HTTP status wasn't checked.
             const response = await fetch('http://localhost/fastfood-website/api/submit_order.php', {
                 method: 'POST',
                 headers: { 
@@ -106,9 +122,7 @@ const PaymentPage = () => {
                 body: JSON.stringify(submissionData),
             });
             
-            // Check for HTTP errors (like 404 or 500)
             if (!response.ok) {
-                 // Attempt to read error message from body if available
                  const errorBody = await response.text();
                  throw new Error(`HTTP error! Status: ${response.status}. Response: ${errorBody.substring(0, 100)}...`);
             }
@@ -116,20 +130,16 @@ const PaymentPage = () => {
             const result = await response.json();
             
             if (result.success) {
-                // Payment and Order successful
                 alert(`🎉 Payment Successful! Your order ID is: ${result.order_id}. You will be redirected to the home page.`);
                 
-                // **FIX:** Clear the cart using the context hook
                 clearCart(); 
                 
                 navigate('/'); // Redirect to home page
             } else {
-                // Backend application error (e.g., failed DB insertion)
                 setError('Failed to process payment: ' + (result.error || 'Unknown error.'));
             }
         } catch (error) {
             console.error('Error submitting order and payment:', error);
-            // Display a generic error message for security/simplicity
             setError('An error occurred during payment. Please check your console for details.');
         } finally {
             setIsProcessing(false);
@@ -154,6 +164,32 @@ const PaymentPage = () => {
                     
                     {error && <p style={{ color: 'red', textAlign: 'center', fontWeight: 'bold' }}>{error}</p>}
                     
+                    {/* ⚠️ FIX 3: Add Customer Phone input */}
+                    <input
+                        type="tel"
+                        name="phone"
+                        placeholder="Phone Number for Contact"
+                        value={customerPhone}
+                        onChange={(e) => setCustomerPhone(e.target.value)}
+                        required
+                        disabled={isProcessing}
+                        style={inputStyle}
+                    />
+
+                    {/* ⚠️ FIX 3: Add Customer Address input */}
+                    <input
+                        type="text"
+                        name="address"
+                        placeholder="Delivery Address"
+                        value={customerAddress}
+                        onChange={(e) => setCustomerAddress(e.target.value)}
+                        required
+                        disabled={isProcessing}
+                        style={inputStyle}
+                    />
+
+                    <hr style={{ borderTop: '1px dashed #ccc', margin: '15px 0' }} />
+
                     {/* Card Number */}
                     <input
                         type="tel"
