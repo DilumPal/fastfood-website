@@ -1,18 +1,19 @@
-import React, { useState, useMemo, useEffect } from 'react';
+// CustomizePage.js
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/OrderContext'; 
 import { useAuth } from '../context/AuthContext';
-// ⚠️ NEW IMPORT: Ensure this file is in the same directory and contains the config data
+// ⚠️ REQUIRED: Ensure this file exists and contains config data
 import { customizationConfig, allIngredients } from './customizationData'; 
-import './CustomizePage.css'; // ⚠️ NEW IMPORT: Using the dedicated CSS file
+import './CustomizePage.css'; // Assuming this exists
 
 // Helper to get ingredient price string
 const getIngredientPrice = (price) => price > 0 ? `+ $${(price / 100).toFixed(2)}` : "Free";
 
-// Helper to group ingredients by its sub-category (e.g., Toppings, Sauces) for display
+// Helper to group ingredients by its sub-category
 const groupIngredients = (ingredients) => {
     return ingredients.reduce((acc, ingredient) => {
-        const subCategory = ingredient.category;
+        const subCategory = ingredient.category || 'Other';
         if (!acc[subCategory]) {
             acc[subCategory] = [];
         }
@@ -29,20 +30,18 @@ const CustomizePage = () => {
     const { isAuthenticated } = useAuth();
 
     const baseItem = location.state?.item;
-    // Determine category and use 'Default' as fallback for items with no customization defined
     const itemCategory = baseItem?.category || 'Default';
     
-    // Dynamically load configuration based on item category
+    // Dynamically load configuration based on item category (using 'Default' as fallback)
     const config = customizationConfig[itemCategory] || customizationConfig['Default'];
     
     // --- State Initialization ---
-    // Initialize state dynamically based on the configuration sections
     const initialCustomizations = useMemo(() => {
         return config.sections.reduce((acc, section) => {
             if (section.type === 'multi_select') {
-                acc[section.key] = [...(section.defaultSelected || [])]; // Clone array for state
+                acc[section.key] = [...(section.defaultSelected || [])];
             } else if (section.type === 'single_select') {
-                acc[section.key] = section.default || '';
+                acc[section.key] = section.default || (section.options.length > 0 ? section.options[0].id : '');
             }
             return acc;
         }, {});
@@ -52,75 +51,99 @@ const CustomizePage = () => {
     const [quantity, setQuantity] = useState(baseItem?.quantity || 1);
 
 
-    // Redirect and State Reset on Item Change
     useEffect(() => {
         if (!baseItem) {
             alert("No item selected for customization. Redirecting to menu.");
             navigate('/menu');
-        } else {
-             // Reset customizations state if the base item or category changes
-             setCustomizations(initialCustomizations);
-             setQuantity(baseItem.quantity || 1);
         }
+        // Reset customizations state if the base item or category changes
+        setCustomizations(initialCustomizations);
+        setQuantity(baseItem?.quantity || 1);
     }, [baseItem, navigate, initialCustomizations]);
     
     
     // --- Customization Handlers ---
-    
-    // Handler for Multi-Select (Toppings, Sauces, Dips)
     const toggleMultiSelect = (key, itemId) => {
-        const currentSelections = customizations[key];
-        
-        if (currentSelections.includes(itemId)) {
-            // Remove item
-            setCustomizations(prev => ({
+        setCustomizations(prev => {
+            const currentSelections = prev[key];
+            return {
                 ...prev,
-                [key]: prev[key].filter(id => id !== itemId)
-            }));
-        } else {
-            // Add item
-            setCustomizations(prev => ({
-                ...prev,
-                [key]: [...prev[key], itemId]
-            }));
-        }
+                [key]: currentSelections.includes(itemId)
+                    ? currentSelections.filter(id => id !== itemId) // Remove
+                    : [...currentSelections, itemId] // Add
+            };
+        });
     };
     
-    // Handler for Single-Select (Combo Size, Crust Type)
     const handleSingleSelect = (key, itemId) => {
         setCustomizations(prev => ({ ...prev, [key]: itemId }));
     };
 
 
-    // --- Price Calculation ---
-    const calculateTotal = useMemo(() => {
-        if (!baseItem) return 0;
-        let basePrice = baseItem.price;
-        let totalMultiplier = 1;
-        let addedPrice = 0;
+    // --- Price Calculation & Customization Details (Memoized) ---
+    const { calculateUnitAdjustedPrice, displayCustomizationDetails } = useMemo(() => {
+        if (!baseItem) return { calculateUnitAdjustedPrice: 0, displayCustomizationDetails: null };
         
-        // Loop through all dynamic sections to calculate price adjustments
+        let basePrice = baseItem.price; // Start with base price in dollars
+        let totalMultiplier = 1;
+        let addedPriceCents = 0; // Price adjustments in cents
+        
+        // --- Customization Details Object for DB/Display ---
+        const details = {
+            added: [], 
+            removed: [], 
+            options: [] 
+        };
+
         config.sections.forEach(section => {
             const selectedId = customizations[section.key];
             
             if (section.type === 'single_select') {
                 const option = section.options.find(o => o.id === selectedId);
-                totalMultiplier *= (option?.multiplier || 1);
+                if (option) {
+                    // Apply price multiplier
+                    totalMultiplier *= (option.multiplier || 1); 
+                    
+                    details.options.push({
+                        title: section.title,
+                        name: option.name,
+                        multiplier: option.multiplier
+                    });
+                }
             } 
             
             else if (section.type === 'multi_select') {
-                // Calculate price from selected ingredients
-                (selectedId || []).forEach(id => {
-                    const ingredient = allIngredients.find(i => i.id === id);
-                    addedPrice += (ingredient?.price || 0);
+                const defaultItems = section.defaultSelected || [];
+
+                (allIngredients || []).forEach(ingredient => {
+                    const isSelected = (selectedId || []).includes(ingredient.id);
+                    const isDefault = defaultItems.includes(ingredient.id);
+
+                    if (isSelected && !isDefault) {
+                        // Added ingredient
+                        addedPriceCents += (ingredient.price || 0);
+                        details.added.push(`${ingredient.name}${ingredient.price > 0 ? ` (+ $${(ingredient.price / 100).toFixed(2)})` : ''}`);
+                    } else if (!isSelected && isDefault) {
+                        // Removed ingredient
+                        details.removed.push(ingredient.name);
+                    }
                 });
             }
         });
 
-        // Final total calculation: (Base Price + Added Ingredient Price) * Multiplier * Quantity
-        // Note: Base price is in dollars, Added Price is in cents, so addedPrice / 100
-        return (basePrice + (addedPrice / 100)) * totalMultiplier * quantity; 
-    }, [baseItem, customizations, quantity, config.sections]);
+        // Final unit price calculation: (Base Price + Added Ingredient Price in Dollars) * Multiplier
+        const finalUnitPrice = (basePrice + (addedPriceCents / 100)) * totalMultiplier; 
+        
+        return {
+            calculateUnitAdjustedPrice: finalUnitPrice,
+            displayCustomizationDetails: details
+        };
+    }, [baseItem, customizations, config.sections, allIngredients]);
+
+
+    const calculateTotal = useMemo(() => {
+        return calculateUnitAdjustedPrice * quantity;
+    }, [calculateUnitAdjustedPrice, quantity]);
 
 
     // --- Add To Cart Logic ---
@@ -133,62 +156,23 @@ const CustomizePage = () => {
 
         if (!baseItem) return;
 
-        // Build a detailed string of customizations for the cart item name
-        let fullName = baseItem.name;
-        let addedItemsList = [];
-        let removedItemsList = [];
-
-        config.sections.forEach(section => {
-            const selectedId = customizations[section.key];
-            
-            if (section.type === 'single_select') {
-                const option = section.options.find(o => o.id === selectedId);
-                if (option && option.id !== section.default) {
-                    fullName += ` (${option.name})`;
-                }
-            } 
-            
-            else if (section.type === 'multi_select') {
-                const defaultItems = section.defaultSelected || [];
-                
-                selectedId.forEach(id => {
-                    if (!defaultItems.includes(id)) {
-                        addedItemsList.push(allIngredients.find(i => i.id === id)?.name);
-                    }
-                });
-
-                defaultItems.forEach(id => {
-                    if (!selectedId.includes(id)) {
-                        removedItemsList.push(allIngredients.find(i => i.id === id)?.name);
-                    }
-                });
-            }
-        });
-
-        if (addedItemsList.length > 0) {
-            fullName += ` (+${addedItemsList.join(', ')})`;
-        }
-        if (removedItemsList.length > 0) {
-            fullName += ` (No ${removedItemsList.join(', ')})`;
-        }
-        
-        // Add the customized item to the cart
+        // Add the customized item to the cart with all necessary fields
         addToCart({
-            id: baseItem.id + Date.now(), // Unique ID for customized item
-            name: fullName,
-            price: calculateTotal / quantity, // Calculate unit price
+            id: Date.now(), // Unique ID for this specific customized item
+            menu_item_id: baseItem.id, // Original menu item ID for database link
+            name: `${baseItem.name} (Customized)`,
+            price: parseFloat(calculateUnitAdjustedPrice.toFixed(2)), // Unit price (Base + Cust)
             quantity: quantity,
-            customizations: customizations
+            customizationDetails: displayCustomizationDetails // The structured object for DB/Display
         });
 
         alert(`Added ${quantity}x ${baseItem.name} to order for $${calculateTotal.toFixed(2)}!`);
-        navigate("/menu"); // Navigate back to menu after adding
+        navigate("/order"); 
     };
     
     
     // --- Conditional Rendering Function for Options ---
     const renderCustomizationOptions = () => {
-        // If the config has no sections, show a minimal customization message
         if (config.sections.length === 0) {
             return (
                 <div className="custom-card">
@@ -231,7 +215,7 @@ const CustomizePage = () => {
             
             // --- Multi Select (e.g., Toppings, Ingredients) ---
             if (section.type === 'multi_select') {
-                const grouped = groupIngredients(section.ingredients);
+                const grouped = groupIngredients(section.ingredients || []);
                 
                 return (
                     <div key={section.key} className="ingredient-section-group">
@@ -239,11 +223,10 @@ const CustomizePage = () => {
                          <p className="card-header-subtitle">{section.subtitle}</p>
                         {Object.entries(grouped).map(([subCategory, items]) => (
                              <div key={subCategory} className="custom-card ingredient-card">
-                                {/* Use simple category name for display */}
                                 <h4 className="card-header-title" style={{color: '#444', fontSize: '1.2rem'}}>{subCategory}</h4>
                                 <div className="ingredient-grid">
                                     {items.map((ingredient) => {
-                                        const isSelected = selectedValue.includes(ingredient.id);
+                                        const isSelected = (customizations[section.key] || []).includes(ingredient.id);
                                         return (
                                             <button
                                                 key={ingredient.id}
@@ -312,31 +295,38 @@ const CustomizePage = () => {
                     <div className="custom-card summary-card sticky-summary">
                         <h3 className="summary-title">Order Summary</h3>
                         <div className="summary-section">
-                            {/* Price Breakdown (Simplified for summary) */}
                             <div className="summary-row">
-                                <span className="summary-label">Base Price</span>
+                                <span className="summary-label">Unit Price (Base)</span>
                                 <span>${baseItem.price.toFixed(2)}</span>
                             </div>
                             
-                            {/* Dynamic Price Adjustments */}
-                            {config.sections.map(section => {
-                                const selectedId = customizations[section.key];
-                                if (section.type === 'single_select') {
-                                     const option = section.options.find(o => o.id === selectedId);
-                                     if(option && option.multiplier > 1) {
-                                        return (
-                                            <div key={section.key} className="summary-row">
-                                                <span className="summary-label">{section.title} ({option.name})</span>
-                                                <span>x{option.multiplier.toFixed(1)}</span>
-                                            </div>
-                                        );
-                                     }
+                            {displayCustomizationDetails?.options.map((option, index) => {
+                                if(option.multiplier !== 1) {
+                                    return (
+                                        <div key={index} className="summary-row">
+                                            <span className="summary-label">{option.title} ({option.name})</span>
+                                            <span>x{option.multiplier.toFixed(1)}</span>
+                                        </div>
+                                    );
                                 }
                                 return null;
                             })}
+                            
+                            {displayCustomizationDetails?.added.length > 0 && (
+                                <div className="summary-row">
+                                    <span className="summary-label">Ingredient Adjustments</span>
+                                    <span>Added</span>
+                                </div>
+                            )}
 
                             <hr className="summary-separator" />
                             
+                            {/* Final Unit Price */}
+                            <div className="summary-row">
+                                <span className="summary-label font-bold">Unit Price (Final)</span>
+                                <span>${calculateUnitAdjustedPrice.toFixed(2)}</span>
+                            </div>
+
                             {/* Quantity Selector */}
                             <div className="summary-row quantity-control-row">
                                 <span className="summary-label font-bold">Quantity</span>
@@ -366,47 +356,37 @@ const CustomizePage = () => {
                         
                         {/* Dynamic Customizations Summary */}
                         <div className="summary-customizations">
-                            {config.sections.map(section => {
-                                const selectedId = customizations[section.key];
-                                if (section.type === 'multi_select') {
-                                    const defaultItems = section.defaultSelected || [];
-                                    const added = selectedId.filter(id => !defaultItems.includes(id)).map(id => allIngredients.find(i => i.id === id));
-                                    const removed = defaultItems.filter(id => !selectedId.includes(id)).map(id => allIngredients.find(i => i.id === id));
+                           {displayCustomizationDetails && (
+                                <React.Fragment>
+                                    {/* Added Ingredients */}
+                                    {displayCustomizationDetails.added.length > 0 && (
+                                        <div className="customization-list">
+                                            <h4 className="list-title added">Added:</h4>
+                                            <div className="badge-group">
+                                                {displayCustomizationDetails.added.map((name, index) => (
+                                                    <span key={index} className="custom-badge added-badge">
+                                                        + {name}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
 
-                                    return (
-                                        <React.Fragment key={section.key}>
-                                            {/* Added Ingredients */}
-                                            {added.length > 0 && (
-                                                <div className="customization-list">
-                                                    <h4 className="list-title added">Added {section.title}:</h4>
-                                                    <div className="badge-group">
-                                                        {added.map((ing) => (
-                                                            <span key={ing.id} className="custom-badge added-badge">
-                                                                {ing?.emoji} {ing?.name}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                            {/* Removed Ingredients */}
-                                            {removed.length > 0 && (
-                                                <div className="customization-list">
-                                                    <h4 className="list-title removed">Removed {section.title}:</h4>
-                                                    <div className="badge-group">
-                                                        {removed.map((ing) => (
-                                                            <span key={ing.id} className="custom-badge removed-badge">
-                                                                No {ing?.name}
-                                                            </span>
-                                                        ))}
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </React.Fragment>
-                                    );
-                                }
-                                return null;
-                            })}
+                                    {/* Removed Ingredients */}
+                                    {displayCustomizationDetails.removed.length > 0 && (
+                                        <div className="customization-list">
+                                            <h4 className="list-title removed">Removed:</h4>
+                                            <div className="badge-group">
+                                                {displayCustomizationDetails.removed.map((name, index) => (
+                                                    <span key={index} className="custom-badge removed-badge">
+                                                        No {name}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </React.Fragment>
+                            )}
                         </div>
                     </div>
                 </div>

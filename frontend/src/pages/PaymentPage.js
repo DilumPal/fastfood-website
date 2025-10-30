@@ -50,6 +50,7 @@ const PaymentPage = () => {
         return digits;
     };
 
+    // ⚠️ MODIFIED: Ensure proper error handling and cart clearing
     const handlePaymentSubmit = async (e) => {
         e.preventDefault();
         setError('');
@@ -96,6 +97,7 @@ const PaymentPage = () => {
         // 5. Call the modified backend API (submit_order.php)
         try {
             // ⚠️ Ensure this URL is correct for your local server setup
+            // This is the crucial part that was likely failing because the backend wasn't expecting the new data structure or the HTTP status wasn't checked.
             const response = await fetch('http://localhost/fastfood-website/api/submit_order.php', {
                 method: 'POST',
                 headers: { 

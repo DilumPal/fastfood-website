@@ -3,18 +3,50 @@ import React, { useState, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/OrderContext'; 
 import { useAuth } from '../context/AuthContext'; 
-import './MenuPage.css'; // Re-use styles
+import './MenuPage.css'; 
 
-// Component for a single item in the order list (Copied from previous response)
+// Helper to render customization details (Crucial for avoiding blank page crash)
+const renderCustomization = (details) => {
+    // Safely check for null/empty details before rendering
+    if (!details || (details.added?.length === 0 && details.removed?.length === 0 && details.options?.length === 0)) return null;
+
+    // Safely map and join option details
+    const optionsList = details.options?.map(o => `${o.title}: ${o.name}`).join('; ');
+    
+    return (
+        <div style={{ marginTop: '5px', fontSize: '0.9rem', color: '#666' }}>
+            {details.added?.length > 0 && (
+                <p style={{ margin: '0' }}>
+                    **Added:** {details.added.join(', ')}
+                </p>
+            )}
+            {details.removed?.length > 0 && (
+                <p style={{ margin: '0' }}>
+                    **Removed:** {details.removed.join(', ')}
+                </p>
+            )}
+            {details.options?.length > 0 && (
+                <p style={{ margin: '0' }}>
+                    **Options:** {optionsList}
+                </p>
+            )}
+        </div>
+    );
+};
+
+
+// Component for a single item in the order list 
 const OrderItemRow = ({ item, removeFromCart, updateQuantity }) => {
     const maxQuantity = 99;
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '15px 0', borderBottom: '1px dashed #ccc' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', padding: '15px 0', borderBottom: '1px dashed #ccc' }}>
             
             <div style={{ flex: 3 }}>
                 <h4 style={{ margin: '0', fontSize: '1.2rem' }}>{item.name}</h4>
                 <p style={{ margin: '0', color: '#666' }}>Unit Price: ${item.price.toFixed(2)}</p>
+                {/* ⚠️ FIX: Safely call renderCustomization */}
+                {item.customizationDetails && renderCustomization(item.customizationDetails)}
             </div>
             
             <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '15px', minWidth: '250px' }}>
@@ -54,7 +86,6 @@ const OrdersPage = () => {
     const navigate = useNavigate();
     const [isHovered, setIsHovered] = useState(false);
 
-    // The handleCheckout function MUST NOT be async, and MUST NOT include functions in state
     const handleCheckout = () => { 
         if (cartItems.length === 0) {
             alert("Your cart is empty! Please add items from the menu.");
@@ -62,19 +93,21 @@ const OrdersPage = () => {
         }
 
         const orderData = {
-            // Include user_id if logged in (assuming user object has an 'id' property)
             user_id: user?.id || null, 
             customer_name: user?.fullName || "Guest Customer", 
             customer_phone: user?.phone || null, 
             customer_address: user?.address || null, 
             total: orderTotal.toFixed(2),
             items: cartItems.map(item => ({
-                menu_item_id: item.id,
-                quantity: item.quantity
+                menu_item_id: item.menu_item_id || item.id, 
+                quantity: item.quantity,
+                // Ensure data is stringified for the JSON column
+                customization_details: item.customizationDetails ? JSON.stringify(item.customizationDetails) : null, 
+                final_unit_price: item.price, 
+                item_name: item.name, 
             }))
         };
         
-        // **FIX:** Only pass the serializable `orderData` object.
         navigate('/payment', { 
             state: { 
                 orderData: orderData,
@@ -121,9 +154,8 @@ const OrdersPage = () => {
                             Order Total: <span style={{ color: 'var(--color-electric-blue)' }}>${orderTotal.toFixed(2)}</span>
                         </h3>
                         
-                        {/* PLACE ORDER BUTTON */}
                         <button 
-                            onClick={handleCheckout} // Now calls the non-async navigator
+                            onClick={handleCheckout} 
                             onMouseEnter={() => setIsHovered(true)}
                             onMouseLeave={() => setIsHovered(false)}
                             style={{ 
@@ -135,9 +167,9 @@ const OrdersPage = () => {
                                 borderRadius: '50px',
                                 cursor: 'pointer',
                                 background: 'linear-gradient(45deg, var(--color-electric-blue, #4d88ff), var(--color-hot-pink, #ff007f))', 
-                                color: 'white',
                                 transform: isHovered ? 'scale(1.05)' : 'scale(1)',
-                                transition: 'transform 0.2s ease-in-out'
+                                transition: 'transform 0.2s ease-in-out',
+                                color: 'white'
                             }}
                         >
                             PROCEED TO PAYMENT
