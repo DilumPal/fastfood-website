@@ -30,7 +30,7 @@ const AboutPage = () => {
             {/* --- 1. Catchy Intro / Brand Story --- */}
             <section style={{ maxWidth: '800px', margin: '40px auto 70px auto', textAlign: 'center' }}>
                 <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--color-secondary)' }}>
-                    Welcome to **YumZone** — where flavor meets fun! 🍔 We started with one simple goal: 
+                    Welcome to **YumZone** — where flavor meets fun! <span className="bouncing-emoji">🍔</span> We started with one simple goal: 
                     to serve mouthwatering fast food that’s freshly made, full of bold flavor, and fits perfectly into your busy life. 
                     From juicy, handcrafted burgers to our signature crispy fries, every bite is made with care and a touch of genuine passion.
                 </p>
