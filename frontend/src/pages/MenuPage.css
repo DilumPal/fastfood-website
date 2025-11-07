@@ -10,11 +10,11 @@
 }
 
 .menu-page-title {
-    text-align: center;
+    /* REMOVED: text-align: center; - now centered by .menu-header-flex */
     font-size: 3rem;
     font-weight: 900;
     color: var(--color-zesty-lime, #C7FF00);
-    margin-bottom: 5px;
+    /* REMOVED: margin-bottom: 5px; - now contained in the flex wrapper */
     text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
 }
 
@@ -22,6 +22,7 @@
     text-align: center;
     font-size: 1.2rem;
     color: rgba(248, 248, 248, 0.7);
+    margin-top: 20px; /* Added spacing after the title/burger block */
     margin-bottom: 50px;
 }
 
@@ -329,4 +330,111 @@
 .home-button:hover {
     background-color: rgb(255, 255, 255); /* Slightly darker pink */
     transform: scale(1.05);
+}
+
+/* --- Bouncing Burger Animation (Custom) --- */
+
+/* New container to align the burgers and the title */
+.menu-header-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Spacing between burger and title */
+    /* The vertical spacing is now managed by the subtitle's margin-top */
+}
+
+/* Base style for the burger container */
+.bouncing-menu-burger {
+    width: 70px;
+    height: 60px;
+    position: relative;
+    /* Use the keyframes provided by the user */
+    animation: bounce 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate;
+    /* NEW: Scale down the entire burger to 75% of its size */
+    transform: scale(0.75);
+    transform-origin: bottom; /* Ensure it scales from the bottom to keep position stable */
+}
+
+/* top bun (uses ::before on the main container) */
+.bouncing-menu-burger::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background: linear-gradient(180deg, #ffce5c 0%, #bb710a 100%);
+    border-top-left-radius: 40px;
+    border-top-right-radius: 40px;
+    box-shadow: inset 0 3px 0 rgba(255,255,255,0.4);
+}
+
+/* bottom bun */
+.bun-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 18px;
+    background: linear-gradient(180deg, #d89e36 0%, #bb710a 100%);
+    border-bottom-left-radius: 40px;
+    border-bottom-right-radius: 40px;
+}
+
+/* patty */
+.patty {
+    position: absolute;
+    bottom: 18px;
+    left: 5px;
+    width: 60px;
+    height: 10px;
+    background: linear-gradient(180deg, #983f04 0%, #3a1f0c 100%);
+    border-radius: 5px;
+}
+
+/* cheese */
+.cheese {
+    position: absolute;
+    bottom: 28px;
+    left: 8px;
+    width: 54px;
+    height: 6px;
+    background: #ffdd55;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+}
+
+/* lettuce */
+.lettuce {
+    position: absolute;
+    bottom: 34px;
+    left: 5px;
+    width: 60px;
+    height: 6px;
+    background: #4caf50;
+    border-radius: 2px;
+}
+
+/* shadow */
+.shadow {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 8px;
+    background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0.4) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: shadow 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate;
+}
+
+/* Keyframes */
+@keyframes bounce {
+    0%    { transform: translateY(0); }
+    /* Reduced bounce height from -60px to -30px */
+    100% { transform: translateY(-30px); } 
+}
+
+@keyframes shadow {
+    0%    { transform: translateX(-50%) scaleX(1); opacity: 0.6; }
+    100% { transform: translateX(-50%) scaleX(0.6); opacity: 0.2; }
 }

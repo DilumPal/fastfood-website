@@ -93,6 +93,15 @@ const MenuItemCard = ({ item, addToCart }) => {
     );
 };
 
+const BouncingBurger = () => (
+    <div className="bouncing-menu-burger">
+        <div className="lettuce"></div>
+        <div className="cheese"></div>
+        <div className="patty"></div>
+        <div className="bun-bottom"></div>
+        <div className="shadow"></div>
+    </div>
+);
 
 // Main Menu Page Component (MODIFIED)
 const MenuPage = () => {
@@ -219,7 +228,11 @@ const MenuPage = () => {
                 </Link>
             )}
             
-            <h1 className="menu-page-title">The YumZone Menu</h1>
+            <div className="menu-header-flex">
+                <BouncingBurger />
+                <h1 className="menu-page-title">The YumZone Menu</h1>
+                <BouncingBurger />
+            </div>
             <p className="menu-page-subtitle">Your cravings, satisfied instantly.</p> {/* Added subtitle for better context */}
 
             {/* --- NEW: Search Bar JSX --- */}

@@ -256,15 +256,9 @@
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-15px); /* Move up 15px */
-    }
-    60% {
-        transform: translateY(-8px); /* Move up 8px (smaller bounce) */
-    }
+    0%    { transform: translateY(0); }
+    /* Reduced bounce height from -60px to -30px */
+    100% { transform: translateY(-30px); }
 }
 
 /* --- Apply Animation to the Burger Emoji --- */
@@ -274,5 +268,5 @@
     font-size: 2rem; /* Matches logo-letters size */
     
     /* Apply the animation */
-    animation: bounce 2s infinite; /* 2 seconds duration, repeats forever */
+    animation: bounce 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate; /* 2 seconds duration, repeats forever */
 }
