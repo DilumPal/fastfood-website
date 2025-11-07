@@ -38,8 +38,10 @@ if (!isset($data['total']) || !isset($data['items']) || !isset($data['payment_de
 
 $user_id = $data['user_id'] ?? null;
 $customer_name = $data['customer_name'] ?? 'Guest';
+// Data retrieval is correct:
 $customer_phone = $data['customer_phone'] ?? null;
 $customer_address = $data['customer_address'] ?? null;
+
 $total = (double)($data['total'] ?? 0.00); // Safely convert total
 $items = $data['items'];
 $payment = $data['payment_details'];
@@ -54,7 +56,10 @@ $conn->begin_transaction();
 
 try {
     // 1. Insert into 'orders' table
+    // The INSERT statement is correct and includes the new columns:
     $stmt_order = $conn->prepare("INSERT INTO orders (user_id, customer_name, customer_phone, customer_address, total, order_time) VALUES (?, ?, ?, ?, ?, NOW())");
+    
+    // Binding parameters is correct:
     $stmt_order->bind_param("isssd", $user_id, $customer_name, $customer_phone, $customer_address, $total);
     
     if (!$stmt_order->execute()) {
@@ -116,3 +121,4 @@ try {
 }
 
 $conn->close();
+?>

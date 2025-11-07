@@ -18,7 +18,7 @@ const PaymentPage = () => {
     // Get clearCart function from context
     const { clearCart } = useCart(); 
 
-    // ⚠️ FIX 1: Add state variables for phone and address
+    // Add state variables for phone and address
     const [customerPhone, setCustomerPhone] = useState(orderData.customer_phone || ''); 
     const [customerAddress, setCustomerAddress] = useState(orderData.customer_address || ''); 
 
@@ -59,7 +59,7 @@ const PaymentPage = () => {
         setError('');
         setIsProcessing(true);
 
-        // --- Front-End Validation for Card Details ---
+        // --- Front-End Validation for Phone and Address ---
         if (customerPhone.trim() === '') {
              setError('Phone Number is required.');
              setIsProcessing(false);
@@ -71,6 +71,7 @@ const PaymentPage = () => {
              return;
         }
         
+        // --- Front-End Validation for Card Details ---
         if (cardNumber.replace(/\s/g, '').length !== 16) {
             setError('Card Number must be 16 digits.');
             setIsProcessing(false);
@@ -98,7 +99,7 @@ const PaymentPage = () => {
         
         // --- Prepare final data including payment details ---
         const submissionData = {
-            // ⚠️ FIX 2: Add phone and address to the submission data
+            // Add phone and address to the submission data
             customer_phone: customerPhone,
             customer_address: customerAddress,
             
@@ -164,7 +165,7 @@ const PaymentPage = () => {
                     
                     {error && <p style={{ color: 'red', textAlign: 'center', fontWeight: 'bold' }}>{error}</p>}
                     
-                    {/* ⚠️ FIX 3: Add Customer Phone input */}
+                    {/* Customer Phone input */}
                     <input
                         type="tel"
                         name="phone"
@@ -176,7 +177,7 @@ const PaymentPage = () => {
                         style={inputStyle}
                     />
 
-                    {/* ⚠️ FIX 3: Add Customer Address input */}
+                    {/* Customer Address input */}
                     <input
                         type="text"
                         name="address"
