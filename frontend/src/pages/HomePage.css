@@ -254,3 +254,25 @@
     border-bottom: 5px solid var(--color-zesty-lime);
     background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
 }
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-15px); /* Move up 15px */
+    }
+    60% {
+        transform: translateY(-8px); /* Move up 8px (smaller bounce) */
+    }
+}
+
+/* --- Apply Animation to the Burger Emoji --- */
+.bouncing-emoji {
+    display: inline-block; /* Essential to apply transform/animation */
+    /* Use a high font size if you want the emoji to look larger than its surroundings */
+    font-size: 2rem; /* Matches logo-letters size */
+    
+    /* Apply the animation */
+    animation: bounce 2s infinite; /* 2 seconds duration, repeats forever */
+}
