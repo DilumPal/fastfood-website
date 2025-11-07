@@ -45,13 +45,19 @@
 }
 
 .logo {
-  font-size: 3.5rem;
-  font-weight: 900;
-  background: linear-gradient(50deg, yellow, orange); /* gradient colors */
-  text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
-  -webkit-background-clip: text;  /* clips gradient to text shape */
-  -webkit-text-fill-color: transparent; /* makes text itself transparent so gradient shows */
-  
+  font-family:'Poppins',sans-serif;
+  font-size:90px;
+  color:#ffe76b;
+  text-transform:uppercase;
+  letter-spacing:3px;
+  text-shadow:
+     0 1px 0 #d1b24b,
+     0 2px 0 #b38f2f,
+     0 3px 0 #927118,
+     0 4px 0 #6b4d00,
+     0 4px 10px rgba(255,220,80,0.7),
+     0 0 25px rgba(255,220,80,0.5),
+     0 0 45px rgba(255,220,80,0.3);
 }
 
 /* --- Hero Section --- */
@@ -116,42 +122,71 @@
     gap: 10px;
 }
 
+/* Base button styles from original (MODIFIED FOR 3D EFFECT) */
 .auth-corner-button {
     padding: 8px 15px; /* Smaller padding for corner buttons */
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     border-radius: 50px;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease; /* Snappier transition for 3D effect */
     border: none;
     cursor: pointer;
     color: var(--color-primary);
+    position: relative; /* Essential for press effect */
+    transform: translateY(0); /* Base state */
 }
 
+/* --- Log In Button (3D Effect) --- */
 .log-in-button {
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+    --button-shadow-color: #c70062; /* Darker hot pink for 3D depth */
+    box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
 .log-in-button:hover{
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--button-shadow-color);
 }
 
+.log-in-button:active {
+  box-shadow: 0 1px 0 var(--button-shadow-color);
+  transform: translateY(2px); /* Button presses down */
+}
+
+/* --- Sign Up Button (3D Effect) --- */
 .sign-up-button {
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+    --button-shadow-color: #93bd00; /* Darker zesty lime for 3D depth */
+    box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
 .sign-up-button:hover{
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--button-shadow-color);
 }
 
+.sign-up-button:active {
+  box-shadow: 0 1px 0 var(--button-shadow-color);
+  transform: translateY(2px); /* Button presses down */
+}
+
+/* --- Log Out Button (3D Effect) --- */
 .log-out-button {
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-    border: 2px solid var(--color-electric-blue);
+    --button-shadow-color: #00b9c7; /* Darker electric blue for 3D depth */
+    box-shadow: 0 4px 0 var(--button-shadow-color);
     color: var(--color-primary);
 }
 
 .log-out-button:hover{
-  transform: scale(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 0 var(--button-shadow-color);
+}
+
+.log-out-button:active {
+  box-shadow: 0 1px 0 var(--button-shadow-color);
+  transform: translateY(2px); /* Button presses down */
 }
 
 .headline {
@@ -180,43 +215,71 @@
      but the auth buttons are no longer part of it. */
 }
 
-/* Base button styles from original */
+/* Base button styles from original (MODIFIED FOR 3D EFFECT) */
 .button-group a {
   padding: 15px 30px;
   font-size: 1.1rem;
   font-weight: 700;
   text-decoration: none;
   border-radius: 50px;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease; /* Reduced transition for snappier press effect */
   border: none;
   cursor: pointer;
   color: var(--color-primary); /* Dark text on bright button */
+  position: relative; /* Ensure the button is a positioned element */
+  transform: translateY(0); /* Base state for transform, essential for :active to work */
 }
 
+/* --- Menu Button (3D Effect) --- */
 .menu-button {
   background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+  --button-shadow-color: #93bd00; /* Darker zesty lime for 3D depth */
+  box-shadow: 0 6px 0 var(--button-shadow-color); 
 }
 
-.menu-button:hover{
-  transform: scale(1.05);
+.menu-button:hover {
+  transform: translateY(-2px); /* Slight lift on hover */
+  box-shadow: 0 8px 0 var(--button-shadow-color); /* Slightly larger shadow on hover */
 }
 
+.menu-button:active {
+  box-shadow: 0 2px 0 var(--button-shadow-color); /* Shadow reduces on press */
+  transform: translateY(4px); /* Button presses down */
+}
+
+/* --- Order Button (3D Effect) --- */
 .order-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
+  --button-shadow-color: #c70062; /* Darker hot pink for 3D depth */
+  box-shadow: 0 6px 0 var(--button-shadow-color);
 }
 
-.order-button:hover{
-  transform: scale(1.05);
+.order-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 var(--button-shadow-color);
 }
 
+.order-button:active {
+  box-shadow: 0 2px 0 var(--button-shadow-color);
+  transform: translateY(4px);
+}
+
+/* --- About Button (3D Effect) --- */
 .about-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-  border: 2px solid var(--color-electric-blue);
+  --button-shadow-color: #00b9c7; /* Darker electric blue for 3D depth */
+  box-shadow: 0 6px 0 var(--button-shadow-color);
   color: var(--color-primary);
 }
 
-.about-button:hover{
-  transform: scale(1.05);
+.about-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 0 var(--button-shadow-color);
+}
+
+.about-button:active {
+  box-shadow: 0 2px 0 var(--button-shadow-color);
+  transform: translateY(4px);
 }
 
 /* --- Features Section --- */
