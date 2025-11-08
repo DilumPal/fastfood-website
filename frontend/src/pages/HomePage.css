@@ -70,8 +70,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Reduced top padding slightly to account for the new header */
-  padding: 80px 20px 100px 20px;
+  /* Retained vertical spacing fix from last step */
+  padding: 80px 20px 40px 20px; 
   text-align: center;
   position: relative; /* CRITICAL: To position absolute children */
 }
@@ -211,8 +211,6 @@
   display: flex;
   gap: 20px;
   z-index: 1;
-  /* CRITICAL: The main button group is now centered as before, 
-     but the auth buttons are no longer part of it. */
 }
 
 /* Base button styles from original (MODIFIED FOR 3D EFFECT) */
@@ -287,35 +285,105 @@
   display: flex;
   justify-content: space-around;
   gap: 30px;
-  padding: 80px 50px;
+  /* Retained vertical spacing fix */
+  padding: 100px 50px 180px 50px; 
 }
 
+/* 1. Feature Card Container (Wrapper for 3D Space) */
 .feature-card {
-  width: 30%;
+  width: 25%;
   text-align: center;
-  padding: 40px 20px;
+  /* CRITICAL: Styles moved to .card-front/.card-back to fix shifting */
+  padding: 0; 
+  box-shadow: none; 
+  background: none;
+  border: none;
   border-radius: 15px;
+  perspective: 1000px; /* Enables 3D effect */
+  min-height: 250px; 
+}
+
+/* 2. Inner wrapper that flips */
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+/* 3. Flip on hover */
+.feature-card:hover .card-inner {
+  transform: rotateY(180deg);
+}
+
+/* 4. Front & Back faces - Position and Basic Setup */
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  /* CRITICAL: Card padding/shadow applied here */
+  padding: 40px 20px; 
   box-shadow: 0 8px 15px rgba(255, 255, 255, 0.685);
+}
+
+/* --- Front Face Styles (Keeps original visual identity) --- */
+.card-front {
+  transform: rotateY(0deg);
   color: var(--color-primary);
 }
+
+/* Specific background and border for the front faces */
+.feature-card.velocity .card-front {
+    border-bottom: 5px solid var(--color-electric-blue);
+    background: linear-gradient(45deg, rgba(231, 235, 2, 0.671), rgba(1, 223, 1, 0.719));
+}
+.feature-card.freshness .card-front {
+    border-bottom: 5px solid var(--color-hot-pink);
+    background: linear-gradient(45deg, rgba(255, 115, 0, 0.822), rgba(255, 238, 0, 0.733));
+}
+.feature-card.atmosphere .card-front {
+    border-bottom: 5px solid var(--color-zesty-lime);
+    background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
+}
+
+/* --- Back Face Styles (The flip side) --- */
+.card-back {
+  /* Initially rotate the back face 180 degrees */
+  transform: rotateY(180deg);
+  /* Style for the back face */
+  background-color: var(--color-primary); 
+  color: var(--color-secondary); 
+}
+
+.card-back h3 {
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    color: var(--color-electric-blue); 
+}
+
+.card-back p {
+    font-size: 1rem;
+    line-height: 1.4;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Specific back colors for consistency */
+.velocity-back h3 { color: var(--color-electric-blue); }
+.freshness-back h3 { color: var(--color-hot-pink); }
+.atmosphere-back h3 { color: var(--color-zesty-lime); }
 
 .icon-placeholder {
   font-size: 3rem;
   margin-bottom: 15px;
-}
-
-/* Specific border colors for features */
-.feature-card.velocity {
-    border-bottom: 5px solid var(--color-electric-blue);
-    background: linear-gradient(45deg, rgba(231, 235, 2, 0.671), rgba(1, 223, 1, 0.719));
-}
-.feature-card.freshness {
-    border-bottom: 5px solid var(--color-hot-pink);
-    background: linear-gradient(45deg, rgba(255, 115, 0, 0.822), rgba(255, 238, 0, 0.733));
-}
-.feature-card.atmosphere {
-    border-bottom: 5px solid var(--color-zesty-lime);
-    background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
 }
 
 @keyframes bounce {

@@ -102,26 +102,52 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* 4. Feature Zones */}
+      {/* 4. Feature Zones (UPDATED for 3D Flip) */}
       <div className="features">
         
-        {/* Added class names for card and specific border style */}
+        {/* Velocity Card */}
         <div className="feature-card velocity">
-          <div className="icon-placeholder" style={{ color: 'var(--color-electric-blue)'}}>⚡</div>
-          <h3>Lightning-Fast Service</h3>
-          <p>Your order, crafted and delivered with unmatched speed. No waiting, just satisfaction.</p>
+          <div className="card-inner">
+            <div className="card-front">
+              <div className="icon-placeholder" style={{ color: 'var(--color-electric-blue)'}}>⚡</div>
+              <h3>Lightning-Fast Service</h3>
+              <p>Your order, crafted and delivered with unmatched speed. No waiting, just satisfaction.</p>
+            </div>
+            <div className="card-back velocity-back">
+              <h3>⚡ Our Speed Promise</h3>
+              <p>Write your creative content for the back of the card here!</p>
+            </div>
+          </div>
         </div>
 
+        {/* Freshness Card */}
         <div className="feature-card freshness">
-          <div className="icon-placeholder" style={{ color: 'var(--color-hot-pink)'}}>🌱</div>
-          <h3>Peak Freshness, Always</h3>
-          <p>We source only the finest, freshest elements to fuel your day. Quality you can taste.</p>
+          <div className="card-inner">
+            <div className="card-front">
+              <div className="icon-placeholder" style={{ color: 'var(--color-hot-pink)'}}>🌱</div>
+              <h3>Peak Freshness, Always</h3>
+              <p>We source only the finest, freshest elements to fuel your day. Quality you can taste.</p>
+            </div>
+            <div className="card-back freshness-back">
+              <h3>🌱 Quality Sourcing</h3>
+              <p>Write your creative content for the back of the card here!</p>
+            </div>
+          </div>
         </div>
 
+        {/* Atmosphere Card */}
         <div className="feature-card atmosphere">
-          <div className="icon-placeholder" style={{ color: 'var(--color-zesty-lime)'}}>✨</div>
-          <h3>Your Energy Hub</h3>
-          <p>More than a meal—it's an experience. Come for the speed, stay for the vibrant atmosphere.</p>
+          <div className="card-inner">
+            <div className="card-front">
+              <div className="icon-placeholder" style={{ color: 'var(--color-zesty-lime)'}}>✨</div>
+              <h3>Your Energy Hub</h3>
+              <p>More than a meal—it's an experience. Come for the speed, stay for the vibrant atmosphere.</p>
+            </div>
+            <div className="card-back atmosphere-back">
+              <h3>✨ Vibrant Experience</h3>
+              <p>Write your creative content for the back of the card here!</p>
+            </div>
+          </div>
         </div>
       </div>
       
