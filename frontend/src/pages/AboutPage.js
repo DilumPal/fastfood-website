@@ -1,15 +1,34 @@
 // AboutPage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
+// IMPORTANT: Updated CSS imports
 import './MenuPage.css'; // Reusing the container and button styles
 import './HomePage.css'; // Importing for access to :root variables like colors
+import './AboutPage.css'; // <--- NEW CSS FILE FOR THE FLIP CARDS
 
-// --- Feature Card Component for Section 2 ---
-const FeatureCard = ({ icon, title, description, className }) => (
-    <div className={`feature-card ${className}`} style={{ width: 'unset', margin: '15px', maxWidth: '300px' }}>
-        <div className="icon-placeholder" style={{ fontSize: '2.5rem', marginBottom: '10px' }}>{icon}</div>
-        <h3 style={{ fontSize: '1.4rem', marginBottom: '5px' }}>{title}</h3>
-        <p style={{ fontSize: '0.95rem', color: 'var(--color-primary)' }}>{description}</p>
+// --- Feature Card Component for Section 2 (UPDATED) ---
+// Added 'backText' prop and updated structure for 3D flip
+const FeatureCard = ({ icon, title, description, backText }) => (
+    // The main container for the flip card effect
+    <div className="flip-card">
+        {/* The inner container that will be rotated */}
+        <div className="flip-card-inner">
+            
+            {/* Front of the Card */}
+            <div className="flip-card-front">
+                <div className="icon-placeholder">{icon}</div>
+                <h3>{title}</h3>
+                <p className="card-description">{description}</p>
+                <div className="hover-hint">Hover to See More!</div> 
+            </div>
+
+            {/* Back of the Card */}
+            <div className="flip-card-back">
+                <p className="back-text">{backText}</p>
+                <Link to="/menu" className="cta-button">See Menu</Link>
+            </div>
+
+        </div>
     </div>
 );
 
@@ -42,29 +61,30 @@ const AboutPage = () => {
             </h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '0 20px 80px 20px' }}>
                 
+                {/* REMEMBER TO ADD YOUR CREATIVE SENTENCES TO 'backText' */}
                 <FeatureCard 
                     icon="🔥" 
                     title="Freshness First" 
                     description="We never freeze our patties or pre-make our salads—everything is cooked and prepped fresh to order."
-                    className="freshness"
+                    backText="Taste the difference! Our ingredients are always fresh, never frozen, for a truly satisfying bite." // Placeholder Text
                 />
                 <FeatureCard 
                     icon="🚀" 
                     title="Fast & Friendly" 
                     description="Quick bites that never compromise on taste. Experience our lightning-fast service with a genuine smile."
-                    className="velocity"
+                    backText="No time to wait? Our swift service gets you back to your life with a full, happy belly in a flash!" // Placeholder Text
                 />
                 <FeatureCard 
                     icon="💖" 
                     title="Made with Love" 
                     description="Every single meal is crafted by a dedicated team who truly care about good food and your satisfaction."
-                    className="atmosphere"
+                    backText="More than just fast food, it's feel-good food. Crafted with passion, served with a genuine smile." // Placeholder Text
                 />
                 <FeatureCard 
                     icon="♻️" 
                     title="Eco-Conscious" 
                     description="We believe in good food and a better planet, using recyclable packaging and sourcing our ingredients responsibly."
-                    className="freshness"
+                    backText="Eating responsibly tastes better! Join us in our commitment to a greener planet, one recyclable box at a time." // Placeholder Text
                 />
             </div>
             

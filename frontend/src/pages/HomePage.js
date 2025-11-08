@@ -115,7 +115,7 @@ const HomePage = () => {
             </div>
             <div className="card-back velocity-back">
               <h3>⚡ Our Speed Promise</h3>
-              <p>Write your creative content for the back of the card here!</p>
+              <p>No waiting, no delays — just lightning-fast responses and on-time delivery every time.</p>
             </div>
           </div>
         </div>
@@ -130,7 +130,7 @@ const HomePage = () => {
             </div>
             <div className="card-back freshness-back">
               <h3>🌱 Quality Sourcing</h3>
-              <p>Write your creative content for the back of the card here!</p>
+              <p>We handpick every ingredient from trusted sources to ensure unmatched freshness and flavor.</p>
             </div>
           </div>
         </div>
@@ -145,7 +145,7 @@ const HomePage = () => {
             </div>
             <div className="card-back atmosphere-back">
               <h3>✨ Vibrant Experience</h3>
-              <p>Write your creative content for the back of the card here!</p>
+              <p>Feel the buzz — every moment here is designed to recharge your mind and spark your energy.</p>
             </div>
           </div>
         </div>
