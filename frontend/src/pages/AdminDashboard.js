@@ -1,57 +1,55 @@
-// CustomizePage.js
+// AdminDashboard.js
+
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext'; // Assuming you have this
+import { useAuth } from '../context/AuthContext'; 
 import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-    // State variables for data
+    // State variables for main data
     const [users, setUsers] = useState([]);
     const [menuItems, setMenuItems] = useState([]);
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // --- STATE FOR MODAL ---
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedOrder, setSelectedOrder] = useState(null);
+    const [orderDetails, setOrderDetails] = useState([]);
+    const [isDetailsLoading, setIsDetailsLoading] = useState(false);
+    const [detailsError, setDetailsError] = useState(null);
+
     const { user, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
-    // 1. Redirection/Security Check (Basic implementation)
+    // 1. Security Check
     useEffect(() => {
         // You would typically check for user role ('admin') here
-        if (!isAuthenticated || user?.role !== 'admin') {
-            // navigate('/'); 
-            // alert("Access Denied: Admin privileges required.");
-        }
+        // if (!isAuthenticated || user?.role !== 'admin') { /* ... */ }
     }, [isAuthenticated, user, navigate]);
 
 
-    // 2. Data Fetching Function (CRITICAL FIXES HERE)
+    // 2. Data Fetching Function (General)
     const fetchData = async (endpoint) => {
         let setter;
         let endpointName = endpoint; 
 
-        if (endpointName === 'users') {
-            setter = setUsers;
-        } else if (endpointName === 'menu-items') {
-            setter = setMenuItems;
-        } else if (endpointName === 'orders') {
-            setter = setOrders;
-        } else {
-            return; 
-        }
+        if (endpointName === 'users') { setter = setUsers; } 
+        else if (endpointName === 'menu-items') { setter = setMenuItems; } 
+        else if (endpointName === 'orders') { setter = setOrders; } 
+        else { return; }
 
         try {
+            // Assumes admin_users.php, admin_menu_items.php, admin_orders.php exist
             const apiUrl = `http://localhost/fastfood-website/api/admin_${endpointName.replace('-', '_')}.php`;
 
             const response = await fetch(apiUrl, {
                 method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
             });
 
             if (!response.ok) {
-                // This catches the 500 error and displays a readable message
                 throw new Error(`HTTP error! Status: ${response.status} for ${endpointName}`);
             }
 
@@ -94,8 +92,111 @@ const AdminDashboard = () => {
     }, [isAuthenticated]); 
 
 
-    // --- 4. Render Functions (With Safeguards) ---
+    // --- Order Details Fetch Function ---
+    const handleOrderClick = async (orderId) => {
+        setDetailsError(null);
+        setIsDetailsLoading(true);
+        setSelectedOrder(orderId);
+        setIsModalOpen(true);
+        setOrderDetails([]); // Clear previous details
 
+        try {
+            const apiUrl = `http://localhost/fastfood-website/api/admin_order_details.php?order_id=${orderId}`;
+
+            const response = await fetch(apiUrl);
+            
+            if (!response.ok) {
+                // Catches the 500 status from the PHP file
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+
+            const jsonResponse = await response.json(); 
+
+            if (jsonResponse.success && Array.isArray(jsonResponse.data)) {
+                setOrderDetails(jsonResponse.data);
+            } else {
+                setDetailsError(jsonResponse.message || "Failed to load order items.");
+            }
+
+        } catch (error) {
+            console.error(`Fetch error for order details:`, error);
+            setDetailsError(`Failed to fetch order details. (${error.message}). Check PHP error log.`); 
+        } finally {
+            setIsDetailsLoading(false);
+        }
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setSelectedOrder(null);
+        setOrderDetails([]);
+        setDetailsError(null);
+    };
+
+
+    // --- Order Details Modal Component (UPDATED to show Customizations) ---
+    const OrderDetailsModal = () => {
+        if (!isModalOpen) return null;
+
+        const currentOrder = orders.find(o => o.id === selectedOrder);
+        const modalTitle = currentOrder 
+            ? `Order #${currentOrder.id} - Total: $${(parseFloat(currentOrder.total_amount) || 0).toFixed(2)}` 
+            : `Order #${selectedOrder} Details`;
+
+        return (
+            <div className="modal-backdrop">
+                <div className="modal-content">
+                    <button className="modal-close" onClick={handleCloseModal}>&times;</button>
+                    <h3 className="modal-title">{modalTitle}</h3>
+                    
+                    {isDetailsLoading && <p>Loading items...</p>}
+                    {detailsError && <p style={{ color: 'red' }}>Error: {detailsError}</p>}
+                    
+                    {!isDetailsLoading && !detailsError && orderDetails.length > 0 && (
+                        <>
+                            <table className="order-items-table data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Item</th>
+                                        <th>Qty</th>
+                                        <th>Price/Item</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {orderDetails.map((item, index) => (
+                                        <React.Fragment key={index}>
+                                            <tr>
+                                                <td className="item-name">{item.item_name}</td>
+                                                <td>{item.quantity}</td>
+                                                <td>${parseFloat(item.price_at_time).toFixed(2)}</td>
+                                                <td>${(item.quantity * parseFloat(item.price_at_time)).toFixed(2)}</td>
+                                            </tr>
+                                            {/* NEW: Row for Customization Details */}
+                                            {item.customizations && item.customizations.length > 0 && (
+                                                <tr className="customization-row">
+                                                    <td colSpan="4">
+                                                        <span className="custom-label">Customizations:</span> {item.customizations}
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </React.Fragment>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </>
+                    )}
+                    
+                    {!isDetailsLoading && !detailsError && orderDetails.length === 0 && (
+                        <p>No items found for this order.</p>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
+
+    // --- Render Functions ---
     const renderUsersTable = () => {
         if (isLoading) return <tr><td colSpan="4">Loading Users...</td></tr>;
         if (error && users.length === 0) return <tr><td colSpan="4" style={{ color: 'red' }}>Error loading users.</td></tr>;
@@ -110,7 +211,7 @@ const AdminDashboard = () => {
             </tr>
         ));
     };
-
+    
     const renderMenuItemsTable = () => {
         if (isLoading) return <tr><td colSpan="5">Loading Menu Items...</td></tr>;
         if (error && menuItems.length === 0) return <tr><td colSpan="5" style={{ color: 'red' }}>Error loading menu items.</td></tr>;
@@ -134,42 +235,39 @@ const AdminDashboard = () => {
 
         return orders.map(order => (
             <tr key={order.id}>
-                <td>{order.id}</td>
+                {/* Make ID clickable */}
+                <td 
+                    onClick={() => handleOrderClick(order.id)} 
+                    style={{ cursor: 'pointer', color: 'var(--color-electric-blue)', fontWeight: 'bold' }}
+                >
+                    #{order.id} 
+                </td> 
                 <td>{new Date(order.order_date).toLocaleDateString()}</td>
                 <td>{order.customer_name} ({order.user_email || 'Guest'})</td>
-                {/* ⚠️ FIX: Use the 'total_amount' key created in PHP, or fallback to a default if missing */}
                 <td>${(parseFloat(order.total_amount) || 0).toFixed(2)}</td>
-                {/* ⚠️ FIX: Use the 'status' key created in PHP, which is now a placeholder */}
                 <td>{order.status}</td> 
                 <td>{order.customer_address}</td>
             </tr>
         ));
     };
-    
-    // ... (Lines 1-137 remain the same)
 
-    // 5. Main Render (FIX APPLIED HERE)
+
+    // 5. Main Render
     return (
-        // Main container class is correct
         <div className="admin-container"> 
             
-            {/* ⚠️ FIX: Applied class 'admin-title' */}
             <h1 className="admin-title">Admin Dashboard</h1> 
-            <p className="admin-subtitle">Manage Users, Menu, and Orders</p> {/* Added subtitle element */}
+            <p className="admin-subtitle">Manage Users, Menu, and Orders</p> 
             
             {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             
-            {/* Data Display Wrapper */}
             <div className="data-display">
             
                 {/* Users Table */}
                 <section style={{ marginBottom: '50px' }}>
-                    {/* ⚠️ FIX: Applied class 'section-title' */}
                     <h2 className="section-title">User Management ({users.length})</h2>
-                    {/* ⚠️ FIX: Applied class 'table' */}
                     <table className="data-table"> 
                         <thead>
-                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
                             <tr className="table-header-row"> 
                                 <th>ID</th>
                                 <th>Name</th>
@@ -185,12 +283,9 @@ const AdminDashboard = () => {
 
                 {/* Menu Items Table */}
                 <section style={{ marginBottom: '50px' }}>
-                    {/* ⚠️ FIX: Applied class 'section-title' */}
                     <h2 className="section-title">Menu Item Inventory ({menuItems.length})</h2>
-                    {/* ⚠️ FIX: Applied class 'table' */}
                     <table className="data-table">
                         <thead>
-                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
                             <tr className="table-header-row">
                                 <th>ID</th>
                                 <th>Name</th>
@@ -207,12 +302,9 @@ const AdminDashboard = () => {
 
                 {/* Orders Table */}
                 <section>
-                    {/* ⚠️ FIX: Applied class 'section-title' */}
                     <h2 className="section-title">Recent Orders ({orders.length})</h2>
-                    {/* ⚠️ FIX: Applied class 'table' */}
                     <table className="data-table">
                         <thead>
-                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
                             <tr className="table-header-row">
                                 <th>Order ID</th>
                                 <th>Date</th>
@@ -228,6 +320,9 @@ const AdminDashboard = () => {
                     </table>
                 </section>
             </div>
+            
+            {/* RENDER THE MODAL */}
+            <OrderDetailsModal />
         </div>
     );
 };
