@@ -14,6 +14,7 @@ import PaymentPage from './pages/PaymentPage';
 import ProtectedRoute from "./components/ProtectedRoute";
 import AboutPage from './pages/AboutPage';
 import CustomizePage from './pages/CustomizePage';
+import AdminDashboard from './pages/AdminDashboard';
 
 // import other pages (e.g., Menu, Order, About)
 
@@ -32,6 +33,7 @@ function App() {
           <Route path="/customize" element={<CustomizePage/>}/>
           <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
           <Route path="/about" element={<AboutPage/>}/>
+          <Route path="/admin" element={<AdminDashboard />} />
           {/* Add other routes here */}
         </Routes>
       </Router>

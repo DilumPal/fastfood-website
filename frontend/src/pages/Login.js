@@ -11,7 +11,8 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-  const { login } = useAuth(); // Get the login function from context
+  // Get the login function from context
+  const { login } = useAuth(); 
 
   const handleChange = (e) => {
     setFormData({
@@ -26,7 +27,8 @@ const Login = () => {
     setIsError(false);
 
     try {
-      const response = await fetch('http://localhost/fastfood-website/api/login.php', {
+      // Ensure path is correct, e.g., 'http://localhost/fastfood-website/api/login.php'
+      const response = await fetch('http://localhost/fastfood-website/api/login.php', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,20 +45,28 @@ const Login = () => {
         setMessage(data.message);
         setIsError(false);
         
-        // CRITICAL: Call the login function and pass user data
-        login({ id: data.userId, fullName: data.fullName });
+        // ⚠️ CRITICAL: Pass the new 'role' to the login context function
+        login({ 
+            userId: data.userId, 
+            fullName: data.fullName, 
+            role: data.role, // <-- NEW: Pass the user's role
+            token: 'dummy-token' 
+        }); 
 
-        // Navigate to the Home Page (/) upon successful login
-        setTimeout(() => {
-          navigate('/'); 
-        }, 1500);
+        // ⚠️ NEW: Admin redirection logic
+        if (data.role === 'admin') {
+            navigate('/admin'); // Redirect to AdminDashboard
+        } else {
+            navigate('/'); // Redirect customer to home page
+        }
+        
       } else {
-        setMessage(data.message || 'Login failed. Please try again.');
+        setMessage(data.message);
         setIsError(true);
       }
     } catch (error) {
-      console.error('Network Error:', error);
-      setMessage('A network error occurred. Check console for details. (Error Type: ' + error.name + ')');
+      console.error("Login Error:", error);
+      setMessage('An error occurred during login. Check console for details. (Error Type: ' + error.name + ')');
       setIsError(true);
     }
   };

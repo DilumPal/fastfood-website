@@ -41,17 +41,18 @@ if (!$data) {
 }
 
 $email = trim($data['email'] ?? '');
-$password = trim($data['password'] ?? '');
+$password = $data['password'] ?? '';
 
-// --- 4. Validation ---
+// --- 4. Basic Validation ---
 if (empty($email) || empty($password)) {
     ob_clean();
     echo json_encode(['success' => false, 'message' => 'Please fill in both email and password.']);
     exit;
 }
 
-// --- 5. Retrieve Hashed Password ---
-$stmt = $conn->prepare("SELECT id, password_hash, full_name FROM users WHERE email = ?");
+// --- 5. Retrieve Hashed Password and ROLE ---
+// ⚠️ MODIFIED: Selecting the 'role' column now
+$stmt = $conn->prepare("SELECT id, password_hash, full_name, role FROM users WHERE email = ?");
 
 if ($stmt === false) {
     ob_clean(); // Clean buffer before sending
@@ -66,12 +67,12 @@ $stmt->store_result();
 
 // --- 6. Verify User and Password ---
 if ($stmt->num_rows === 1) {
-    // Bind results including the user's full name
-    $stmt->bind_result($user_id, $hashed_password, $full_name);
+    // ⚠️ MODIFIED: Binding the 'role' variable
+    $stmt->bind_result($user_id, $hashed_password, $full_name, $role);
     $stmt->fetch();
     
     if (password_verify($password, $hashed_password)) {
-        // Login successful - return user data (userId and fullName are critical)
+        // Login successful - return user data (userId, fullName, and ROLE are critical)
         $stmt->close();
         $conn->close();
         ob_clean();
@@ -79,17 +80,17 @@ if ($stmt->num_rows === 1) {
             'success' => true, 
             'message' => 'Login successful. Welcome ' . $full_name . '!', 
             'userId' => $user_id,
-            'fullName' => $full_name // CRITICAL: Return full name for the React state
+            'fullName' => $full_name,
+            'role' => $role // ⚠️ CRITICAL: Return the user's role
         ]);
         exit;
     }
 }
 
-// Login failed 
+// Login failed (no user or wrong password)
 $stmt->close();
 $conn->close();
 ob_clean();
 echo json_encode(['success' => false, 'message' => 'Invalid email or password.']);
-
-ob_end_flush();
+exit;
 ?>

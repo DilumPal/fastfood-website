@@ -41,12 +41,12 @@ if (!$data) {
 
 $fullName = trim($data['fullName'] ?? '');
 $email = trim($data['email'] ?? '');
-$password = trim($data['password'] ?? '');
+$password = $data['password'] ?? '';
 
 // --- 4. Validation ---
-if (!$fullName || !$email || !$password) {
+if (empty($fullName) || empty($email) || empty($password)) {
     ob_clean();
-    echo json_encode(['success' => false, 'message' => 'All fields are required.']);
+    echo json_encode(['success' => false, 'message' => 'Please fill in all required fields.']);
     exit;
 }
 
@@ -76,28 +76,30 @@ if ($stmt_check->num_rows > 0) {
 }
 $stmt_check->close();
 
-// --- 6. Insert New User ---
+// --- 6. Insert New User (Default role is 'customer') ---
 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+$role = 'customer'; // ⚠️ CRITICAL: Set the default role
 
-$stmt_insert = $conn->prepare("INSERT INTO users (full_name, email, password_hash) VALUES (?, ?, ?)");
+// ⚠️ MODIFIED: Inserting the 'role' column now
+$stmt_insert = $conn->prepare("INSERT INTO users (full_name, email, password_hash, role) VALUES (?, ?, ?, ?)");
 if ($stmt_insert === false) {
     ob_clean();
     echo json_encode(['success' => false, 'message' => 'Failed to prepare insert statement: ' . $conn->error]);
     exit;
 }
 
-$stmt_insert->bind_param("sss", $fullName, $email, $hashed_password);
+// ⚠️ MODIFIED: Binding $role as the fourth string parameter
+$stmt_insert->bind_param("ssss", $fullName, $email, $hashed_password, $role);
 
 if ($stmt_insert->execute()) {
+    $stmt_insert->close();
+    $conn->close();
     ob_clean();
-    echo json_encode(['success' => true, 'message' => 'User registered successfully.']);
+    echo json_encode(['success' => true, 'message' => 'Registration successful! Please log in.']);
 } else {
+    $stmt_insert->close();
+    $conn->close();
     ob_clean();
-    echo json_encode(['success' => false, 'message' => 'Error registering user: ' . $stmt_insert->error]);
+    echo json_encode(['success' => false, 'message' => 'Registration failed: ' . $conn->error]);
 }
-
-// --- 7. Cleanup ---
-$stmt_insert->close();
-$conn->close();
-ob_end_flush();
 ?>
