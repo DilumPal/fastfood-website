@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext'; // Assuming you have this
 import { useNavigate } from 'react-router-dom';
+import './AdminDashboard.css';
 
 const AdminDashboard = () => {
     // State variables for data
@@ -145,69 +146,88 @@ const AdminDashboard = () => {
         ));
     };
     
-    // 5. Main Render
+    // ... (Lines 1-137 remain the same)
+
+    // 5. Main Render (FIX APPLIED HERE)
     return (
-        <div style={{ padding: '20px', backgroundColor: '#0A0A0A', color: '#F8F8F8', minHeight: '100vh' }}>
-            <h1 style={{ color: '#C7FF00', textAlign: 'center', marginBottom: '40px' }}>Admin Dashboard</h1>
+        // Main container class is correct
+        <div className="admin-container"> 
+            
+            {/* ⚠️ FIX: Applied class 'admin-title' */}
+            <h1 className="admin-title">Admin Dashboard</h1> 
+            <p className="admin-subtitle">Manage Users, Menu, and Orders</p> {/* Added subtitle element */}
             
             {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             
-            {/* Users Table */}
-            <section style={{ marginBottom: '50px' }}>
-                <h2 style={{ color: '#00F0FF' }}>User Management ({users.length})</h2>
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#1a1a1a' }}>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderUsersTable()}
-                    </tbody>
-                </table>
-            </section>
+            {/* Data Display Wrapper */}
+            <div className="data-display">
+            
+                {/* Users Table */}
+                <section style={{ marginBottom: '50px' }}>
+                    {/* ⚠️ FIX: Applied class 'section-title' */}
+                    <h2 className="section-title">User Management ({users.length})</h2>
+                    {/* ⚠️ FIX: Applied class 'table' */}
+                    <table className="data-table"> 
+                        <thead>
+                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
+                            <tr className="table-header-row"> 
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderUsersTable()}
+                        </tbody>
+                    </table>
+                </section>
 
-            {/* Menu Items Table */}
-            <section style={{ marginBottom: '50px' }}>
-                <h2 style={{ color: '#FF007F' }}>Menu Item Inventory ({menuItems.length})</h2>
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#1a1a1a' }}>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th>Category</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderMenuItemsTable()}
-                    </tbody>
-                </table>
-            </section>
+                {/* Menu Items Table */}
+                <section style={{ marginBottom: '50px' }}>
+                    {/* ⚠️ FIX: Applied class 'section-title' */}
+                    <h2 className="section-title">Menu Item Inventory ({menuItems.length})</h2>
+                    {/* ⚠️ FIX: Applied class 'table' */}
+                    <table className="data-table">
+                        <thead>
+                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
+                            <tr className="table-header-row">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Category</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderMenuItemsTable()}
+                        </tbody>
+                    </table>
+                </section>
 
-            {/* Orders Table */}
-            <section>
-                <h2 style={{ color: '#C7FF00' }}>Recent Orders ({orders.length})</h2>
-                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '10px' }}>
-                    <thead>
-                        <tr style={{ backgroundColor: '#1a1a1a' }}>
-                            <th>Order ID</th>
-                            <th>Date</th>
-                            <th>Customer</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                            <th>Address</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderOrdersTable()}
-                    </tbody>
-                </table>
-            </section>
+                {/* Orders Table */}
+                <section>
+                    {/* ⚠️ FIX: Applied class 'section-title' */}
+                    <h2 className="section-title">Recent Orders ({orders.length})</h2>
+                    {/* ⚠️ FIX: Applied class 'table' */}
+                    <table className="data-table">
+                        <thead>
+                            {/* ⚠️ FIX: Applied class 'table-header-row' */}
+                            <tr className="table-header-row">
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderOrdersTable()}
+                        </tbody>
+                    </table>
+                </section>
+            </div>
         </div>
     );
 };
