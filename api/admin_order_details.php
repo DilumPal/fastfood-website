@@ -40,7 +40,8 @@ try {
         SELECT 
             oi.quantity,
             oi.final_unit_price, 
-            oi.customizations,     
+            oi.customization_details,
+            oi.menu_item_id,     
             mi.name AS item_name   /* Will be NULL if the original menu item was deleted */
         FROM order_items oi
         LEFT JOIN menu_items mi ON oi.menu_item_id = mi.id
@@ -74,7 +75,8 @@ try {
         $row['item_name'] = $row['item_name'] ?? 'Unknown Item (ID:' . $row['menu_item_id'] . ')';
 
         // Ensure customizations is a string, or null if empty
-        $row['customizations'] = $row['customizations'] ? trim($row['customizations']) : null;
+        $row['customizations'] = $row['customization_details'] ? trim($row['customization_details']) : null;
+        unset($row['customization_details']); // Remove the original DB column
         
         $items[] = $row;
     }
