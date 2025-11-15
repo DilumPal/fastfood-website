@@ -1,13 +1,12 @@
 /* CustomizePage.css */
 
-/* --- Page-Level Styles --- */
 .customize-page-container {
     padding: 20px;
-    background-color: var(--color-primary, #0A0A0A); /* Dark background */
-    color: var(--color-secondary, #F8F8F8); /* Light text */
+    background-color: var(--color-primary, #0A0A0A); 
+    color: var(--color-secondary, #F8F8F8); 
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
-    position: relative; /* For absolute positioning of nav buttons */
+    position: relative; 
 }
 
 .menu-page-title {
@@ -26,8 +25,6 @@
     margin-bottom: 50px;
 }
 
-
-/* --- Nav Button Adjustment --- */
 .customize-nav-btn {
     position: absolute; 
     top: 25px;
@@ -47,10 +44,9 @@
     background-color: #e6006f;
 }
 
-/* --- Main Grid Layout --- */
 .customize-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* 2/3rds for options, 1/3rd for summary */
+    grid-template-columns: 2fr 1fr; 
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
@@ -59,14 +55,13 @@
 
 @media (max-width: 1024px) {
     .customize-grid {
-        grid-template-columns: 1fr; /* Stack columns on smaller screens */
+        grid-template-columns: 1fr; 
     }
 }
 
-/* --- Card Styles (Containers) --- */
 .custom-card {
-    background-color: var(--color-secondary, #F8F8F8); /* Light card background */
-    color: var(--color-primary, #0A0A0A); /* Dark text on light card */
+    background-color: var(--color-secondary, #F8F8F8); 
+    color: var(--color-primary, #0A0A0A); 
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 25px;
@@ -86,8 +81,6 @@
     margin-bottom: 15px;
 }
 
-
-/* --- 1. Item Preview Card --- */
 .item-preview-card {
     display: flex;
     gap: 20px;
@@ -126,8 +119,6 @@
     color: var(--color-electric-blue);
 }
 
-
-/* --- 2. Combo Selector --- */
 .combo-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -175,8 +166,6 @@
     font-weight: 700;
 }
 
-
-/* --- 3. Ingredient Card --- */
 .ingredient-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -240,14 +229,13 @@
     font-weight: 900;
 }
 
-/* --- Right Column - Summary --- */
 .customize-summary-container {
     padding-top: 20px;
 }
 
 .sticky-summary {
     position: sticky;
-    top: 100px; /* Aligns with the top of the viewport when scrolling */
+    top: 100px; 
     padding: 25px;
 }
 
@@ -294,7 +282,6 @@
     color: var(--color-zesty-lime, #C7FF00);
 }
 
-/* Quantity Control in Summary */
 .quantity-control-row .quantity-control {
     border: none;
     background-color: #eee;
@@ -335,8 +322,6 @@
     color: var(--color-primary);
 }
 
-
-/* Add to Cart Button */
 .add-to-cart-btn {
     width: 100%;
     padding: 15px;
@@ -346,7 +331,6 @@
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
-    /* Use the bright gradient for the final action */
     background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-electric-blue)); 
     color: var(--color-primary);
     transition: opacity 0.3s, transform 0.2s;
@@ -358,8 +342,6 @@
     transform: scale(1.02);
 }
 
-
-/* Customizations List */
 .summary-customizations {
     border-top: 1px solid #eee;
     margin-top: 20px;

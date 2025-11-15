@@ -3,14 +3,11 @@ import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/OrderContext'; 
 import { useAuth } from '../context/AuthContext';
-// ⚠️ REQUIRED: Ensure this file exists and contains config data
 import { customizationConfig, allIngredients } from './customizationData'; 
-import './CustomizePage.css'; // Assuming this exists
+import './CustomizePage.css';
 
-// Helper to get ingredient price string
 const getIngredientPrice = (price) => price > 0 ? `+ $${(price / 100).toFixed(2)}` : "Free";
 
-// Helper to group ingredients by its sub-category
 const groupIngredients = (ingredients) => {
     return ingredients.reduce((acc, ingredient) => {
         const subCategory = ingredient.category || 'Other';
@@ -32,10 +29,8 @@ const CustomizePage = () => {
     const baseItem = location.state?.item;
     const itemCategory = baseItem?.category || 'Default';
     
-    // Dynamically load configuration based on item category (using 'Default' as fallback)
     const config = customizationConfig[itemCategory] || customizationConfig['Default'];
     
-    // --- State Initialization ---
     const initialCustomizations = useMemo(() => {
         return config.sections.reduce((acc, section) => {
             if (section.type === 'multi_select') {
@@ -56,21 +51,18 @@ const CustomizePage = () => {
             alert("No item selected for customization. Redirecting to menu.");
             navigate('/menu');
         }
-        // Reset customizations state if the base item or category changes
         setCustomizations(initialCustomizations);
         setQuantity(baseItem?.quantity || 1);
     }, [baseItem, navigate, initialCustomizations]);
     
-    
-    // --- Customization Handlers ---
     const toggleMultiSelect = (key, itemId) => {
         setCustomizations(prev => {
             const currentSelections = prev[key];
             return {
                 ...prev,
                 [key]: currentSelections.includes(itemId)
-                    ? currentSelections.filter(id => id !== itemId) // Remove
-                    : [...currentSelections, itemId] // Add
+                    ? currentSelections.filter(id => id !== itemId) 
+                    : [...currentSelections, itemId] 
             };
         });
     };
@@ -79,16 +71,13 @@ const CustomizePage = () => {
         setCustomizations(prev => ({ ...prev, [key]: itemId }));
     };
 
-
-    // --- Price Calculation & Customization Details (Memoized) ---
     const { calculateUnitAdjustedPrice, displayCustomizationDetails } = useMemo(() => {
         if (!baseItem) return { calculateUnitAdjustedPrice: 0, displayCustomizationDetails: null };
         
-        let basePrice = baseItem.price; // Start with base price in dollars
+        let basePrice = baseItem.price; 
         let totalMultiplier = 1;
-        let addedPriceCents = 0; // Price adjustments in cents
+        let addedPriceCents = 0; 
         
-        // --- Customization Details Object for DB/Display ---
         const details = {
             added: [], 
             removed: [], 
@@ -101,7 +90,6 @@ const CustomizePage = () => {
             if (section.type === 'single_select') {
                 const option = section.options.find(o => o.id === selectedId);
                 if (option) {
-                    // Apply price multiplier
                     totalMultiplier *= (option.multiplier || 1); 
                     
                     details.options.push({
@@ -120,18 +108,14 @@ const CustomizePage = () => {
                     const isDefault = defaultItems.includes(ingredient.id);
 
                     if (isSelected && !isDefault) {
-                        // Added ingredient
                         addedPriceCents += (ingredient.price || 0);
                         details.added.push(`${ingredient.name}${ingredient.price > 0 ? ` (+ $${(ingredient.price / 100).toFixed(2)})` : ''}`);
                     } else if (!isSelected && isDefault) {
-                        // Removed ingredient
                         details.removed.push(ingredient.name);
                     }
                 });
             }
         });
-
-        // Final unit price calculation: (Base Price + Added Ingredient Price in Dollars) * Multiplier
         const finalUnitPrice = (basePrice + (addedPriceCents / 100)) * totalMultiplier; 
         
         return {
@@ -145,8 +129,6 @@ const CustomizePage = () => {
         return calculateUnitAdjustedPrice * quantity;
     }, [calculateUnitAdjustedPrice, quantity]);
 
-
-    // --- Add To Cart Logic ---
     const handleAddToCart = () => {
         if (!isAuthenticated) {
             alert("Please login to add items to your order 😊");
@@ -156,22 +138,19 @@ const CustomizePage = () => {
 
         if (!baseItem) return;
 
-        // Add the customized item to the cart with all necessary fields
         addToCart({
-            id: Date.now(), // Unique ID for this specific customized item
-            menu_item_id: baseItem.id, // Original menu item ID for database link
+            id: Date.now(), 
+            menu_item_id: baseItem.id, 
             name: `${baseItem.name} (Customized)`,
-            price: parseFloat(calculateUnitAdjustedPrice.toFixed(2)), // Unit price (Base + Cust)
+            price: parseFloat(calculateUnitAdjustedPrice.toFixed(2)), 
             quantity: quantity,
-            customizationDetails: displayCustomizationDetails // The structured object for DB/Display
+            customizationDetails: displayCustomizationDetails 
         });
 
         alert(`Added ${quantity}x ${baseItem.name} to order for $${calculateTotal.toFixed(2)}!`);
         navigate("/order"); 
     };
     
-    
-    // --- Conditional Rendering Function for Options ---
     const renderCustomizationOptions = () => {
         if (config.sections.length === 0) {
             return (
@@ -185,7 +164,6 @@ const CustomizePage = () => {
         return config.sections.map((section) => {
             const selectedValue = customizations[section.key];
             
-            // --- Single Select (e.g., Combo Size, Crust) ---
             if (section.type === 'single_select') {
                 return (
                     <div key={section.key} className="custom-card combo-selector-card">
@@ -213,7 +191,6 @@ const CustomizePage = () => {
                 );
             }
             
-            // --- Multi Select (e.g., Toppings, Ingredients) ---
             if (section.type === 'multi_select') {
                 const grouped = groupIngredients(section.ingredients || []);
                 
@@ -358,7 +335,6 @@ const CustomizePage = () => {
                         <div className="summary-customizations">
                            {displayCustomizationDetails && (
                                 <React.Fragment>
-                                    {/* Added Ingredients */}
                                     {displayCustomizationDetails.added.length > 0 && (
                                         <div className="customization-list">
                                             <h4 className="list-title added">Added:</h4>
@@ -372,7 +348,6 @@ const CustomizePage = () => {
                                         </div>
                                     )}
 
-                                    {/* Removed Ingredients */}
                                     {displayCustomizationDetails.removed.length > 0 && (
                                         <div className="customization-list">
                                             <h4 className="list-title removed">Removed:</h4>
