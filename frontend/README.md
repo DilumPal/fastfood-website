@@ -1,70 +1,111 @@
-# Getting Started with Create React App
+# FastFood Website 🍔
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full‑stack fast food ordering platform built with **PHP**, **MySQL**, **HTML/CSS**, and **JavaScript**.
+This system allows customers to browse menu items, customize orders, and complete purchases, while storing order and payment data in a backend database.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
 
-### `npm start`
+### 🛒 Customer Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Browse food categories (Burgers, Sides, Drinks, Wraps, etc.)
+* View item descriptions, images, and prices
+* Add items to cart
+* Submit orders with customer details
+* Automatic order total calculation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 🧾 Order & Payment Handling
 
-### `npm test`
+* Orders stored in MySQL database
+* Supports item customizations (JSON-based)
+* Payment records stored with method & status
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🔐 User System
 
-### `npm run build`
+* Users table storing:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  * Email
+  * Password hash (bcrypt)
+  * Role (customer/admin)
+* Admin can view or track user orders 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🧰 Tech Stack
 
-### `npm run eject`
+**Frontend:** HTML, CSS, JavaScript
+**Backend:** PHP (Procedural / Custom API endpoints)
+**Database:** MySQL 
+**Environment:** XAMPP 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 📁 Project Structure
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```
+fastfood-website/
+├─ api/               # PHP backend scripts (menu, orders, payments, etc.)
+├─ frontend/          # UI pages, CSS, JS
+├─ database/          # SQL file 
+└─ README.md          # Project documentation
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+## 🗄️ Database Setup
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Your project requires a MySQL database.
+To set it up:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Create a database (example name):
 
-### Code Splitting
+   ```sql
+   CREATE DATABASE fastfood_db;
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+2. Import the SQL file:
 
-### Analyzing the Bundle Size
+   * Open **phpMyAdmin** → Select your database
+   * Go to the **Import** tab
+   * Upload `fastfood_db.sql` (or your cleaned version)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+3. Update your backend config file (`api/` folder) with:
 
-### Making a Progressive Web App
+   ```php
+   $dbHost = "localhost";
+   $dbUser = "root";        
+   $dbPass = "";            
+   $dbName = "fastfood_db";
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🖥️ How to Run the Project Locally
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### ✔ Using XAMPP (Recommended)
 
-### Deployment
+1. Install XAMPP
+2. Copy the project folder into:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+   ```
+   C:/xampp/htdocs/fastfood-website
+   ```
+3. Start **Apache** and **MySQL** in XAMPP Control Panel
+4. Navigate to:
 
-### `npm run build` fails to minify
+   ```
+   http://localhost/fastfood-website/frontend/
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Your backend APIs will run under:
+
+```
+http://localhost/fastfood-website/api/
+```
+---
+
+## 👨‍💻 Author
+
+**Dilum Palawaththa**
+Creator & developer of the full project.
