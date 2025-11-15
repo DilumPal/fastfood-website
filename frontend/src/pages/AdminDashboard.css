@@ -1,9 +1,8 @@
 /* AdminDashboard.css */
 
-/* --- Import/Reuse Global Variables --- */
 :root {
-    --color-primary: #0A0A0A; /* Dark background */
-    --color-secondary: #F8F8F8; /* Light text */
+    --color-primary: #0A0A0A; 
+    --color-secondary: #F8F8F8; 
     --color-electric-blue: #00F0FF;
     --color-hot-pink: #FF007F;
     --color-zesty-lime: #C7FF00;
@@ -33,7 +32,6 @@
     margin-bottom: 30px;
 }
 
-/* --- Data Table Styling --- */
 .data-display {
     max-width: 1200px;
     margin: 0 auto;
@@ -66,7 +64,6 @@ tr:hover {
     background-color: #2a2a2a;
 }
 
-/* --- Modal Styling --- */
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -118,7 +115,6 @@ tr:hover {
     padding-bottom: 10px;
 }
 
-/* Table specific to the modal */
 .order-items-table {
     margin-top: 15px;
     width: 100%;
@@ -138,7 +134,6 @@ tr:hover {
     background-color: #2a2a2a;
 }
 
-/* --- Customization Row Styling --- */
 .order-items-table .customization-row {
     background-color: #1e1e1e !important; 
     font-size: 0.9em;

@@ -6,14 +6,12 @@ import { useNavigate } from 'react-router-dom';
 import './AdminDashboard.css';
 
 const AdminDashboard = () => {
-    // State variables for main data
     const [users, setUsers] = useState([]);
     const [menuItems, setMenuItems] = useState([]);
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // --- STATE FOR MODAL ---
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [orderDetails, setOrderDetails] = useState([]);
@@ -23,14 +21,9 @@ const AdminDashboard = () => {
     const { user, isAuthenticated } = useAuth();
     const navigate = useNavigate();
 
-    // 1. Security Check
     useEffect(() => {
-        // You would typically check for user role ('admin') here
-        // if (!isAuthenticated || user?.role !== 'admin') { /* ... */ }
     }, [isAuthenticated, user, navigate]);
 
-
-    // 2. Data Fetching Function (General)
     const fetchData = async (endpoint) => {
         let setter;
         let endpointName = endpoint; 
@@ -41,7 +34,6 @@ const AdminDashboard = () => {
         else { return; }
 
         try {
-            // Assumes admin_users.php, admin_menu_items.php, admin_orders.php exist
             const apiUrl = `http://localhost/fastfood-website/api/admin_${endpointName.replace('-', '_')}.php`;
 
             const response = await fetch(apiUrl, {
@@ -69,7 +61,6 @@ const AdminDashboard = () => {
         }
     };
 
-    // 3. Initial Data Fetch Hook
     useEffect(() => {
         const fetchAllData = async () => {
             setIsLoading(true);
@@ -92,13 +83,12 @@ const AdminDashboard = () => {
     }, [isAuthenticated]); 
 
 
-    // --- Order Details Fetch Function ---
     const handleOrderClick = async (orderId) => {
         setDetailsError(null);
         setIsDetailsLoading(true);
         setSelectedOrder(orderId);
         setIsModalOpen(true);
-        setOrderDetails([]); // Clear previous details
+        setOrderDetails([]); 
 
         try {
             const apiUrl = `http://localhost/fastfood-website/api/admin_order_details.php?order_id=${orderId}`;
@@ -106,7 +96,6 @@ const AdminDashboard = () => {
             const response = await fetch(apiUrl);
             
             if (!response.ok) {
-                // Catches the 500 status from the PHP file
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
@@ -133,8 +122,6 @@ const AdminDashboard = () => {
         setDetailsError(null);
     };
 
-
-    // --- Order Details Modal Component (UPDATED to show Customizations) ---
     const OrderDetailsModal = () => {
         if (!isModalOpen) return null;
 
@@ -195,8 +182,6 @@ const AdminDashboard = () => {
         );
     };
 
-
-    // --- Render Functions ---
     const renderUsersTable = () => {
         if (isLoading) return <tr><td colSpan="4">Loading Users...</td></tr>;
         if (error && users.length === 0) return <tr><td colSpan="4" style={{ color: 'red' }}>Error loading users.</td></tr>;
@@ -251,8 +236,6 @@ const AdminDashboard = () => {
         ));
     };
 
-
-    // 5. Main Render
     return (
         <div className="admin-container"> 
             
