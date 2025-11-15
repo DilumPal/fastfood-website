@@ -1,60 +1,43 @@
-/* AboutPage.css - Styles for 3D Flip Cards */
-
-/* --- 1. Flip Card Container Setup --- */
+/*AboutPage.css*/
 .flip-card {
-    /* Set dimensions for the card */
     width: 300px; 
     height: 400px;
-    
-    /* Set up the 3D space (perspective) */
-    perspective: 1000px; /* Required for 3D effect */
-    margin: 15px; /* Spacing from the original component */
-    
-    /* Add a subtle initial shadow */
+    perspective: 1000px;
+    margin: 15px; 
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
 
-/* --- 2. Inner Card & Flip Transition --- */
 .flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
     text-align: center;
-    
-    /* The core transition property for the flip effect */
     transition: transform 0.6s;
-    transform-style: preserve-3d; /* Required to make children appear in 3D space */
+    transform-style: preserve-3d; 
 }
 
-/* Rotate the inner container on hover to show the back side */
 .flip-card:hover .flip-card-inner {
     transform: rotateY(180deg);
 }
 
-/* --- 3. Card Faces (Front and Back) --- */
 .flip-card-front, .flip-card-back {
     position: absolute;
     width: 100%;
     height: 100%;
-    
-    /* Prevents the back side from being visible when rotated */
     backface-visibility: hidden;
-    
-    /* Centering content and basic styling */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 20px;
     border-radius: 15px;
-    color: var(--color-white); /* Assuming white text on dark background */
+    color: var(--color-white); 
 }
 
-/* --- 4. Styling the Front Side --- */
 .flip-card-front {
-    background-color: var(--color-dark-gray); /* Dark background for the card */
-    border: 2px solid var(--color-hot-pink); /* Border for visual flair */
+    background-color: var(--color-dark-gray); 
+    border: 2px solid var(--color-hot-pink); 
 }
 
 .flip-card-front h3 {
@@ -80,7 +63,6 @@
     animation: pulse 1.5s infinite;
 }
 
-/* Subtle animation for the hint */
 @keyframes pulse {
     0% { opacity: 0.5; }
     50% { opacity: 1; }
@@ -88,12 +70,8 @@
 }
 
 
-/* --- 5. Styling the Back Side --- */
 .flip-card-back {
-    /* A contrasting or vibrant background for the back */
     background: linear-gradient(135deg, var(--color-hot-pink), var(--color-electric-blue));
-    
-    /* Start with the back rotated 180 degrees so it's hidden initially */
     transform: rotateY(180deg);
 }
 
@@ -105,7 +83,6 @@
     text-shadow: 0 0 5px rgb(0, 0, 0);
 }
 
-/* Call-to-Action Button on the back */
 .cta-button {
     text-decoration: none;
     padding: 10px 20px;

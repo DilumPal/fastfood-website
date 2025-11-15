@@ -1,15 +1,11 @@
 // AboutPage.js
 import React from 'react';
 import { Link } from 'react-router-dom';
-// IMPORTANT: Updated CSS imports
-import './MenuPage.css'; // Reusing the container and button styles
-import './HomePage.css'; // Importing for access to :root variables like colors
-import './AboutPage.css'; // <--- NEW CSS FILE FOR THE FLIP CARDS
+import './MenuPage.css'; 
+import './HomePage.css'; 
+import './AboutPage.css'; 
 
-// --- Feature Card Component for Section 2 (UPDATED) ---
-// Added 'backText' prop and updated structure for 3D flip
 const FeatureCard = ({ icon, title, description, backText }) => (
-    // The main container for the flip card effect
     <div className="flip-card">
         {/* The inner container that will be rotated */}
         <div className="flip-card-inner">
@@ -34,7 +30,6 @@ const FeatureCard = ({ icon, title, description, backText }) => (
 
 const AboutPage = () => {
     return (
-        // Reusing the dark background container from MenuPage.css
         <div className="menu-container"> 
             
             {/* Back to Home Button */}
