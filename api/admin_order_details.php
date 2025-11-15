@@ -1,8 +1,8 @@
 <?php
-// admin_order_details.php - Fetches items and customizations for a specific order ID.
+// admin_order_details.php 
 
 ob_start(); 
-error_reporting(0); // Prevents PHP errors from breaking JSON output
+error_reporting(0); 
 
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: http://localhost:3000'); 
@@ -14,28 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// --- 1. Database Configuration ---
 $servername = "localhost";
 $username = "root"; 
 $password = ""; 
 $dbname = "fastfood_db";
 
 try {
-    // --- 2. Validate Input ---
     if (!isset($_GET['order_id']) || !is_numeric($_GET['order_id'])) {
         http_response_code(400);
         throw new Exception("Invalid or missing order ID.");
     }
     $orderId = (int)$_GET['order_id'];
 
-    // --- 3. Database Connection ---
     $conn = new mysqli($servername, $username, $password, $dbname);
 
     if ($conn->connect_error) {
         throw new Exception("Database connection failed: " . $conn->connect_error);
     }
     
-    // --- 4. CORRECTED SQL Query (Using LEFT JOIN for stability and fetching customizations) ---
     $sql = "
         SELECT 
             oi.quantity,
@@ -62,21 +58,14 @@ try {
     
     $result = $stmt->get_result();
 
-    // --- 5. Process Data ---
     $items = [];
     while ($row = $result->fetch_assoc()) {
-        // Rename for frontend compatibility
         $row['price_at_time'] = (float)$row['final_unit_price']; 
         unset($row['final_unit_price']);
-        
         $row['quantity'] = (int)$row['quantity'];
-        
-        // Handle case where menu_item name might be NULL due to LEFT JOIN
         $row['item_name'] = $row['item_name'] ?? 'Unknown Item (ID:' . $row['menu_item_id'] . ')';
-
-        // Ensure customizations is a string, or null if empty
         $row['customizations'] = $row['customization_details'] ? trim($row['customization_details']) : null;
-        unset($row['customization_details']); // Remove the original DB column
+        unset($row['customization_details']); 
         
         $items[] = $row;
     }
@@ -84,13 +73,11 @@ try {
     $stmt->close();
     $conn->close();
     
-    // --- 6. Success Response ---
     ob_clean();
     echo json_encode(['success' => true, 'data' => $items, 'order_id' => $orderId]);
     exit;
 
 } catch (Exception $e) {
-    // --- 7. Error Response ---
     if (http_response_code() === 200) {
         http_response_code(500); 
     }

@@ -1,10 +1,9 @@
+// App.js
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// CRITICAL: Import the AuthProvider you are creating
 import { AuthProvider } from './context/AuthContext'; 
 import { OrderProvider } from './context/OrderContext';
 
-// Import your page components
 import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -16,11 +15,8 @@ import AboutPage from './pages/AboutPage';
 import CustomizePage from './pages/CustomizePage';
 import AdminDashboard from './pages/AdminDashboard';
 
-// import other pages (e.g., Menu, Order, About)
-
 function App() {
   return (
-    // CRITICAL: Wrap the entire Router with AuthProvider
     <OrderProvider>
     <AuthProvider> 
       <Router>
@@ -34,7 +30,6 @@ function App() {
           <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
           <Route path="/about" element={<AboutPage/>}/>
           <Route path="/admin" element={<AdminDashboard />} />
-          {/* Add other routes here */}
         </Routes>
       </Router>
     </AuthProvider>
