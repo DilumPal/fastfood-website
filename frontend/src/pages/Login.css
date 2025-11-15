@@ -1,4 +1,4 @@
-/* --- Reusing colors from HomePage.css --- */
+/* Login.css */
 :root {
     --color-primary: #0A0A0A;
     --color-secondary: #F8F8F8;
@@ -7,7 +7,6 @@
     --color-zesty-lime: #C7FF00;
 }
 
-/* --- Container and Box Styling (Similar to SignUp) --- */
 .login-container {
     font-family: 'Poppins', sans-serif;
     background-color: var(--color-primary);
@@ -32,13 +31,11 @@
     font-weight: 700;
     margin-bottom: 30px;
     text-align: center;
-    /* Use a gradient similar to your home page buttons */
     background-image: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* --- Form Group Styling --- */
 .form-group {
     margin-bottom: 20px;
 }
@@ -58,7 +55,7 @@
     background-color: #2a2a2a;
     color: var(--color-secondary);
     font-size: 1rem;
-    box-sizing: border-box; /* Include padding in width */
+    box-sizing: border-box;
     transition: border-color 0.3s ease;
 }
 
@@ -68,7 +65,6 @@
     box-shadow: 0 0 5px var(--color-electric-blue);
 }
 
-/* --- Login Button Styling --- */
 .login-button {
     width: 100%;
     padding: 15px;
@@ -78,30 +74,16 @@
     border: none;
     border-radius: 50px;
     cursor: pointer;
-    
-    /* Correct syntax for the gradient background */
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    
-    /* Using var(--color-primary) for dark text */
     color: var(--color-primary); 
-    
-    /* CORRECTED TRANSITION */
-    /* Use 'all' or specifically transition properties that can change smoothly. */
-    /* Transitioning 'background' for a gradient often causes the visual "snap". */
     transition: all 0.3s ease; 
-    
-    /* Alternatively, you can remove the transition on background entirely,
-       and only transition the color if you expect it to change. */
 }
 
 .login-button:hover {
-    /* When hovering, the gradient changes smoothly due to transition: all */
     background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-hot-pink));
-    /* You can add a subtle transform here for a nice effect */
     transform: scale(1.02);
 }
 
-/* --- Link to Sign Up Prompt --- */
 .signup-prompt {
     text-align: center;
     margin-top: 20px;
@@ -119,7 +101,6 @@
     color: var(--color-hot-pink);
 }
 
-/* --- Message Styling --- */
 .message {
     padding: 10px;
     margin-bottom: 20px;
@@ -129,13 +110,13 @@
 }
 
 .message.error {
-    background-color: rgba(255, 0, 127, 0.1); /* Hot Pink light background */
-    color: var(--color-hot-pink); /* Hot Pink text */
+    background-color: rgba(255, 0, 127, 0.1); 
+    color: var(--color-hot-pink); 
     border: 1px solid var(--color-hot-pink);
 }
 
 .message.success {
-    background-color: rgba(0, 240, 255, 0.1); /* Electric Blue light background */
-    color: var(--color-electric-blue); /* Electric Blue text */
+    background-color: rgba(0, 240, 255, 0.1); 
+    color: var(--color-electric-blue); 
     border: 1px solid var(--color-electric-blue);
 }

@@ -1,5 +1,5 @@
-/* --- Placeholder Colors --- */
-/* Define CSS variables for easy maintenance */
+/* HomePage.css */
+
 :root {
   --color-primary: #0A0A0A;
   --color-secondary: #F8F8F8;
@@ -8,7 +8,6 @@
   --color-zesty-lime: #C7FF00;
 }
 
-/* --- Global Container and Typography --- */
 .home-container {
   font-family: 'Poppins', sans-serif;
   background-color: var(--color-primary);
@@ -16,7 +15,6 @@
   min-height: 100vh;
 }
 
-/* --- Main Header for Business Name --- */
 .main-header {
   display: flex;
   justify-content: center;
@@ -24,10 +22,9 @@
   gap: 40px;
   padding: 20px 0;
   background-color: var(--color-primary);
-  /* The color is already set by home-container, but being explicit is good */
   color: var(--color-secondary);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  position: sticky; /* Keep it at the top */
+  position: sticky;
   top: 0;
   z-index: 10;
 }
@@ -60,9 +57,7 @@
      0 0 45px rgba(255,220,80,0.3);
 }
 
-/* --- Hero Section --- */
 .hero {
-  /* Use a relative URL if the image is in the public folder */
   background-image: url('../../public/images/velocity-hub-bg.png');
   background-size: cover;
   background-position: center;
@@ -70,13 +65,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /* Retained vertical spacing fix from last step */
   padding: 80px 20px 40px 20px; 
   text-align: center;
-  position: relative; /* CRITICAL: To position absolute children */
+  position: relative; 
 }
 
-/* Overlay for the Hero (use a pseudo-element) */
 .hero::before {
   content: '';
   position: absolute;
@@ -85,22 +78,20 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0);
-  z-index: 0; /* Ensure the content is above the overlay */
+  z-index: 0; 
 }
 
-/* --- NEW: Top UI Elements Container --- */
 .top-ui-elements {
     position: absolute;
-    top: 20px; /* Space below the sticky header */
+    top: 20px; 
     left: 0;
     right: 0;
     display: flex;
-    justify-content: center; /* Default for centering welcome message */
-    z-index: 5; /* Above other hero content */
+    justify-content: center; 
+    z-index: 5; 
     padding: 0 20px;
 }
 
-/* --- NEW: Welcome Message (Top Middle) --- */
 .welcome-message {
     position: absolute;
     left: 50%;
@@ -114,33 +105,30 @@
     border-radius: 10px;
 }
 
-/* --- NEW: Auth Corner (Top Right) --- */
 .auth-corner {
     position: absolute;
-    right: 20px; /* Align to the right edge of the hero */
+    right: 20px; 
     display: flex;
     gap: 10px;
 }
 
-/* Base button styles from original (MODIFIED FOR 3D EFFECT) */
 .auth-corner-button {
-    padding: 8px 15px; /* Smaller padding for corner buttons */
+    padding: 8px 15px; 
     font-size: 0.9rem;
     font-weight: 600;
     text-decoration: none;
     border-radius: 50px;
-    transition: all 0.2s ease; /* Snappier transition for 3D effect */
+    transition: all 0.2s ease; 
     border: none;
     cursor: pointer;
     color: var(--color-primary);
-    position: relative; /* Essential for press effect */
-    transform: translateY(0); /* Base state */
+    position: relative; 
+    transform: translateY(0); 
 }
 
-/* --- Log In Button (3D Effect) --- */
 .log-in-button {
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
-    --button-shadow-color: #c70062; /* Darker hot pink for 3D depth */
+    --button-shadow-color: #c70062; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
@@ -151,13 +139,12 @@
 
 .log-in-button:active {
   box-shadow: 0 1px 0 var(--button-shadow-color);
-  transform: translateY(2px); /* Button presses down */
+  transform: translateY(2px); 
 }
 
-/* --- Sign Up Button (3D Effect) --- */
 .sign-up-button {
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    --button-shadow-color: #93bd00; /* Darker zesty lime for 3D depth */
+    --button-shadow-color: #93bd00; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
@@ -168,13 +155,12 @@
 
 .sign-up-button:active {
   box-shadow: 0 1px 0 var(--button-shadow-color);
-  transform: translateY(2px); /* Button presses down */
+  transform: translateY(2px); 
 }
 
-/* --- Log Out Button (3D Effect) --- */
 .log-out-button {
     background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-    --button-shadow-color: #00b9c7; /* Darker electric blue for 3D depth */
+    --button-shadow-color: #00b9c7; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
     color: var(--color-primary);
 }
@@ -186,7 +172,7 @@
 
 .log-out-button:active {
   box-shadow: 0 1px 0 var(--button-shadow-color);
-  transform: translateY(2px); /* Button presses down */
+  transform: translateY(2px); 
 }
 
 .headline {
@@ -194,7 +180,7 @@
   font-weight: 900;
   color: white;
   text-shadow: 0 0 10px var(--color-primary);
-  z-index: 1; /* Keep text above overlay */
+  z-index: 1; 
 }
 
 .sub-headline {
@@ -206,49 +192,45 @@
   z-index: 1;
 }
 
-/* --- Button Group (Main Buttons in the middle) --- */
 .button-group {
   display: flex;
   gap: 20px;
   z-index: 1;
 }
 
-/* Base button styles from original (MODIFIED FOR 3D EFFECT) */
 .button-group a {
   padding: 15px 30px;
   font-size: 1.1rem;
   font-weight: 700;
   text-decoration: none;
   border-radius: 50px;
-  transition: all 0.2s ease; /* Reduced transition for snappier press effect */
+  transition: all 0.2s ease; 
   border: none;
   cursor: pointer;
-  color: var(--color-primary); /* Dark text on bright button */
-  position: relative; /* Ensure the button is a positioned element */
-  transform: translateY(0); /* Base state for transform, essential for :active to work */
+  color: var(--color-primary); 
+  position: relative; 
+  transform: translateY(0); 
 }
 
-/* --- Menu Button (3D Effect) --- */
 .menu-button {
   background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-  --button-shadow-color: #93bd00; /* Darker zesty lime for 3D depth */
+  --button-shadow-color: #93bd00; 
   box-shadow: 0 6px 0 var(--button-shadow-color); 
 }
 
 .menu-button:hover {
-  transform: translateY(-2px); /* Slight lift on hover */
-  box-shadow: 0 8px 0 var(--button-shadow-color); /* Slightly larger shadow on hover */
+  transform: translateY(-2px); 
+  box-shadow: 0 8px 0 var(--button-shadow-color); 
 }
 
 .menu-button:active {
-  box-shadow: 0 2px 0 var(--button-shadow-color); /* Shadow reduces on press */
-  transform: translateY(4px); /* Button presses down */
+  box-shadow: 0 2px 0 var(--button-shadow-color); 
+  transform: translateY(4px); 
 }
 
-/* --- Order Button (3D Effect) --- */
 .order-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
-  --button-shadow-color: #c70062; /* Darker hot pink for 3D depth */
+  --button-shadow-color: #c70062; 
   box-shadow: 0 6px 0 var(--button-shadow-color);
 }
 
@@ -262,10 +244,9 @@
   transform: translateY(4px);
 }
 
-/* --- About Button (3D Effect) --- */
 .about-button {
   background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-  --button-shadow-color: #00b9c7; /* Darker electric blue for 3D depth */
+  --button-shadow-color: #00b9c7; 
   box-shadow: 0 6px 0 var(--button-shadow-color);
   color: var(--color-primary);
 }
@@ -280,30 +261,25 @@
   transform: translateY(4px);
 }
 
-/* --- Features Section --- */
 .features {
   display: flex;
   justify-content: space-around;
   gap: 30px;
-  /* Retained vertical spacing fix */
   padding: 100px 50px 180px 50px; 
 }
 
-/* 1. Feature Card Container (Wrapper for 3D Space) */
 .feature-card {
   width: 25%;
   text-align: center;
-  /* CRITICAL: Styles moved to .card-front/.card-back to fix shifting */
   padding: 0; 
   box-shadow: none; 
   background: none;
   border: none;
   border-radius: 15px;
-  perspective: 1000px; /* Enables 3D effect */
+  perspective: 1000px;
   min-height: 250px; 
 }
 
-/* 2. Inner wrapper that flips */
 .card-inner {
   position: relative;
   width: 100%;
@@ -312,12 +288,10 @@
   transition: transform 0.8s;
 }
 
-/* 3. Flip on hover */
 .feature-card:hover .card-inner {
   transform: rotateY(180deg);
 }
 
-/* 4. Front & Back faces - Position and Basic Setup */
 .card-front,
 .card-back {
   position: absolute;
@@ -329,12 +303,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  /* CRITICAL: Card padding/shadow applied here */
   padding: 40px 20px; 
   box-shadow: 0 8px 15px rgba(255, 255, 255, 0.685);
 }
 
-/* --- Front Face Styles (Keeps original visual identity) --- */
 .card-front {
   transform: rotateY(0deg);
   color: var(--color-primary);
@@ -346,7 +318,6 @@
   text-shadow: 0 0 10px rgb(80, 80, 80);
 }
 
-/* Specific background and border for the front faces */
 .feature-card.velocity .card-front {
     border-bottom: 5px solid var(--color-electric-blue);
     background: linear-gradient(45deg, rgba(231, 235, 2, 0.671), rgba(1, 223, 1, 0.719));
@@ -360,11 +331,8 @@
     background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
 }
 
-/* --- Back Face Styles (The flip side) --- */
 .card-back {
-  /* Initially rotate the back face 180 degrees */
   transform: rotateY(180deg);
-  /* Style for the back face */
   background-color: var(--color-primary); 
   color: var(--color-secondary); 
 }
@@ -382,7 +350,6 @@
     margin-bottom: 15px;
 }
 
-/* Specific back colors for consistency */
 .velocity-back h3 { color: var(--color-electric-blue); }
 .freshness-back h3 { color: var(--color-hot-pink); }
 .atmosphere-back h3 { color: var(--color-zesty-lime); }
@@ -394,16 +361,11 @@
 
 @keyframes bounce {
     0%    { transform: translateY(0); }
-    /* Reduced bounce height from -60px to -30px */
     100% { transform: translateY(-30px); }
 }
 
-/* --- Apply Animation to the Burger Emoji --- */
 .bouncing-emoji {
-    display: inline-block; /* Essential to apply transform/animation */
-    /* Use a high font size if you want the emoji to look larger than its surroundings */
-    font-size: 2rem; /* Matches logo-letters size */
-    
-    /* Apply the animation */
-    animation: bounce 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate; /* 2 seconds duration, repeats forever */
+    display: inline-block; 
+    font-size: 2rem; 
+    animation: bounce 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate;
 }

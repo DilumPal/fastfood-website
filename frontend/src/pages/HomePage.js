@@ -5,17 +5,14 @@ import { useAuth } from '../context/AuthContext';
 import './HomePage.css'; 
 
 const HomePage = () => {
-  // CRITICAL: Get the authentication state and functions from context
   const { isAuthenticated, logout, user } = useAuth(); 
 
   const handleLogout = () => {
     logout();
   };
 
-  // NEW: Component for the Top-Right Authentication Links/Buttons
   const AuthCorner = () => {
     if (isAuthenticated) {
-      // Show Log Out
       return (
         <button 
           onClick={handleLogout} 
@@ -25,7 +22,6 @@ const HomePage = () => {
         </button>
       );
     } else {
-      // Show Log In and Sign Up
       return (
         <>
           <Link 
@@ -45,17 +41,15 @@ const HomePage = () => {
     }
   };
   
-  // NEW: Component for the Top-Middle Welcome Message
   const WelcomeMessage = () => {
-    if (isAuthenticated) {
-      // Display first name or generic "USER" 
+    if (isAuthenticated) { 
       return (
         <div className="welcome-message">
           WELCOME, {user?.fullName?.split(' ')[0]?.toUpperCase() || 'USER'}!
         </div>
       );
     }
-    return null; // Nothing to display if not logged in
+    return null; 
   };
 
   return (
@@ -66,7 +60,6 @@ const HomePage = () => {
         <div className="logo-letters2"><span className="bouncing-emoji">🌮</span>🌯<span className="bouncing-emoji">🍣</span>🍝<span className="bouncing-emoji">🍔</span>🥧<span className="bouncing-emoji">🍩</span>🍪</div>
       </header>
       
-      {/* NEW: Place AuthCorner and WelcomeMessage outside the main header and button group */}
       <div className="hero">
         <div className="top-ui-elements">
             <WelcomeMessage />
@@ -78,14 +71,12 @@ const HomePage = () => {
         <h1 className="headline">Your Crave, Accelerated.</h1>
         <h2 className="sub-headline">Freshness Meets Velocity. Every Time.</h2>
 
-        {/* The main action buttons are now the only elements in this group */}
         <div className="button-group">
           
           <Link to="/menu" className="menu-button">
             OUR MENU
           </Link>
           
-          {/* ⚠️ This link points to the new Orders Page */}
           <Link 
             to="/order" 
             className="order-button"
@@ -102,7 +93,6 @@ const HomePage = () => {
         </div>
       </div>
 
-      {/* 4. Feature Zones (UPDATED for 3D Flip) */}
       <div className="features">
         
         {/* Velocity Card */}

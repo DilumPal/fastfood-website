@@ -1,6 +1,7 @@
+// Login.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import useAuth
+import { useAuth } from '../context/AuthContext'; 
 import './Login.css';
 
 const Login = () => {
@@ -11,7 +12,6 @@ const Login = () => {
   const [message, setMessage] = useState('');
   const [isError, setIsError] = useState(false);
   const navigate = useNavigate();
-  // Get the login function from context
   const { login } = useAuth(); 
 
   const handleChange = (e) => {
@@ -27,7 +27,6 @@ const Login = () => {
     setIsError(false);
 
     try {
-      // Ensure path is correct, e.g., 'http://localhost/fastfood-website/api/login.php'
       const response = await fetch('http://localhost/fastfood-website/api/login.php', { 
         method: 'POST',
         headers: {
@@ -45,19 +44,18 @@ const Login = () => {
         setMessage(data.message);
         setIsError(false);
         
-        // ⚠️ CRITICAL: Pass the new 'role' to the login context function
         login({ 
             userId: data.userId, 
             fullName: data.fullName, 
-            role: data.role, // <-- NEW: Pass the user's role
+            role: data.role, 
             token: 'dummy-token' 
         }); 
 
-        // ⚠️ NEW: Admin redirection logic
+        
         if (data.role === 'admin') {
-            navigate('/admin'); // Redirect to AdminDashboard
+            navigate('/admin'); 
         } else {
-            navigate('/'); // Redirect customer to home page
+            navigate('/'); 
         }
         
       } else {
