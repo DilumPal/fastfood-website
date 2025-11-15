@@ -32,7 +32,8 @@
     margin-bottom: 30px;
     text-align: center;
     background-image: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
-    -webkit-background-clip: text;
+    -webkit-background-clip: text; 
+    background-clip: text;         
     -webkit-text-fill-color: transparent;
 }
 
