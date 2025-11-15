@@ -1,3 +1,4 @@
+// SignUp.js
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './SignUp.css';
@@ -32,7 +33,7 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('http://localhost/fastfood-website/api/signup.php', { // Ensure path is correct
+      const response = await fetch('http://localhost/fastfood-website/api/signup.php', { 
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +51,6 @@ const SignUp = () => {
         setMessage(data.message + " Redirecting to Login...");
         setIsError(false);
         
-        // Redirect to login after successful sign-up
         setTimeout(() => {
           navigate('/login'); 
         }, 1500);

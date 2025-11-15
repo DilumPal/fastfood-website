@@ -1,12 +1,11 @@
+//MenuPage.js
 import React, { useState, useEffect, useMemo } from 'react';
-import { useCart } from '../context/OrderContext'; // ⚠️ NEW IMPORT
+import { useCart } from '../context/OrderContext'; 
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import './MenuPage.css';
 import { Link } from 'react-router-dom';
 
-// Component for a single menu item card (MODIFIED)
-// ⚠️ Now accepts addToCart from parent
 const MenuItemCard = ({ item, addToCart }) => { 
     const [quantity, setQuantity] = useState(1);
     const { isAuthenticated } = useAuth();
@@ -40,7 +39,7 @@ const MenuItemCard = ({ item, addToCart }) => {
             state: { 
                 item: { 
                     ...item, 
-                    quantity: quantity // Pass the currently selected quantity
+                    quantity: quantity
                 } 
             } 
         });
@@ -75,14 +74,14 @@ const MenuItemCard = ({ item, addToCart }) => {
                 
                 <div className="card-button-group">
                     <button 
-                        className="menu-card-btn customize-btn" // New class for customization
+                        className="menu-card-btn customize-btn" 
                         onClick={handleCustomize}
                     >
                         CUSTOMIZE
                     </button>
                     
                     <button 
-                        className="menu-card-btn add-to-order-btn-small" // New class for ADD
+                        className="menu-card-btn add-to-order-btn-small" 
                         onClick={handleAddToCart}
                     >
                         ADD
@@ -103,20 +102,13 @@ const BouncingBurger = () => (
     </div>
 );
 
-// Main Menu Page Component (MODIFIED)
 const MenuPage = () => {
     const [menu, setMenu] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { isAuthenticated } = useAuth();
-    //const navigate = useNavigate();
-
-    
-    // Search state is now the direct driver of the filter
     const [searchTerm, setSearchTerm] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
-    
-    // ⚠️ NEW: Get cart functions and total from context
     const { cartItems, orderTotal, addToCart } = useCart(); 
 
     useEffect(() => {
@@ -149,23 +141,19 @@ const MenuPage = () => {
 
     const handleSuggestionClick = (category) => {
         setSearchTerm(category);
-        setShowSuggestions(false); // Hide suggestions after selection
+        setShowSuggestions(false); 
     };
 
-    // --- NEW: Handlers for Search Bar ---
     const handleSearchChange = (event) => {
         setSearchTerm(event.target.value);
-        // Show suggestions only if the search term is not empty
         setShowSuggestions(event.target.value.trim().length > 0); 
     };
 
     const handleSearchSubmit = (event) => {
-        event.preventDefault(); // Prevents page reload
+        event.preventDefault(); 
         setSearchTerm(searchTerm.trim()); 
-        setShowSuggestions(false); // Hide suggestions on explicit submission
+        setShowSuggestions(false); 
     };
-    // --- END NEW HANDLERS ---
-
 
     const filteredMenu = useMemo(() => {
         const term = searchTerm.toLowerCase().trim();
@@ -208,12 +196,10 @@ const MenuPage = () => {
     
     return (
         <div className="menu-container">
-            {/* --- NEW: Home Button Link --- */}
             <Link to="/" className="home-button">
                 &larr; Back to Home
             </Link>
             
-            {/* ⚠️ NEW: Link to Orders Page */}
             {isAuthenticated && (
                 <Link
                     to="/order"
@@ -233,9 +219,8 @@ const MenuPage = () => {
                 <h1 className="menu-page-title">The YumZone Menu</h1>
                 <BouncingBurger />
             </div>
-            <p className="menu-page-subtitle">Your cravings, satisfied instantly.</p> {/* Added subtitle for better context */}
+            <p className="menu-page-subtitle">Your cravings, satisfied instantly.</p> 
 
-            {/* --- NEW: Search Bar JSX --- */}
             <div className="search-container">
                 <form className="search-input-group" onSubmit={handleSearchSubmit}>
                     <input
@@ -245,12 +230,10 @@ const MenuPage = () => {
                         value={searchTerm}
                         onChange={handleSearchChange}
                         onFocus={() => searchTerm && setShowSuggestions(true)}
-                        // Use a slight delay on blur to allow a click on a suggestion before the dropdown hides
                         onBlur={() => setTimeout(() => setShowSuggestions(false), 150)} 
                     />
                     <button type="submit" className="search-go-btn">GO</button>
 
-                    {/* Suggestions Dropdown */}
                     {showSuggestions && filteredSuggestions.length > 0 && (
                         <div className="suggestions-dropdown">
                             {filteredSuggestions.map((category) => (
@@ -266,9 +249,7 @@ const MenuPage = () => {
                     )}
                 </form>
             </div>
-            {/* --- END Search Bar JSX --- */}
             
-            {/* Show a reset button if the search term is active */}
             {searchTerm && (
                 <div style={{ textAlign: 'center', marginBottom: '30px' }}>
                     <p style={{ color: 'rgba(248, 248, 248, 0.7)' }}>
@@ -300,7 +281,7 @@ const MenuPage = () => {
                                 <MenuItemCard 
                                     key={item.id} 
                                     item={{ ...item, category: category }} 
-                                    addToCart={addToCart} // ⚠️ Pass the context function
+                                    addToCart={addToCart} 
                                 /> 
                             ))}
                         </div>

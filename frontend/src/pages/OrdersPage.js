@@ -5,12 +5,8 @@ import { useCart } from '../context/OrderContext';
 import { useAuth } from '../context/AuthContext'; 
 import './MenuPage.css'; 
 
-// Helper to render customization details (Crucial for avoiding blank page crash)
 const renderCustomization = (details) => {
-    // Safely check for null/empty details before rendering
     if (!details || (details.added?.length === 0 && details.removed?.length === 0 && details.options?.length === 0)) return null;
-
-    // Safely map and join option details
     const optionsList = details.options?.map(o => `${o.title}: ${o.name}`).join('; ');
     
     return (
@@ -35,7 +31,6 @@ const renderCustomization = (details) => {
 };
 
 
-// Component for a single item in the order list 
 const OrderItemRow = ({ item, removeFromCart, updateQuantity }) => {
     const maxQuantity = 99;
 
@@ -45,7 +40,6 @@ const OrderItemRow = ({ item, removeFromCart, updateQuantity }) => {
             <div style={{ flex: 3 }}>
                 <h4 style={{ margin: '0', fontSize: '1.2rem' }}>{item.name}</h4>
                 <p style={{ margin: '0', color: '#666' }}>Unit Price: ${item.price.toFixed(2)}</p>
-                {/* ⚠️ FIX: Safely call renderCustomization */}
                 {item.customizationDetails && renderCustomization(item.customizationDetails)}
             </div>
             
@@ -101,7 +95,6 @@ const OrdersPage = () => {
             items: cartItems.map(item => ({
                 menu_item_id: item.menu_item_id || item.id, 
                 quantity: item.quantity,
-                // Ensure data is stringified for the JSON column
                 customization_details: item.customizationDetails ? JSON.stringify(item.customizationDetails) : null, 
                 final_unit_price: item.price, 
                 item_name: item.name, 
@@ -117,12 +110,10 @@ const OrdersPage = () => {
 
     return (
         <div className="menu-container"> 
-            {/* Link back to Home */}
             <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'var(--color-hot-pink)' }}>
                 &larr; Back to Home
             </Link>
             
-            {/* Link to Menu */}
             <Link to="/menu" className="home-button" style={{ top: '25px', right: '25px', left: 'unset', backgroundColor: 'var(--color-zesty-lime)' }}>
                 View Menu
             </Link>
@@ -138,7 +129,6 @@ const OrdersPage = () => {
             ) : (
                 <div style={{ maxWidth: '900px', margin: '0 auto', padding: '20px', backgroundColor: 'var(--color-secondary, #F8F8F8)', borderRadius: '15px', color: 'var(--color-primary, #0A0A0A)', boxShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
                     
-                    {/* List of Cart Items */}
                     {cartItems.map(item => (
                         <OrderItemRow 
                             key={item.id} 
@@ -148,7 +138,6 @@ const OrdersPage = () => {
                         />
                     ))}
                     
-                    {/* Order Summary and Checkout Button */}
                     <div style={{ marginTop: '30px', textAlign: 'right', borderTop: '2px solid #ccc', paddingTop: '20px' }}>
                         <h3 style={{ fontSize: '1.8rem', margin: '0' }}>
                             Order Total: <span style={{ color: 'var(--color-electric-blue)' }}>${orderTotal.toFixed(2)}</span>

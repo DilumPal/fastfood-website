@@ -2,31 +2,20 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useCart } from '../context/OrderContext'; 
-import './MenuPage.css'; // Re-use styles
-
-// NOTE: If you installed react-credit-cards, uncomment the imports:
-// import Cards from 'react-credit-cards';
-// import 'react-credit-cards/es/styles-compiled.css'; 
+import './MenuPage.css'; 
 
 const PaymentPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    
-    // Retrieve order data passed from OrdersPage
     const orderData = location.state?.orderData; 
-    
-    // Get clearCart function from context
     const { clearCart } = useCart(); 
-
-    // Add state variables for phone and address
     const [customerPhone, setCustomerPhone] = useState(orderData.customer_phone || ''); 
     const [customerAddress, setCustomerAddress] = useState(orderData.customer_address || ''); 
-
     const [cardNumber, setCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
     const [expiry, setExpiry] = useState('');
     const [cvc, setCvc] = useState('');
-    const [focus, setFocus] = useState(''); // For card component focus
+    const [focus, setFocus] = useState(''); 
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
 
@@ -39,13 +28,11 @@ const PaymentPage = () => {
         );
     }
     
-    // Helper function to format card number
     const formatCardNumber = (value) => {
         const digits = value.replace(/\D/g, '').substring(0, 16);
         return digits.replace(/(\d{4})(?=\d)/g, '$1 ');
     };
 
-    // Helper function to format expiry date
     const formatExpiry = (value) => {
         const digits = value.replace(/\D/g, '').substring(0, 4);
         if (digits.length > 2) {
@@ -59,7 +46,6 @@ const PaymentPage = () => {
         setError('');
         setIsProcessing(true);
 
-        // --- Front-End Validation for Phone and Address ---
         if (customerPhone.trim() === '') {
              setError('Phone Number is required.');
              setIsProcessing(false);
@@ -71,7 +57,6 @@ const PaymentPage = () => {
              return;
         }
         
-        // --- Front-End Validation for Card Details ---
         if (cardNumber.replace(/\s/g, '').length !== 16) {
             setError('Card Number must be 16 digits.');
             setIsProcessing(false);
@@ -97,13 +82,10 @@ const PaymentPage = () => {
             return;
         }
         
-        // --- Prepare final data including payment details ---
         const submissionData = {
-            // Add phone and address to the submission data
             customer_phone: customerPhone,
             customer_address: customerAddress,
             
-            // Existing order data
             ...orderData,
             
             payment_details: {
@@ -113,7 +95,6 @@ const PaymentPage = () => {
             }
         };
 
-        // 5. Call the modified backend API (submit_order.php)
         try {
             const response = await fetch('http://localhost/fastfood-website/api/submit_order.php', {
                 method: 'POST',
@@ -135,7 +116,7 @@ const PaymentPage = () => {
                 
                 clearCart(); 
                 
-                navigate('/'); // Redirect to home page
+                navigate('/'); 
             } else {
                 setError('Failed to process payment: ' + (result.error || 'Unknown error.'));
             }
@@ -157,15 +138,11 @@ const PaymentPage = () => {
             <p className="menu-page-subtitle">Pay for your final order total of **${orderData.total}**.</p>
 
             <div style={{ maxWidth: '600px', width: '100%', margin: '20px 0', padding: '40px', backgroundColor: 'var(--color-secondary, #F8F8F8)', borderRadius: '15px', color: 'var(--color-primary, #0A0A0A)', boxShadow: '0 10px 30px rgba(0,0,0,0.6)' }}>
-                
-                {/* Optional: Card component display here */}
-                {/* <Cards ... /> */}
-                
+
                 <form onSubmit={handlePaymentSubmit} style={{ marginTop: '20px', display: 'grid', gap: '15px' }}>
                     
                     {error && <p style={{ color: 'red', textAlign: 'center', fontWeight: 'bold' }}>{error}</p>}
                     
-                    {/* Customer Phone input */}
                     <input
                         type="tel"
                         name="phone"
@@ -177,7 +154,6 @@ const PaymentPage = () => {
                         style={inputStyle}
                     />
 
-                    {/* Customer Address input */}
                     <input
                         type="text"
                         name="address"
@@ -191,7 +167,6 @@ const PaymentPage = () => {
 
                     <hr style={{ borderTop: '1px dashed #ccc', margin: '15px 0' }} />
 
-                    {/* Card Number */}
                     <input
                         type="tel"
                         name="number"
@@ -202,10 +177,9 @@ const PaymentPage = () => {
                         required
                         disabled={isProcessing}
                         style={inputStyle}
-                        maxLength="19" // 16 digits + 3 spaces
+                        maxLength="19"
                     />
 
-                    {/* Name on Card */}
                     <input
                         type="text"
                         name="name"
@@ -219,7 +193,6 @@ const PaymentPage = () => {
                     />
 
                     <div style={{ display: 'flex', gap: '15px' }}>
-                        {/* Expiry Date */}
                         <input
                             type="tel"
                             name="expiry"
@@ -230,10 +203,9 @@ const PaymentPage = () => {
                             required
                             disabled={isProcessing}
                             style={{ ...inputStyle, flex: 1 }}
-                            maxLength="5" // MM/YY
+                            maxLength="5" 
                         />
 
-                        {/* CVV */}
                         <input
                             type="password"
                             name="cvc"
@@ -261,7 +233,6 @@ const PaymentPage = () => {
     );
 };
 
-// Simple inline styles for the form
 const inputStyle = {
     padding: '12px',
     borderRadius: '8px',

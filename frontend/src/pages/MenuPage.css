@@ -1,20 +1,17 @@
-/* --- Menu Page Styles (Link with HomePage.css variables) --- */
-/* Assuming the variables from HomePage.css are available or copied here for context */
+/* MenuPage.css */
 
 .menu-container {
     padding: 20px;
-    background-color: var(--color-primary, #0A0A0A); /* Dark background */
-    color: var(--color-secondary, #F8F8F8); /* Light text */
+    background-color: var(--color-primary, #0A0A0A); 
+    color: var(--color-secondary, #F8F8F8); 
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
 }
 
 .menu-page-title {
-    /* REMOVED: text-align: center; - now centered by .menu-header-flex */
     font-size: 3rem;
     font-weight: 900;
     color: var(--color-zesty-lime, #C7FF00);
-    /* REMOVED: margin-bottom: 5px; - now contained in the flex wrapper */
     text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
 }
 
@@ -22,11 +19,10 @@
     text-align: center;
     font-size: 1.2rem;
     color: rgba(248, 248, 248, 0.7);
-    margin-top: 20px; /* Added spacing after the title/burger block */
+    margin-top: 20px; 
     margin-bottom: 50px;
 }
 
-/* --- Category Sections --- */
 .menu-category {
     margin-bottom: 40px;
 }
@@ -40,40 +36,30 @@
     color: var(--color-electric-blue, #00F0FF);
 }
 
-/* --- Grid for Items --- */
 .category-items-grid {
-    display: flex; /* <-- KEY CHANGE: Switch from grid to flex */
-    
-    /* REMOVED: grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); */
-    
-    /* Add properties for horizontal layout and scrolling */
-    flex-wrap: nowrap; /* <-- Prevents items from wrapping to the next line */
-    overflow-x: auto; /* <-- Enables horizontal scrolling when content exceeds width */
-    padding-bottom: 20px; /* Space for scrollbar */
-    
-    /* Optional: Hide scrollbar for a cleaner look */
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
-    
+    display: flex; 
+    flex-wrap: nowrap; 
+    overflow-x: auto; 
+    padding-bottom: 20px; 
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
     gap: 30px;
 }
 
-/* Styles to hide default scrollbar in Webkit browsers (Chrome, Safari) */
 .category-items-grid::-webkit-scrollbar {
     display: none;
 }
 
-/* --- Menu Card Styles --- */
 .menu-card {
-    background-color: var(--color-secondary, #F8F8F8); /* Light card background */
-    color: var(--color-primary, #0A0A0A); /* Dark text on light card */
+    background-color: var(--color-secondary, #F8F8F8); 
+    color: var(--color-primary, #0A0A0A); 
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     transition: transform 0.3s ease;
-    width: 320px; /* Fixed width for uniform look */
-    min-height: 500px; /* Ensures all cards are tall enough, even if content is short */
-    max-height: 500px; /* Prevents cards from growing taller */
+    width: 320px; 
+    min-height: 500px; 
+    max-height: 500px; 
     display: flex;
     flex-direction: column;
     flex-shrink: 0;
@@ -86,14 +72,14 @@
 
 .card-image-container {
     position: relative;
-    height: 200px; /* Fixed height for image area */
+    height: 200px; 
     overflow: hidden;
 }
 
 .item-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensures the image covers the area without distortion */
+    object-fit: cover; 
 }
 
 .special-badge {
@@ -112,7 +98,7 @@
     padding: 15px;
     display: flex;
     flex-direction: column;
-    flex-grow: 1; /* Allows content area to fill remaining space */
+    flex-grow: 1; 
 }
 
 .item-name {
@@ -126,7 +112,7 @@
     font-size: 0.9rem;
     color: #444;
     margin-bottom: 15px;
-    flex-grow: 1; /* Pushes the footer down */
+    flex-grow: 1; 
 }
 
 .card-footer {
@@ -143,7 +129,6 @@
     color: var(--color-electric-blue, #00F0FF);
 }
 
-/* --- Quantity Control --- */
 .quantity-control {
     display: flex;
     align-items: center;
@@ -163,7 +148,7 @@
 }
 
 .quantity-control button:hover {
-    background-color: #e6006f; /* Slightly darker pink */
+    background-color: #e6006f; 
     transform: scale(1.05);
 }
 
@@ -176,24 +161,22 @@
     background-color: var(--color-secondary);
 }
 
-/* --- Button Group Container --- */
-.card-button-group { /* ⚠️ NEW: Flex container for the two buttons */
+.card-button-group { 
     display: flex;
-    gap: 10px; /* Space between the two buttons */
+    gap: 10px; 
     width: 100%;
-    margin-top: 15px; /* Adds space above the buttons, pushes them to the bottom */
+    margin-top: 15px; 
 }
 
-/* Base style for both buttons */
 .menu-card-btn {
     padding: 12px 10px;
     border: none;
     border-radius: 8px;
-    font-size: 0.95rem; /* Slightly smaller font to fit */
+    font-size: 0.95rem; 
     font-weight: 700;
     cursor: pointer;
     transition: opacity 0.3s, transform 0.2s;
-    flex-grow: 1; /* Both buttons take equal space */
+    flex-grow: 1; 
 }
 
 .menu-card-btn:hover {
@@ -201,9 +184,8 @@
     transform: scale(1.02);
 }
 
-/* --- Customize Button Styling --- */
-.customize-btn { /* Style for the new Customize button */
-    background-color: var(--color-hot-pink, #FF007F); /* Use Hot Pink for Customize */
+.customize-btn { 
+    background-color: var(--color-hot-pink, #FF007F); 
     color: white;
 }
 
@@ -212,14 +194,11 @@
 }
 
 .customize-btn:active {
-  background-color: #e6006f; /* Darker blue when clicked */
-  /* You can add more visual feedback here, like a slight scale change: */
+  background-color: #e6006f; 
   transform: scale(0.98);
 }
 
-/* --- Add to Order Button Styling (Modified) --- */
-.add-to-order-btn-small { /* Style for the ADD button */
-    /* Use the bright gradient for the primary action (Add to Order) */
+.add-to-order-btn-small { 
     background: linear-gradient(45deg, var(--color-zesty-lime, #C7FF00), var(--color-electric-blue, #00F0FF)); 
     color: var(--color-primary, #0A0A0A);
 }
@@ -229,17 +208,10 @@
 }
 
 .add-to-order-btn-small:active {
-  background-color: #0056b3; /* Darker blue when clicked */
-  /* You can add more visual feedback here, like a slight scale change: */
+  background-color: #0056b3; 
   transform: scale(0.98);
 }
 
-/* ⚠️ REMOVED/RENAMED: Old .add-to-order-btn section */
-/* You should remove the old .add-to-order-btn block entirely from the original file. */
-
-/* --- Add this new section to MenuPage.css --- */
-
-/* --- Search Bar Container --- */
 .search-container {
     display: flex;
     justify-content: center;
@@ -248,15 +220,14 @@
     padding: 10px 0;
 }
 
-/* --- Search Input Styling --- */
 .search-input-group {
     display: flex;
     width: 100%;
-    max-width: 650px; /* Limits the search bar width */
+    max-width: 650px; 
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    position: relative; /* To position the suggestions list */
+    position: relative; 
 }
 
 .search-input {
@@ -264,13 +235,13 @@
     padding: 15px 20px;
     border: none;
     font-size: 1.1rem;
-    color: var(--color-primary); /* Dark text */
-    background-color: var(--color-secondary, #F8F8F8); /* Light background */
+    color: var(--color-primary); 
+    background-color: var(--color-secondary, #F8F8F8); 
     outline: none;
 }
 
 .search-go-btn {
-    background-color: var(--color-zesty-lime, #C7FF00); /* Bright button */
+    background-color: var(--color-zesty-lime, #C7FF00); 
     color: var(--color-primary, #0A0A0A);
     border: none;
     padding: 0 25px;
@@ -281,13 +252,12 @@
 }
 
 .search-go-btn:hover {
-    background-color: #a8d600; /* Slightly darker lime */
+    background-color: #a8d600; 
 }
 
-/* --- Suggestions Dropdown --- */
 .suggestions-dropdown {
     position: absolute;
-    top: 100%; /* Position right below the input */
+    top: 100%;
     left: 0;
     right: 0;
     background-color: var(--color-secondary, #F8F8F8);
@@ -310,52 +280,44 @@
     background-color: #eee;
 }
 
-/* --- New Home Button Style --- */
+
 .home-button {
-    position: absolute; /* Position relative to the nearest positioned ancestor (usually body or .menu-container if it has 'position: relative') */
+    position: absolute; 
     top: 25px;
     left: 25px;
     padding: 5px 10px;
     background-color: rgb(12, 235, 12);
     color: rgb(0, 0, 0);
-    text-decoration: none; /* Remove underline */
+    text-decoration: none; 
     border-radius: 8px;
     font-size: 0.9rem;
     font-weight: 700;
-    z-index: 20; /* Ensure it stays above other elements like suggestions */
+    z-index: 20; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
     transition: background-color 0.2s, transform 0.2s;
 }
 
 .home-button:hover {
-    background-color: rgb(255, 255, 255); /* Slightly darker pink */
+    background-color: rgb(255, 255, 255); 
     transform: scale(1.05);
 }
 
-/* --- Bouncing Burger Animation (Custom) --- */
-
-/* New container to align the burgers and the title */
 .menu-header-flex {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Spacing between burger and title */
-    /* The vertical spacing is now managed by the subtitle's margin-top */
+    gap: 20px; 
 }
 
-/* Base style for the burger container */
 .bouncing-menu-burger {
     width: 70px;
     height: 60px;
     position: relative;
-    /* Use the keyframes provided by the user */
     animation: bounce 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate;
-    /* NEW: Scale down the entire burger to 75% of its size */
     transform: scale(0.75);
-    transform-origin: bottom; /* Ensure it scales from the bottom to keep position stable */
+    transform-origin: bottom; 
 }
 
-/* top bun (uses ::before on the main container) */
 .bouncing-menu-burger::before {
     content: "";
     position: absolute;
@@ -369,7 +331,6 @@
     box-shadow: inset 0 3px 0 rgba(255,255,255,0.4);
 }
 
-/* bottom bun */
 .bun-bottom {
     position: absolute;
     bottom: 0;
@@ -381,7 +342,6 @@
     border-bottom-right-radius: 40px;
 }
 
-/* patty */
 .patty {
     position: absolute;
     bottom: 18px;
@@ -392,7 +352,6 @@
     border-radius: 5px;
 }
 
-/* cheese */
 .cheese {
     position: absolute;
     bottom: 28px;
@@ -403,7 +362,6 @@
     clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
 }
 
-/* lettuce */
 .lettuce {
     position: absolute;
     bottom: 34px;
@@ -414,7 +372,6 @@
     border-radius: 2px;
 }
 
-/* shadow */
 .shadow {
     position: absolute;
     bottom: -10px;
@@ -427,10 +384,8 @@
     animation: shadow 0.6s cubic-bezier(.28,.84,.42,1) infinite alternate;
 }
 
-/* Keyframes */
 @keyframes bounce {
     0%    { transform: translateY(0); }
-    /* Reduced bounce height from -60px to -30px */
     100% { transform: translateY(-30px); } 
 }
 
