@@ -57,14 +57,14 @@ const OrderItemRow = ({ item, removeFromCart, updateQuantity }) => {
                     <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
                 </div>
                 
-                <span style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--color-electric-blue)' }}>
+                <span style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--color-primary, #0A0A0A)' }}>
                     ${(item.price * item.quantity).toFixed(2)}
                 </span>
             </div>
 
             <button 
                 onClick={() => removeFromCart(item.id)} 
-                style={{ background: 'var(--color-hot-pink, #FF007F)', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer', marginLeft: '20px', fontWeight: '700' }}
+                style={{ background: 'rgba(255, 0, 0, 1)', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer', marginLeft: '20px', fontWeight: '700' }}
             >
                 X
             </button>
@@ -110,11 +110,11 @@ const OrdersPage = () => {
 
     return (
         <div className="menu-container"> 
-            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'var(--color-hot-pink)' }}>
+            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'rgb(255, 136, 0)' }}>
                 &larr; Back to Home
             </Link>
             
-            <Link to="/menu" className="home-button" style={{ top: '25px', right: '25px', left: 'unset', backgroundColor: 'var(--color-zesty-lime)' }}>
+            <Link to="/menu" className="home-button" style={{ top: '25px', right: '25px', left: 'unset', backgroundColor: 'rgb(255, 136, 0)' }}>
                 View Menu
             </Link>
 
@@ -140,7 +140,7 @@ const OrdersPage = () => {
                     
                     <div style={{ marginTop: '30px', textAlign: 'right', borderTop: '2px solid #ccc', paddingTop: '20px' }}>
                         <h3 style={{ fontSize: '1.8rem', margin: '0' }}>
-                            Order Total: <span style={{ color: 'var(--color-electric-blue)' }}>${orderTotal.toFixed(2)}</span>
+                            Order Total: <span style={{ color: 'var(--color-primary)' }}>${orderTotal.toFixed(2)}</span>
                         </h3>
                         
                         <button 
@@ -155,7 +155,7 @@ const OrdersPage = () => {
                                 border: 'none',
                                 borderRadius: '50px',
                                 cursor: 'pointer',
-                                background: 'linear-gradient(45deg, var(--color-electric-blue, #4d88ff), var(--color-hot-pink, #ff007f))', 
+                                background: 'linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime))', 
                                 transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                                 transition: 'transform 0.2s ease-in-out',
                                 color: 'white'

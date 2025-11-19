@@ -130,7 +130,7 @@ const PaymentPage = () => {
 
     return (
         <div className="menu-container" style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-             <Link to="/order" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'var(--color-hot-pink)' }}>
+             <Link to="/order" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'rgb(255, 136, 0)' }}>
                 &larr; Back to Order Summary
             </Link>
 
@@ -250,7 +250,7 @@ const buttonStyle = {
     border: 'none',
     borderRadius: '50px',
     cursor: 'pointer',
-    background: 'linear-gradient(45deg, var(--color-electric-blue, #4d88ff), var(--color-hot-pink, #ff007f))', 
+    background: 'linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime))', 
     color: 'white'
 };
 
