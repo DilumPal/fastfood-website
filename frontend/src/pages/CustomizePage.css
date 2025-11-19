@@ -29,8 +29,8 @@
     position: absolute; 
     top: 25px;
     padding: 10px 15px;
-    background-color: var(--color-hot-pink, #FF007F);
-    color: white;
+    background-color: rgb(255, 136, 0);
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 8px;
     font-size: 1rem;
@@ -41,7 +41,7 @@
 }
 
 .customize-nav-btn:hover {
-    background-color: #e6006f;
+    background-color: rgb(255, 225, 0);
 }
 
 .customize-grid {
@@ -71,7 +71,7 @@
 .card-header-title {
     font-size: 1.5rem;
     font-weight: 800;
-    color: var(--color-hot-pink, #FF007F);
+    color: var(--color-primary, #0A0A0A);
     margin-bottom: 5px;
 }
 
@@ -116,7 +116,7 @@
 .base-price {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--color-electric-blue);
+    color: var(--color-primary, #0A0A0A);
 }
 
 .combo-grid {
@@ -136,13 +136,13 @@
 }
 
 .combo-option:hover {
-    border-color: var(--color-hot-pink);
+    border-color: rgb(255, 136, 0);
 }
 
 .combo-option.selected {
-    border-color: var(--color-zesty-lime, #C7FF00);
+    border-color: rgb(255, 225, 0);
     background-color: #e8ffe0;
-    box-shadow: 0 0 8px rgba(199, 255, 0, 0.5);
+    box-shadow: 0 0 8px rgb(255, 225, 0);
 }
 
 .combo-info {
@@ -158,8 +158,8 @@
 }
 
 .combo-badge {
-    background-color: var(--color-electric-blue);
-    color: white;
+    background-color: rgb(255, 136, 0);
+    color: var(--color-primary, #0A0A0A);
     padding: 3px 8px;
     border-radius: 5px;
     font-size: 0.8rem;
@@ -188,13 +188,13 @@
 }
 
 .ingredient-option:hover {
-    border-color: var(--color-hot-pink);
+    border-color: rgb(255, 136, 0);
 }
 
 .ingredient-option.selected {
-    border-color: var(--color-hot-pink, #FF007F);
+    border-color: rgb(255, 225, 0);
     background-color: #ffe0f0;
-    box-shadow: 0 0 5px rgba(255, 0, 127, 0.5);
+    box-shadow: 0 0 5px rgb(255, 136, 0);
 }
 
 .ingredient-emoji {
@@ -216,7 +216,7 @@
 
 .ingredient-price {
     font-size: 0.8rem;
-    color: var(--color-electric-blue);
+    color: var(--color-primary, #0A0A0A);
     font-weight: 500;
 }
 
@@ -224,7 +224,7 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    color: var(--color-zesty-lime);
+    color: rgb(255, 225, 0);
     font-size: 1.2rem;
     font-weight: 900;
 }
@@ -279,7 +279,7 @@
 .total-price {
     font-size: 2.2rem;
     font-weight: 900;
-    color: var(--color-zesty-lime, #C7FF00);
+    color: var(--color-primary);
 }
 
 .quantity-control-row .quantity-control {
@@ -301,7 +301,7 @@
 }
 
 .quantity-control-row .quantity-control button {
-    background-color: var(--color-hot-pink);
+    background-color: rgb(255, 136, 0);
     color: white;
     border: none;
     width: 25px;
@@ -312,7 +312,7 @@
 }
 
 .quantity-control-row .quantity-control button:hover {
-    background-color: #e6006f;
+    background-color: rgb(255, 136, 0);
 }
 
 .quantity-display {
@@ -331,8 +331,8 @@
     font-size: 1.2rem;
     font-weight: 700;
     cursor: pointer;
-    background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-electric-blue)); 
-    color: var(--color-primary);
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+    color: var(--color-primary, #0A0A0A);
     transition: opacity 0.3s, transform 0.2s;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
@@ -355,11 +355,11 @@
 }
 
 .list-title.added {
-    color: var(--color-electric-blue);
+    color: var(--color-primary, #0A0A0A);
 }
 
 .list-title.removed {
-    color: var(--color-hot-pink);
+    color: rgb(255, 136, 0);
 }
 
 .badge-group {
@@ -377,12 +377,12 @@
 }
 
 .added-badge {
-    background-color: var(--color-zesty-lime);
+    background-color: rgb(255, 225, 0);
     color: var(--color-primary);
 }
 
 .removed-badge {
     background-color: #f8e0e0;
-    color: var(--color-hot-pink);
-    border: 1px solid var(--color-hot-pink);
+    color: var(--color-primary);
+    border: 1px solid rgb(255, 225, 0);
 }
