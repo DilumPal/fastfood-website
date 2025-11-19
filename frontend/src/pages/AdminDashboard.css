@@ -20,9 +20,9 @@
     text-align: center;
     font-size: 3rem;
     font-weight: 900;
-    color: var(--color-electric-blue);
+    color: var(--color-zesty-lime);
     margin-bottom: 5px;
-    text-shadow: 0 0 15px rgba(0, 240, 255, 0.5);
+    text-shadow: 0 0 5px var(--color-zesty-lime);
 }
 
 .admin-subtitle {
@@ -54,8 +54,8 @@ th, td {
 }
 
 th {
-    background-color: var(--color-hot-pink);
-    color: var(--color-secondary);
+    background-color: rgb(255, 136, 0);
+    color: var(--color-primary);
     font-weight: 700;
     text-transform: uppercase;
 }
@@ -84,7 +84,7 @@ tr:hover {
     max-width: 550px; 
     width: 90%;
     position: relative;
-    box-shadow: 0 5px 30px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0px 10px rgb(255, 225, 0);
     color: var(--color-secondary);
     max-height: 90vh; 
     overflow-y: auto;
@@ -103,7 +103,7 @@ tr:hover {
 }
 
 .modal-close:hover {
-    color: var(--color-electric-blue);
+    color: red;
 }
 
 .modal-title {
@@ -155,5 +155,5 @@ tr:hover {
 
 .order-items-table .item-name {
     font-weight: bold;
-    color: var(--color-electric-blue);
+    color: rgb(255, 136, 0);
 }

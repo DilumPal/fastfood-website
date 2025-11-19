@@ -228,7 +228,7 @@ const AdminDashboard = () => {
                 {/* Make ID clickable */}
                 <td 
                     onClick={() => handleOrderClick(order.id)} 
-                    style={{ cursor: 'pointer', color: 'var(--color-electric-blue)', fontWeight: 'bold' }}
+                    style={{ cursor: 'pointer', color: 'rgb(255, 136, 0)', fontWeight: 'bold' }}
                 >
                     #{order.id} 
                 </td> 
