@@ -11,7 +11,7 @@
 .menu-page-title {
     font-size: 3rem;
     font-weight: 900;
-    color: var(--color-zesty-lime, #C7FF00);
+    color: rgb(255, 225, 0);
     text-shadow: 0 0 10px rgba(199, 255, 0, 0.4);
 }
 
@@ -32,8 +32,8 @@
     font-weight: 700;
     margin-bottom: 20px;
     padding-bottom: 5px;
-    border-bottom: 3px solid var(--color-hot-pink, #FF007F);
-    color: var(--color-electric-blue, #00F0FF);
+    border-bottom: 3px solid rgb(255, 225, 0);
+    color: rgb(255, 255, 0);
 }
 
 .category-items-grid {
@@ -86,7 +86,7 @@
     position: absolute;
     top: 10px;
     right: 10px;
-    background-color: var(--color-hot-pink, #FF007F);
+    background-color: #ff0000;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -126,7 +126,7 @@
 .item-price {
     font-size: 1.8rem;
     font-weight: 1000;
-    color: var(--color-electric-blue, #00F0FF);
+    color: var(--color-primary);
 }
 
 .quantity-control {
@@ -138,7 +138,7 @@
 }
 
 .quantity-control button {
-    background-color: var(--color-hot-pink, #FF007F);
+    background-color: rgb(255, 136, 0);
     color: white;
     border: none;
     padding: 5px 12px;
@@ -148,7 +148,7 @@
 }
 
 .quantity-control button:hover {
-    background-color: #e6006f; 
+    background-color: rgb(255, 136, 0); 
     transform: scale(1.05);
 }
 
@@ -185,21 +185,22 @@
 }
 
 .customize-btn { 
-    background-color: var(--color-hot-pink, #FF007F); 
-    color: white;
+    background-color: rgb(255, 136, 0); 
+    color: rgb(0, 0, 0);
 }
 
 .customize-btn:hover {
-    background-color: #e6006f; 
+    background-color: rgb(255, 225, 0); 
+    transform: scale(1.05);
 }
 
 .customize-btn:active {
-  background-color: #e6006f; 
+  background-color: rgb(255, 136, 0); 
   transform: scale(0.98);
 }
 
 .add-to-order-btn-small { 
-    background: linear-gradient(45deg, var(--color-zesty-lime, #C7FF00), var(--color-electric-blue, #00F0FF)); 
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
     color: var(--color-primary, #0A0A0A);
 }
 
@@ -241,7 +242,7 @@
 }
 
 .search-go-btn {
-    background-color: var(--color-zesty-lime, #C7FF00); 
+    background-color: rgb(255, 255, 0); 
     color: var(--color-primary, #0A0A0A);
     border: none;
     padding: 0 25px;
@@ -286,7 +287,7 @@
     top: 25px;
     left: 25px;
     padding: 5px 10px;
-    background-color: rgb(12, 235, 12);
+    background-color: rgb(255, 136, 0);
     color: rgb(0, 0, 0);
     text-decoration: none; 
     border-radius: 8px;
@@ -298,7 +299,7 @@
 }
 
 .home-button:hover {
-    background-color: rgb(255, 255, 255); 
+    background-color: rgb(255, 225, 0); 
     transform: scale(1.05);
 }
 

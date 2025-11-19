@@ -207,7 +207,7 @@ const MenuPage = () => {
                     style={{
                         left: 'unset',
                         right: '25px',
-                        backgroundColor: 'var(--color-electric-blue)'
+                        backgroundColor: 'rgb(255, 255, 0)'
                     }}
                 >
                     🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
