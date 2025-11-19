@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AboutPage from './pages/AboutPage';
 import CustomizePage from './pages/CustomizePage';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminAnalytics from './pages/AdminAnalytics';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/customize" element={<CustomizePage/>}/>
           <Route path="/payment" element={<ProtectedRoute><PaymentPage /></ProtectedRoute>} />
           <Route path="/about" element={<AboutPage/>}/>
+          <Route path="/admin-analytics" element={<AdminAnalytics />} />
           <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </Router>

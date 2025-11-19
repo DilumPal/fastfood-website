@@ -53,7 +53,7 @@ const Login = () => {
 
         
         if (data.role === 'admin') {
-            navigate('/admin'); 
+            navigate('/admin-analytics'); 
         } else {
             navigate('/'); 
         }

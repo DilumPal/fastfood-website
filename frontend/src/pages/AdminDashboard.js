@@ -24,6 +24,11 @@ const AdminDashboard = () => {
     useEffect(() => {
     }, [isAuthenticated, user, navigate]);
 
+    // NEW: Function to handle navigation to Analytics
+    const navigateToAnalytics = () => {
+        navigate('/admin-analytics');
+    };
+
     const fetchData = async (endpoint) => {
         let setter;
         let endpointName = endpoint; 
@@ -238,6 +243,16 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-container"> 
+            
+            {/* NEW ANALYTICS BUTTON */}
+            <div className="admin-header-actions">
+                <button 
+                    className="nav-button analytics-button" 
+                    onClick={navigateToAnalytics}
+                >
+                    &larr; Go to Analytics Dashboard
+                </button>
+            </div>
             
             <h1 className="admin-title">Admin Dashboard</h1> 
             <p className="admin-subtitle">Manage Users, Menu, and Orders</p> 
