@@ -127,8 +127,8 @@
 }
 
 .log-in-button {
-    background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
-    --button-shadow-color: #c70062; 
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+    --button-shadow-color: #bd0000; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
@@ -144,7 +144,7 @@
 
 .sign-up-button {
     background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    --button-shadow-color: #93bd00; 
+    --button-shadow-color: #bd0000; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
 }
 
@@ -159,10 +159,9 @@
 }
 
 .log-out-button {
-    background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-    --button-shadow-color: #00b9c7; 
+    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+    --button-shadow-color: #bd0000; 
     box-shadow: 0 4px 0 var(--button-shadow-color);
-    color: var(--color-primary);
 }
 
 .log-out-button:hover{
@@ -214,7 +213,7 @@
 
 .menu-button {
   background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-  --button-shadow-color: #93bd00; 
+  --button-shadow-color: #bd0000; 
   box-shadow: 0 6px 0 var(--button-shadow-color); 
 }
 
@@ -229,8 +228,8 @@
 }
 
 .order-button {
-  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-hot-pink));
-  --button-shadow-color: #c70062; 
+  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+  --button-shadow-color: #bd0000; 
   box-shadow: 0 6px 0 var(--button-shadow-color);
 }
 
@@ -245,10 +244,9 @@
 }
 
 .about-button {
-  background: linear-gradient(45deg, var(--color-electric-blue), var(--color-zesty-lime));
-  --button-shadow-color: #00b9c7; 
+  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
+  --button-shadow-color: #bd0000; 
   box-shadow: 0 6px 0 var(--button-shadow-color);
-  color: var(--color-primary);
 }
 
 .about-button:hover {
@@ -319,16 +317,16 @@
 }
 
 .feature-card.velocity .card-front {
-    border-bottom: 5px solid var(--color-electric-blue);
-    background: linear-gradient(45deg, rgba(231, 235, 2, 0.671), rgba(1, 223, 1, 0.719));
+    border-bottom: 5px solid rgb(255, 0, 0);
+    background: linear-gradient(5deg, rgb(255, 136, 0), rgb(244, 230, 44));
 }
 .feature-card.freshness .card-front {
-    border-bottom: 5px solid var(--color-hot-pink);
-    background: linear-gradient(45deg, rgba(255, 115, 0, 0.822), rgba(255, 238, 0, 0.733));
+    border-bottom: 5px solid rgb(255, 0, 0);
+    background: linear-gradient(5deg, rgb(255, 136, 0), rgb(244, 230, 44));
 }
 .feature-card.atmosphere .card-front {
-    border-bottom: 5px solid var(--color-zesty-lime);
-    background: linear-gradient(45deg, rgba(0, 255, 34, 0.74), rgba(0, 255, 200, 0.712));
+    border-bottom: 5px solid rgb(255, 0, 0);
+    background: linear-gradient(5deg, rgb(255, 136, 0), rgb(244, 230, 44));
 }
 
 .card-back {
@@ -350,8 +348,8 @@
     margin-bottom: 15px;
 }
 
-.velocity-back h3 { color: var(--color-electric-blue); }
-.freshness-back h3 { color: var(--color-hot-pink); }
+.velocity-back h3 { color: var(--color-zesty-lime); }
+.freshness-back h3 { color: var(--color-zesty-lime); }
 .atmosphere-back h3 { color: var(--color-zesty-lime); }
 
 .icon-placeholder {
