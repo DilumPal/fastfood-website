@@ -1,6 +1,5 @@
 /* AdminAnalytics.css */
 
-/* Reuse variables from AdminDashboard.css */
 :root {
     --color-primary: #0A0A0A; 
     --color-secondary: #F8F8F8; 
@@ -41,7 +40,6 @@
     padding-bottom: 15px;
 }
 
-/* Navigation Button Style */
 .nav-button {
     padding: 10px 20px;
     background-color: var(--color-hot-pink);
@@ -58,7 +56,6 @@
     transform: translateY(-2px);
 }
 
-/* Metrics Grid */
 .metrics-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -112,7 +109,6 @@
     padding-bottom: 10px;
 }
 
-/* Reusing data-table styling for simplicity */
 .analytics-table {
     width: 100%;
     border-collapse: collapse;
@@ -156,7 +152,6 @@
     line-height: 1.5;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 900px) {
     .data-sections-grid {
         grid-template-columns: 1fr;

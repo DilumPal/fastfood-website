@@ -1,10 +1,10 @@
-// AdminAnalytics.js - UPDATED SECTION for 7 Days Trend
+// AdminAnalytics.js 
 
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import './AdminAnalytics.css';
-// REMINDER: These imports REQUIRE 'recharts' to be installed (npm install recharts
+
 import { 
     BarChart, 
     Bar, 
@@ -16,13 +16,10 @@ import {
     ResponsiveContainer 
 } from 'recharts';
 
-
-// Helper function to format the 'YYYY-MM-DD' string into a chart label
 const formatDayLabel = (dayString) => {
     if (!dayString) return '';
     const [year, month, day] = dayString.split('-');
     const date = new Date(year, month - 1, day);
-    // Format: 'Nov 19'
     return date.toLocaleString('en-US', { day: 'numeric', month: 'short' });
 };
 
@@ -53,7 +50,6 @@ const AdminAnalytics = () => {
             if (jsonResponse.success) {
                 const data = jsonResponse.data;
                 
-                // Format Trend Data: map 'day' to 'dayLabel'
                 const formattedTrends = (data.order_trends || []).map(trend => ({
                     ...trend,
                     dayLabel: formatDayLabel(trend.day), 
@@ -66,7 +62,7 @@ const AdminAnalytics = () => {
                     customerFrequency: data.metrics.customer_frequency || 'N/A',
                     topSelling: data.top_selling_items || [],
                     leastSelling: data.least_selling_items || [],
-                    orderTrends: formattedTrends, // Use formatted data
+                    orderTrends: formattedTrends, 
                 });
             } else {
                 setError(jsonResponse.message || "Failed to load analytics data.");
@@ -116,7 +112,6 @@ const AdminAnalytics = () => {
             </div>
             <p className="admin-analytics-subtitle">Key Performance Indicators and Sales Trends</p>
 
-            {/* --- Sales Metrics --- */}
             <div className="metrics-grid">
                 {renderMetricCard('Monthly Sales (Current)', analyticsData.monthlySales)}
                 {renderMetricCard('Total Revenue (YTD)', analyticsData.totalRevenue)}
@@ -124,10 +119,8 @@ const AdminAnalytics = () => {
                 {renderMetricCard('Customer Order Frequency', analyticsData.customerFrequency, false)}
             </div>
 
-            {/* --- Item Performance and Trends --- */}
             <div className="data-sections-grid">
                 
-                {/* Top Selling Items */}
                 <section className="item-performance-section">
                     <h2 className="section-title">🥇 Top-Selling Items</h2>
                     <table className="analytics-table">
@@ -146,7 +139,6 @@ const AdminAnalytics = () => {
                     </table>
                 </section>
 
-                {/* Least Selling Items */}
                 <section className="item-performance-section">
                     <h2 className="section-title">📉 Least-Selling Items</h2>
                     <table className="analytics-table">
@@ -166,7 +158,6 @@ const AdminAnalytics = () => {
                 </section>
             </div>
 
-            {/* Order Trends Chart Section */}
             <section className="chart-section">
                 <h2 className="section-title">📈 Order Trends (Last 7 Days)</h2> {/* UPDATED TITLE */}
                 {analyticsData.orderTrends.length > 0 ? (
@@ -178,10 +169,8 @@ const AdminAnalytics = () => {
                             >
                                 <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                                 
-                                {/* XAxis uses the new 'dayLabel' key */}
                                 <XAxis dataKey="dayLabel" stroke="#F8F8F8" /> 
                                 
-                                {/* YAxis for Revenue (primary data) */}
                                 <YAxis 
                                     yAxisId="left" 
                                     orientation="left" 
@@ -189,7 +178,6 @@ const AdminAnalytics = () => {
                                     tickFormatter={(value) => `$${value.toFixed(0)}`}
                                 />
                                 
-                                {/* YAxis for Orders (secondary data) */}
                                 <YAxis 
                                     yAxisId="right" 
                                     orientation="right" 
@@ -207,10 +195,8 @@ const AdminAnalytics = () => {
                                 />
                                 <Legend wrapperStyle={{ paddingTop: '20px' }} />
                                 
-                                {/* Revenue Bar */}
                                 <Bar yAxisId="left" dataKey="totalRevenue" fill="#00F0FF" name="Total Revenue" /> 
                                 
-                                {/* Orders Bar */}
                                 <Bar yAxisId="right" dataKey="totalOrders" fill="#FF007F" name="Total Orders" />
                             </BarChart>
                         </ResponsiveContainer>

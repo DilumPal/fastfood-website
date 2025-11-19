@@ -1,6 +1,5 @@
 <?php
-// admin_analytics.php - Updated for Last 7 Days Trends
-
+// admin_analytics.php 
 ob_start();
 error_reporting(0); 
 
@@ -19,7 +18,7 @@ $username = "root";
 $password = ""; 
 $dbname = "fastfood_db";
 
-$COGS_PERCENTAGE = 0.30; // Using 30% of revenue as the estimated Cost of Goods Sold
+$COGS_PERCENTAGE = 0.30; 
 
 $response = [
     'success' => false,
@@ -34,9 +33,6 @@ try {
         throw new Exception("Database connection failed: " . $conn->connect_error);
     }
 
-    // --- 1. Metric Aggregations (Revenue, COGS, Profit, Frequency) ---
-
-    // Total Revenue, Total COGS (Estimated), and Total Orders/Users
     $sql_metrics = "
         SELECT 
             (SELECT SUM(total) FROM orders) AS total_revenue_all_time,
@@ -51,7 +47,6 @@ try {
     }
     $metrics = $result_metrics->fetch_assoc();
     
-    // Calculate total COGS based on order_items (30% of final price)
     $sql_cogs = "
         SELECT 
             SUM(oi.quantity * oi.final_unit_price * {$COGS_PERCENTAGE}) AS total_estimated_cogs
@@ -72,16 +67,14 @@ try {
     $unique_users = (int)$metrics['unique_users'];
     $customer_frequency = $unique_users > 0 ? $total_orders / $unique_users : 0;
     
-    // Store core metrics
+    
     $response['data']['metrics'] = [
         'monthly_sales' => (float)$metrics['monthly_sales'],
         'total_revenue' => $total_revenue,
-        'net_profit' => $net_profit, // Revenue - Estimated COGS
+        'net_profit' => $net_profit, 
         'customer_frequency' => number_format($customer_frequency, 2) . ' orders/user',
     ];
 
-
-    // --- 2. Top/Least Selling Items ---
     $item_performance_sql = "
         SELECT 
             mi.name, 
@@ -106,19 +99,16 @@ try {
         $all_items_performance[] = $row;
     }
     
-    // Separate into Top (DESC) and Least (ASC)
     usort($all_items_performance, function($a, $b) {
-        return $b['total_sold'] - $a['total_sold']; // Sort Descending
+        return $b['total_sold'] - $a['total_sold']; 
     });
     $response['data']['top_selling_items'] = array_slice($all_items_performance, 0, 5);
     
     usort($all_items_performance, function($a, $b) {
-        return $a['total_sold'] - $b['total_sold']; // Sort Ascending
+        return $a['total_sold'] - $b['total_sold']; 
     });
     $response['data']['least_selling_items'] = array_slice($all_items_performance, 0, 5);
 
-
-    // --- 3. Order Trends (Last 7 Days) ---
     $sql_trends = "
         SELECT 
             DATE_FORMAT(order_time, '%Y-%m-%d') AS order_day, 
@@ -138,7 +128,7 @@ try {
     $trends = [];
     while ($row = $result_trends->fetch_assoc()) {
         $trends[] = [
-            'day' => $row['order_day'], // Changed key from 'month' to 'day'
+            'day' => $row['order_day'], 
             'totalOrders' => (int)$row['total_orders'],
             'totalRevenue' => (float)$row['total_revenue'],
         ];
