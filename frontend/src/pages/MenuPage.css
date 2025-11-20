@@ -395,8 +395,6 @@
     100% { transform: translateX(-50%) scaleX(0.6); opacity: 0.2; }
 }
 
-
-/* --- Custom Notification Styles --- */
 .notification {
     position: fixed;
     top: -60px;
@@ -418,11 +416,11 @@
 }
 
 .notification.success {
-    background: #28a745; /* Green for success */
+    background: #28a745; 
     border: 1px solid #1e7e34;
 }
 
 .notification.error {
-    background: #dc3545; /* Red for error/warning */
+    background: #dc3545; 
     border: 1px solid #bd2130;
 }

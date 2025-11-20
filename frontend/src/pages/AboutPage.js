@@ -7,18 +7,13 @@ import './AboutPage.css';
 
 const FeatureCard = ({ icon, title, description, backText }) => (
     <div className="flip-card">
-        {/* The inner container that will be rotated */}
         <div className="flip-card-inner">
-            
-            {/* Front of the Card */}
             <div className="flip-card-front">
                 <div className="icon-placeholder">{icon}</div>
                 <h3>{title}</h3>
                 <p className="card-description">{description}</p>
                 <div className="hover-hint">Hover to See More!</div> 
             </div>
-
-            {/* Back of the Card */}
             <div className="flip-card-back">
                 <p className="back-text">{backText}</p>
                 <Link to="/menu" className="cta-button">See Menu</Link>
@@ -31,17 +26,14 @@ const FeatureCard = ({ icon, title, description, backText }) => (
 const AboutPage = () => {
     return (
         <div className="menu-container"> 
-            
-            {/* Back to Home Button */}
+        
             <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'var(--color-hot-pink)' }}>
                 &larr; Back to Home
             </Link>
 
-            {/* Title */}
             <h1 className="menu-page-title" style={{ marginTop: '50px' }}>About YumZone</h1>
             <h2 className="menu-page-subtitle">Our Story: Where Flavor Meets Fun!</h2>
 
-            {/* --- 1. Catchy Intro / Brand Story --- */}
             <section style={{ maxWidth: '800px', margin: '40px auto 70px auto', textAlign: 'center' }}>
                 <p style={{ fontSize: '1.2rem', lineHeight: '1.8', color: 'var(--color-secondary)' }}>
                     Welcome to **YumZone** — where flavor meets fun! <span className="bouncing-emoji">🍔</span> We started with one simple goal: 
@@ -50,13 +42,11 @@ const AboutPage = () => {
                 </p>
             </section>
 
-            {/* --- 2. What Makes You Special (Presented as Cards) --- */}
             <h2 className="category-title" style={{ maxWidth: '950px', margin: '0 auto 30px auto', borderBottomColor: 'var(--color-zesty-lime)' }}>
                 The YumZone Difference
             </h2>
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px', padding: '0 20px 80px 20px' }}>
                 
-                {/* REMEMBER TO ADD YOUR CREATIVE SENTENCES TO 'backText' */}
                 <FeatureCard 
                     icon="🔥" 
                     title="Freshness First" 
@@ -83,7 +73,6 @@ const AboutPage = () => {
                 />
             </div>
             
-            {/* --- 3. Our Mission --- */}
             <section style={{ 
                 maxWidth: '800px', 
                 margin: '0 auto 70px auto', 
@@ -102,7 +91,6 @@ const AboutPage = () => {
                 </p>
             </section>
 
-            {/* --- 6. Customer Promise & Contact Info --- */}
             <section style={{ maxWidth: '800px', margin: '0 auto 50px auto', textAlign: 'center' }}>
                 <p style={{ fontSize: '1.2rem', fontWeight: '700', color: 'var(--color-zesty-lime)', marginBottom: '30px' }}>
                     Your satisfaction fuels our passion!

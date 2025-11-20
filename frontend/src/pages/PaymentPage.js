@@ -19,15 +19,13 @@ const PaymentPage = () => {
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
     
-    // Notification State
     const [notification, setNotification] = useState({
         message: '',
-        type: '', // 'success' or 'error'
+        type: '',
         show: false,
         action: null 
     });
 
-    // showNotification function
     const showNotification = useCallback((message, type = 'success', action = null, duration = 4000) => {
         setNotification({ message, type, show: true, action });
         
@@ -39,7 +37,6 @@ const PaymentPage = () => {
         }, duration);
     }, []); 
 
-    // Handle missing orderData with notification and redirect
     useEffect(() => {
         if (!orderData) {
             showNotification("No Order Data Found. Redirecting to menu.", 'error', () => navigate('/menu'), 5000);
@@ -145,7 +142,6 @@ const PaymentPage = () => {
             const result = await response.json();
             
             if (result.success) {
-                // Replaced alert() with showNotification()
                 clearCart(); 
                 showNotification(
                     `🎉 Payment Successful! Your order ID is: ${result.order_id}. Redirecting you to the home page.`, 
@@ -168,7 +164,6 @@ const PaymentPage = () => {
 
     return (
         <div className="menu-container" style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            {/* Custom Notification Component */}
             <div 
                 className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
             >

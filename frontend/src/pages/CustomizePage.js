@@ -19,7 +19,6 @@ const groupIngredients = (ingredients) => {
     }, {});
 };
 
-
 const CustomizePage = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -45,22 +44,19 @@ const CustomizePage = () => {
     const [customizations, setCustomizations] = useState(initialCustomizations);
     const [quantity, setQuantity] = useState(baseItem?.quantity || 1);
 
-    // New state for custom notifications
     const [notification, setNotification] = useState({
         message: '',
-        type: '', // 'success' or 'error'
+        type: '',
         show: false,
-        action: null // Optional callback function for action after showing
+        action: null 
     });
 
     const showNotification = useCallback((message, type = 'success', action = null, duration = 3000) => {
         setNotification({ message, type, show: true, action });
         
-        // Timer to hide notification and execute action
         setTimeout(() => {
             setNotification(prev => ({ ...prev, show: false }));
             if (action) {
-                // Execute action after notification fades out
                 action(); 
             }
         }, duration);
@@ -68,7 +64,6 @@ const CustomizePage = () => {
 
     useEffect(() => {
         if (!baseItem) {
-            // Replaced alert with custom notification, navigation is handled by the action callback
             showNotification("No item selected for customization. Redirecting to menu.", 'error', () => navigate('/menu'), 5000);
             return;
         }
@@ -152,7 +147,6 @@ const CustomizePage = () => {
 
     const handleAddToCart = () => {
         if (!isAuthenticated) {
-            // Replaced alert with custom notification, navigation is handled by the action callback
             showNotification("Please login to add items to your order 😊", 'error', () => navigate('/login'));
             return;
         }
@@ -167,8 +161,6 @@ const CustomizePage = () => {
             quantity: quantity,
             customizationDetails: displayCustomizationDetails 
         });
-
-        // Replaced alert with custom notification, navigation is handled by the action callback
         showNotification(`Added ${quantity}x ${baseItem.name} (Customized) to your order!`, 'success', () => navigate("/order"));
     };
     
@@ -255,14 +247,12 @@ const CustomizePage = () => {
 
     return (
         <div className="customize-page-container">
-            {/* Custom Notification Component */}
             <div 
                 className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
             >
                 {notification.message}
             </div>
             
-            {/* Header & Navigation */}
             <button className="customize-nav-btn" onClick={() => navigate(-1)} style={{ left: '25px' }}>
                 &larr; Back
             </button>
@@ -275,10 +265,7 @@ const CustomizePage = () => {
 
             <div className="customize-grid">
                 
-                {/* Left Column - Dynamic Customization Options */}
                 <div className="customize-options-container">
-                    
-                    {/* Item Preview Card */}
                     <div className="custom-card item-preview-card">
                         <div className="preview-image-container">
                              <img src={baseItem.image_url || '/placeholder.jpg'} alt={baseItem.name} className="preview-image"/>
@@ -291,10 +278,8 @@ const CustomizePage = () => {
                     </div>
 
                     {renderCustomizationOptions()}
-
                 </div>
 
-                {/* Right Column - Order Summary (Sticky) */}
                 <div className="customize-summary-container">
                     <div className="custom-card summary-card sticky-summary">
                         <h3 className="summary-title">Order Summary</h3>
@@ -325,13 +310,11 @@ const CustomizePage = () => {
 
                             <hr className="summary-separator" />
                             
-                            {/* Final Unit Price */}
                             <div className="summary-row">
                                 <span className="summary-label font-bold">Unit Price (Final)</span>
                                 <span>${calculateUnitAdjustedPrice.toFixed(2)}</span>
                             </div>
 
-                            {/* Quantity Selector */}
                             <div className="summary-row quantity-control-row">
                                 <span className="summary-label font-bold">Quantity</span>
                                 <div className="quantity-control small-control">
@@ -343,13 +326,11 @@ const CustomizePage = () => {
                             
                             <hr className="summary-separator" />
 
-                            {/* Total */}
                             <div className="summary-row total-row">
                                 <span className="summary-label total-label">Total</span>
                                 <span className="total-price">${calculateTotal.toFixed(2)}</span>
                             </div>
 
-                            {/* Add to Cart Button */}
                             <button
                                 onClick={handleAddToCart}
                                 className="add-to-cart-btn"
@@ -358,7 +339,6 @@ const CustomizePage = () => {
                             </button>
                         </div>
                         
-                        {/* Dynamic Customizations Summary */}
                         <div className="summary-customizations">
                            {displayCustomizationDetails && (
                                 <React.Fragment>

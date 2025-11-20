@@ -24,7 +24,6 @@ const AdminDashboard = () => {
     useEffect(() => {
     }, [isAuthenticated, user, navigate]);
 
-    // NEW: Function to handle navigation to Analytics
     const navigateToAnalytics = () => {
         navigate('/admin-analytics');
     };
@@ -164,7 +163,6 @@ const AdminDashboard = () => {
                                                 <td>${parseFloat(item.price_at_time).toFixed(2)}</td>
                                                 <td>${(item.quantity * parseFloat(item.price_at_time)).toFixed(2)}</td>
                                             </tr>
-                                            {/* NEW: Row for Customization Details */}
                                             {item.customizations && item.customizations.length > 0 && (
                                                 <tr className="customization-row">
                                                     <td colSpan="4">
@@ -225,7 +223,6 @@ const AdminDashboard = () => {
 
         return orders.map(order => (
             <tr key={order.id}>
-                {/* Make ID clickable */}
                 <td 
                     onClick={() => handleOrderClick(order.id)} 
                     style={{ cursor: 'pointer', color: 'rgb(255, 136, 0)', fontWeight: 'bold' }}
@@ -244,7 +241,6 @@ const AdminDashboard = () => {
     return (
         <div className="admin-container"> 
             
-            {/* NEW ANALYTICS BUTTON */}
             <div className="admin-header-actions">
                 <button 
                     className="nav-button analytics-button" 
@@ -261,7 +257,6 @@ const AdminDashboard = () => {
             
             <div className="data-display">
             
-                {/* Users Table */}
                 <section style={{ marginBottom: '50px' }}>
                     <h2 className="section-title">User Management ({users.length})</h2>
                     <table className="data-table"> 
@@ -279,7 +274,6 @@ const AdminDashboard = () => {
                     </table>
                 </section>
 
-                {/* Menu Items Table */}
                 <section style={{ marginBottom: '50px' }}>
                     <h2 className="section-title">Menu Item Inventory ({menuItems.length})</h2>
                     <table className="data-table">
@@ -298,7 +292,6 @@ const AdminDashboard = () => {
                     </table>
                 </section>
 
-                {/* Orders Table */}
                 <section>
                     <h2 className="section-title">Recent Orders ({orders.length})</h2>
                     <table className="data-table">
@@ -319,7 +312,6 @@ const AdminDashboard = () => {
                 </section>
             </div>
             
-            {/* RENDER THE MODAL */}
             <OrderDetailsModal />
         </div>
     );

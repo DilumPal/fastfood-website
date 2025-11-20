@@ -413,6 +413,6 @@
 }
 
 .notification.error {
-    background: #dc3545; /* Red for error/warning */
+    background: #dc3545;
     border: 1px solid #bd2130;
 }

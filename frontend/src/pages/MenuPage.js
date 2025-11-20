@@ -22,7 +22,6 @@ const MenuItemCard = ({ item, addToCart, isAuthenticated, navigate, showNotifica
             quantity: quantity
         });
 
-        // Success notification for adding to cart
         showNotification(`Added ${quantity}x ${item.name} to your order!`, 'success');
         setQuantity(1);
     };
@@ -110,12 +109,11 @@ const MenuPage = () => {
     const [showSuggestions, setShowSuggestions] = useState(false);
     const { cartItems, orderTotal, addToCart } = useCart(); 
     
-    // New state for custom notifications
     const [notification, setNotification] = useState({
         message: '',
-        type: '', // 'success' or 'error'
+        type: '', 
         show: false,
-        action: null // Optional callback function for action after showing
+        action: null 
     });
 
     const showNotification = (message, type = 'success', action = null, duration = 3000) => {
@@ -123,7 +121,6 @@ const MenuPage = () => {
         
         setTimeout(() => {
             setNotification(prev => ({ ...prev, show: false }));
-            // Execute action after notification fades out (e.g., redirect)
             if (action) {
                 action(); 
             }
@@ -216,7 +213,6 @@ const MenuPage = () => {
     
     return (
         <div className="menu-container">
-            {/* Custom Notification Component */}
             <div 
                 className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
             >
