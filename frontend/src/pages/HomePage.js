@@ -55,9 +55,9 @@ const HomePage = () => {
   return (
     <div className="home-container">
       <header className="main-header">
-        <div className="logo-letters1"><span className="bouncing-emoji">🥯</span>🧀<span className="bouncing-emoji">🥞</span>🌭<span className="bouncing-emoji">🍔</span>🍟<span className="bouncing-emoji">🍕</span>🥪</div>
+        <div className="logo-letters1">🥯🧀🥞🌭🍔🍟🥪🍕</div>
         <div className="logo">YumZone</div>
-        <div className="logo-letters2"><span className="bouncing-emoji">🌮</span>🌯<span className="bouncing-emoji">🍣</span>🍝<span className="bouncing-emoji">🍔</span>🥧<span className="bouncing-emoji">🍩</span>🍪</div>
+        <div className="logo-letters2">🌮🌯🍣🍝🍔🥧🍩🍪</div>
       </header>
       
       <div className="hero">
