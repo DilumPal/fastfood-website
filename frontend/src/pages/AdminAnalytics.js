@@ -159,7 +159,7 @@ const AdminAnalytics = () => {
             </div>
 
             <section className="chart-section">
-                <h2 className="section-title">📈 Order Trends (Last 7 Days)</h2> {/* UPDATED TITLE */}
+                <h2 className="section-title">📈 Order Trends (Last 7 Days)</h2> 
                 {analyticsData.orderTrends.length > 0 ? (
                     <div style={{ width: '100%', height: 400 }}>
                         <ResponsiveContainer width="100%" height="100%">
@@ -174,19 +174,19 @@ const AdminAnalytics = () => {
                                 <YAxis 
                                     yAxisId="left" 
                                     orientation="left" 
-                                    stroke="#00F0FF" 
+                                    stroke="rgb(255, 136, 0)" 
                                     tickFormatter={(value) => `$${value.toFixed(0)}`}
                                 />
                                 
                                 <YAxis 
                                     yAxisId="right" 
                                     orientation="right" 
-                                    stroke="#FF007F" 
+                                    stroke="rgb(255, 225, 0)" 
                                     allowDecimals={false}
                                 />
                                 
                                 <Tooltip 
-                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid #00F0FF' }}
+                                    contentStyle={{ backgroundColor: '#1a1a1a', border: '1px solid rgb(255, 136, 0)' }} 
                                     formatter={(value, name) => {
                                         if (name === 'Total Revenue') return [`$${value.toFixed(2)}`, name];
                                         if (name === 'Total Orders') return [value, name];
@@ -195,9 +195,9 @@ const AdminAnalytics = () => {
                                 />
                                 <Legend wrapperStyle={{ paddingTop: '20px' }} />
                                 
-                                <Bar yAxisId="left" dataKey="totalRevenue" fill="#00F0FF" name="Total Revenue" /> 
+                                <Bar yAxisId="left" dataKey="totalRevenue" fill="rgb(255, 136, 0)" name="Total Revenue" /> /* Replaced #00F0FF with Orange */
                                 
-                                <Bar yAxisId="right" dataKey="totalOrders" fill="#FF007F" name="Total Orders" />
+                                <Bar yAxisId="right" dataKey="totalOrders" fill="rgb(255, 225, 0)" name="Total Orders" /> /* Replaced #FF007F with Yellow */
                             </BarChart>
                         </ResponsiveContainer>
                     </div>

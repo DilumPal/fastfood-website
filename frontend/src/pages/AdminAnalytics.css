@@ -3,8 +3,8 @@
 :root {
     --color-primary: #0A0A0A; 
     --color-secondary: #F8F8F8; 
-    --color-electric-blue: #00F0FF;
-    --color-hot-pink: #FF007F;
+    --color-electric-blue: rgb(255, 136, 0); 
+    --color-hot-pink: rgb(255, 225, 0); 
     --color-zesty-lime: #C7FF00;
 }
 
@@ -42,8 +42,8 @@
 
 .nav-button {
     padding: 10px 20px;
-    background-color: var(--color-hot-pink);
-    color: var(--color-secondary);
+    background-color: var(--color-hot-pink); 
+    color: var(--color-primary);
     border: none;
     border-radius: 5px;
     font-weight: bold;
@@ -52,7 +52,7 @@
 }
 
 .nav-button:hover {
-    background-color: #e60073;
+    background-color: rgb(220, 190, 0); 
     transform: translateY(-2px);
 }
 
@@ -68,7 +68,7 @@
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    border-left: 5px solid var(--color-electric-blue);
+    border-left: 5px solid var(--color-electric-blue); 
 }
 
 .metric-card:nth-child(3) {
@@ -102,7 +102,7 @@
 }
 
 .section-title {
-    color: var(--color-electric-blue);
+    color: var(--color-electric-blue); 
     margin-bottom: 15px;
     font-size: 1.5rem;
     border-bottom: 1px solid #333;

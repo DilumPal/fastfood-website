@@ -96,7 +96,7 @@ const AboutPage = () => {
                     fontSize: '1.8rem', 
                     fontWeight: '900', 
                     color: 'var(--color-electric-blue)',
-                    textShadow: '0 0 10px rgba(0, 240, 255, 0.5)'
+                    textShadow: '0 0 1px rgba(0, 240, 255, 0.5)'
                 }}>
                     "Our mission is to bring smiles through delicious, freshly prepared fast food that fits your lifestyle."
                 </p>
