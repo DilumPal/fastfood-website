@@ -1,5 +1,5 @@
 // PaymentPage.js
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useCart } from '../context/OrderContext'; 
 import './MenuPage.css'; 
@@ -9,8 +9,8 @@ const PaymentPage = () => {
     const location = useLocation();
     const orderData = location.state?.orderData; 
     const { clearCart } = useCart(); 
-    const [customerPhone, setCustomerPhone] = useState(orderData.customer_phone || ''); 
-    const [customerAddress, setCustomerAddress] = useState(orderData.customer_address || ''); 
+    const [customerPhone, setCustomerPhone] = useState(orderData?.customer_phone || ''); 
+    const [customerAddress, setCustomerAddress] = useState(orderData?.customer_address || ''); 
     const [cardNumber, setCardNumber] = useState('');
     const [cardName, setCardName] = useState('');
     const [expiry, setExpiry] = useState('');
@@ -18,12 +18,39 @@ const PaymentPage = () => {
     const [focus, setFocus] = useState(''); 
     const [error, setError] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
+    
+    // Notification State
+    const [notification, setNotification] = useState({
+        message: '',
+        type: '', // 'success' or 'error'
+        show: false,
+        action: null 
+    });
+
+    // showNotification function
+    const showNotification = useCallback((message, type = 'success', action = null, duration = 4000) => {
+        setNotification({ message, type, show: true, action });
+        
+        setTimeout(() => {
+            setNotification(prev => ({ ...prev, show: false }));
+            if (action) {
+                action(); 
+            }
+        }, duration);
+    }, []); 
+
+    // Handle missing orderData with notification and redirect
+    useEffect(() => {
+        if (!orderData) {
+            showNotification("No Order Data Found. Redirecting to menu.", 'error', () => navigate('/menu'), 5000);
+        }
+    }, [orderData, navigate, showNotification]);
 
     if (!orderData) {
         return (
             <div className="menu-container" style={{ textAlign: 'center', paddingTop: '100px' }}>
-                <h1>No Order Data Found</h1>
-                <p>Please return to the <Link to="/menu">menu</Link> to place an order.</p>
+                <h1>Loading...</h1>
+                <p>Redirecting you to the menu shortly.</p>
             </div>
         );
     }
@@ -48,17 +75,20 @@ const PaymentPage = () => {
 
         if (customerPhone.trim() === '') {
              setError('Phone Number is required.');
+             showNotification('Phone Number is required.', 'error', null, 2500);
              setIsProcessing(false);
              return;
         }
         if (customerAddress.trim() === '') {
              setError('Delivery Address is required.');
+             showNotification('Delivery Address is required.', 'error', null, 2500);
              setIsProcessing(false);
              return;
         }
         
         if (cardNumber.replace(/\s/g, '').length !== 16) {
             setError('Card Number must be 16 digits.');
+            showNotification('Card Number must be 16 digits.', 'error', null, 2500);
             setIsProcessing(false);
             return;
         }
@@ -66,18 +96,21 @@ const PaymentPage = () => {
         const [month, year] = expiry.split('/');
         if (!month || !year || month.length !== 2 || year.length !== 2 || isNaN(month) || isNaN(year) || parseInt(month) < 1 || parseInt(month) > 12) {
              setError('Expiry must be in valid MM/YY format.');
+             showNotification('Expiry must be in valid MM/YY format.', 'error', null, 2500);
              setIsProcessing(false);
              return;
         }
         
         if (cvc.length !== 3 || isNaN(cvc)) {
             setError('CVV must be 3 digits.');
+            showNotification('CVV must be 3 digits.', 'error', null, 2500);
             setIsProcessing(false);
             return;
         }
 
         if (cardName.trim() === '') {
             setError('Name on Card is required.');
+            showNotification('Name on Card is required.', 'error', null, 2500);
             setIsProcessing(false);
             return;
         }
@@ -112,17 +145,22 @@ const PaymentPage = () => {
             const result = await response.json();
             
             if (result.success) {
-                alert(`🎉 Payment Successful! Your order ID is: ${result.order_id}. You will be redirected to the home page.`);
-                
+                // Replaced alert() with showNotification()
                 clearCart(); 
-                
-                navigate('/'); 
+                showNotification(
+                    `🎉 Payment Successful! Your order ID is: ${result.order_id}. Redirecting you to the home page.`, 
+                    'success', 
+                    () => navigate('/'), 
+                    5000 
+                );
             } else {
                 setError('Failed to process payment: ' + (result.error || 'Unknown error.'));
+                showNotification('Payment Failed: ' + (result.error || 'Unknown error.'), 'error');
             }
         } catch (error) {
             console.error('Error submitting order and payment:', error);
             setError('An error occurred during payment. Please check your console for details.');
+            showNotification('An error occurred during payment. Please try again.', 'error');
         } finally {
             setIsProcessing(false);
         }
@@ -130,6 +168,13 @@ const PaymentPage = () => {
 
     return (
         <div className="menu-container" style={{ padding: '0 20px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            {/* Custom Notification Component */}
+            <div 
+                className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
+            >
+                {notification.message}
+            </div>
+
              <Link to="/order" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'rgb(255, 136, 0)' }}>
                 &larr; Back to Order Summary
             </Link>
