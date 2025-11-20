@@ -251,7 +251,7 @@ const buttonStyle = {
     borderRadius: '50px',
     cursor: 'pointer',
     background: 'linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime))', 
-    color: 'white'
+    color: 'black'
 };
 
 

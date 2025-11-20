@@ -158,7 +158,7 @@ const OrdersPage = () => {
                                 background: 'linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime))', 
                                 transform: isHovered ? 'scale(1.05)' : 'scale(1)',
                                 transition: 'transform 0.2s ease-in-out',
-                                color: 'white'
+                                color: 'black'
                             }}
                         >
                             PROCEED TO PAYMENT
