@@ -45,15 +45,36 @@ const CustomizePage = () => {
     const [customizations, setCustomizations] = useState(initialCustomizations);
     const [quantity, setQuantity] = useState(baseItem?.quantity || 1);
 
+    // New state for custom notifications
+    const [notification, setNotification] = useState({
+        message: '',
+        type: '', // 'success' or 'error'
+        show: false,
+        action: null // Optional callback function for action after showing
+    });
+
+    const showNotification = useCallback((message, type = 'success', action = null, duration = 3000) => {
+        setNotification({ message, type, show: true, action });
+        
+        // Timer to hide notification and execute action
+        setTimeout(() => {
+            setNotification(prev => ({ ...prev, show: false }));
+            if (action) {
+                // Execute action after notification fades out
+                action(); 
+            }
+        }, duration);
+    }, []); 
 
     useEffect(() => {
         if (!baseItem) {
-            alert("No item selected for customization. Redirecting to menu.");
-            navigate('/menu');
+            // Replaced alert with custom notification, navigation is handled by the action callback
+            showNotification("No item selected for customization. Redirecting to menu.", 'error', () => navigate('/menu'), 5000);
+            return;
         }
         setCustomizations(initialCustomizations);
         setQuantity(baseItem?.quantity || 1);
-    }, [baseItem, navigate, initialCustomizations]);
+    }, [baseItem, navigate, initialCustomizations, showNotification]);
     
     const toggleMultiSelect = (key, itemId) => {
         setCustomizations(prev => {
@@ -131,8 +152,8 @@ const CustomizePage = () => {
 
     const handleAddToCart = () => {
         if (!isAuthenticated) {
-            alert("Please login to add items to your order 😊");
-            navigate('/login');
+            // Replaced alert with custom notification, navigation is handled by the action callback
+            showNotification("Please login to add items to your order 😊", 'error', () => navigate('/login'));
             return;
         }
 
@@ -147,8 +168,8 @@ const CustomizePage = () => {
             customizationDetails: displayCustomizationDetails 
         });
 
-        alert(`Added ${quantity}x ${baseItem.name} to order for $${calculateTotal.toFixed(2)}!`);
-        navigate("/order"); 
+        // Replaced alert with custom notification, navigation is handled by the action callback
+        showNotification(`Added ${quantity}x ${baseItem.name} (Customized) to your order!`, 'success', () => navigate("/order"));
     };
     
     const renderCustomizationOptions = () => {
@@ -234,6 +255,12 @@ const CustomizePage = () => {
 
     return (
         <div className="customize-page-container">
+            {/* Custom Notification Component */}
+            <div 
+                className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
+            >
+                {notification.message}
+            </div>
             
             {/* Header & Navigation */}
             <button className="customize-nav-btn" onClick={() => navigate(-1)} style={{ left: '25px' }}>

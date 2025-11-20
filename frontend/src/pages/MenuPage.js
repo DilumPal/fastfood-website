@@ -6,15 +6,12 @@ import { useNavigate } from "react-router-dom";
 import './MenuPage.css';
 import { Link } from 'react-router-dom';
 
-const MenuItemCard = ({ item, addToCart }) => { 
+const MenuItemCard = ({ item, addToCart, isAuthenticated, navigate, showNotification }) => { 
     const [quantity, setQuantity] = useState(1);
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
 
     const handleAddToCart = () => {
         if (!isAuthenticated) {
-            alert("Please login to add items to your order 😊");
-            navigate('/login');
+            showNotification("Please login to add items to your order 😊", 'error', () => navigate('/login'));
             return;
         }
 
@@ -25,13 +22,14 @@ const MenuItemCard = ({ item, addToCart }) => {
             quantity: quantity
         });
 
+        // Success notification for adding to cart
+        showNotification(`Added ${quantity}x ${item.name} to your order!`, 'success');
         setQuantity(1);
     };
 
     const handleCustomize = () => {
         if (!isAuthenticated) {
-            alert("Please login to add items to your order 😊");
-            navigate('/login');
+            showNotification("Please login to customize items 😊", 'error', () => navigate('/login'));
             return;
         }
 
@@ -107,9 +105,31 @@ const MenuPage = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { isAuthenticated } = useAuth();
+    const navigate = useNavigate();
     const [searchTerm, setSearchTerm] = useState('');
     const [showSuggestions, setShowSuggestions] = useState(false);
     const { cartItems, orderTotal, addToCart } = useCart(); 
+    
+    // New state for custom notifications
+    const [notification, setNotification] = useState({
+        message: '',
+        type: '', // 'success' or 'error'
+        show: false,
+        action: null // Optional callback function for action after showing
+    });
+
+    const showNotification = (message, type = 'success', action = null, duration = 3000) => {
+        setNotification({ message, type, show: true, action });
+        
+        setTimeout(() => {
+            setNotification(prev => ({ ...prev, show: false }));
+            // Execute action after notification fades out (e.g., redirect)
+            if (action) {
+                action(); 
+            }
+        }, duration);
+    };
+
 
     useEffect(() => {
         const fetchMenu = async () => {
@@ -196,6 +216,13 @@ const MenuPage = () => {
     
     return (
         <div className="menu-container">
+            {/* Custom Notification Component */}
+            <div 
+                className={`notification ${notification.show ? 'show' : ''} ${notification.type}`}
+            >
+                {notification.message}
+            </div>
+            
             <Link to="/" className="home-button">
                 &larr; Back to Home
             </Link>
@@ -282,6 +309,9 @@ const MenuPage = () => {
                                     key={item.id} 
                                     item={{ ...item, category: category }} 
                                     addToCart={addToCart} 
+                                    isAuthenticated={isAuthenticated}
+                                    navigate={navigate}
+                                    showNotification={showNotification}
                                 /> 
                             ))}
                         </div>

@@ -386,3 +386,33 @@
     color: var(--color-primary);
     border: 1px solid rgb(255, 225, 0);
 }
+
+.notification {
+    position: fixed;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgb(0, 0, 0);
+    padding: 12px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: all 0.4s ease-out;
+    z-index: 1000; 
+    font-weight: 600;
+}
+
+.notification.show {
+    top: 20px;
+    opacity: 1;
+}
+
+.notification.success {
+    background: rgb(255, 225, 0); 
+    border: 1px solid #7e7b1e;
+}
+
+.notification.error {
+    background: #dc3545; /* Red for error/warning */
+    border: 1px solid #bd2130;
+}
