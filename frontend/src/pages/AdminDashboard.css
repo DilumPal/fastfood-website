@@ -22,7 +22,7 @@
     font-weight: 900;
     color: var(--color-zesty-lime);
     margin-bottom: 5px;
-    text-shadow: 0 0 5px var(--color-zesty-lime);
+    text-shadow: 0 0 3px var(--color-zesty-lime);
 }
 
 .admin-subtitle {
@@ -32,10 +32,42 @@
     margin-bottom: 30px;
 }
 
+.nav-button.analytics-button {
+    background-color: rgb(255, 136, 0); 
+    color: var(--color-primary); 
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
+    display: inline-block; 
+}
+
+.nav-button.analytics-button:hover {
+    background-color: rgb(255, 225, 0); 
+}
+
+.admin-header-actions {
+    text-align: right; 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 0 20px 0;
+}
+
 .data-display {
     max-width: 1200px;
     margin: 0 auto;
     overflow-x: auto;
+}
+
+.section-title {
+    color: rgb(255, 225, 0) !important; 
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 2rem;
+    font-weight: 700;
 }
 
 .data-table { 
