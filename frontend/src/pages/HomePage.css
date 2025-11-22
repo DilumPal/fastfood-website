@@ -29,16 +29,9 @@
   z-index: 10;
 }
 
-.logo-letters1 {
-  font-size: 2rem;
-  font-weight: 1000;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-}
-
-.logo-letters2 {
-  font-size: 2rem;
-  font-weight: 1000;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+.logo-text-group {
+  display: inline-flex; 
+  align-items: baseline;
 }
 
 .logo-red {
@@ -47,30 +40,14 @@
   color:#ffe76b;
   text-transform:uppercase;
   letter-spacing: -0.02em;
-  text-shadow:
-     0 1px 0 #d1b24b,
-     0 2px 0 #b38f2f,
-     0 3px 0 #927118,
-     0 4px 0 #6b4d00,
-     0 4px 10px rgba(255,220,80,0.7),
-     0 0 25px rgba(255,220,80,0.5),
-     0 0 45px rgba(255,220,80,0.3);
 }
 
 .logo-dark {
   font-family:'Poppins',sans-serif;
-  font-size:50px;
+  font-size:40px;
   color:#ffffff;
   text-transform:uppercase;
   letter-spacing: -0.02em;
-  text-shadow:
-     0 1px 0 #ffffff,
-     0 2px 0 #d3cebe,
-     0 3px 0 #a99a71,
-     0 4px 0 #d0a948,
-     0 4px 10px rgba(255,220,80,0.7),
-     0 0 25px rgba(160, 134, 29, 0.5),
-     0 0 45px rgba(109, 89, 6, 0.3);
 }
 
 .hero {
@@ -222,15 +199,13 @@
   transition: all 0.2s ease; 
   border: none;
   cursor: pointer;
-  color: var(--color-primary); 
+  color: var(--color-secondary); 
   position: relative; 
   transform: translateY(0); 
 }
 
 .menu-button {
-  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-  --button-shadow-color: #bd0000; 
-  box-shadow: 0 6px 0 var(--button-shadow-color); 
+  text-shadow: 0 0 10px var(--color-primary);
 }
 
 .menu-button:hover {
@@ -244,9 +219,7 @@
 }
 
 .order-button {
-  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-  --button-shadow-color: #bd0000; 
-  box-shadow: 0 6px 0 var(--button-shadow-color);
+  text-shadow: 0 0 10px var(--color-primary);
 }
 
 .order-button:hover {
@@ -260,9 +233,7 @@
 }
 
 .about-button {
-  background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-  --button-shadow-color: #bd0000; 
-  box-shadow: 0 6px 0 var(--button-shadow-color);
+  text-shadow: 0 0 10px var(--color-primary);
 }
 
 .about-button:hover {
