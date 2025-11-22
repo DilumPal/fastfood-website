@@ -41,12 +41,12 @@
   text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
 }
 
-.logo {
+.logo-red {
   font-family:'Poppins',sans-serif;
-  font-size:90px;
+  font-size:70px;
   color:#ffe76b;
   text-transform:uppercase;
-  letter-spacing:3px;
+  letter-spacing: -0.02em;
   text-shadow:
      0 1px 0 #d1b24b,
      0 2px 0 #b38f2f,
@@ -55,6 +55,22 @@
      0 4px 10px rgba(255,220,80,0.7),
      0 0 25px rgba(255,220,80,0.5),
      0 0 45px rgba(255,220,80,0.3);
+}
+
+.logo-dark {
+  font-family:'Poppins',sans-serif;
+  font-size:50px;
+  color:#ffffff;
+  text-transform:uppercase;
+  letter-spacing: -0.02em;
+  text-shadow:
+     0 1px 0 #ffffff,
+     0 2px 0 #d3cebe,
+     0 3px 0 #a99a71,
+     0 4px 0 #d0a948,
+     0 4px 10px rgba(255,220,80,0.7),
+     0 0 25px rgba(160, 134, 29, 0.5),
+     0 0 45px rgba(109, 89, 6, 0.3);
 }
 
 .hero {

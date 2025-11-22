@@ -56,7 +56,8 @@ const HomePage = () => {
     <div className="home-container">
       <header className="main-header">
         <div className="logo-letters1">🥯🧀🥞🌭🍔🍟🥪🍕</div>
-        <div className="logo">YumZone</div>
+        <span class="logo-red">Yum</span>
+        <span class="logo-dark">Zone</span>
         <div className="logo-letters2">🌮🌯🍣🍝🍔🥧🍩🍪</div>
       </header>
       
