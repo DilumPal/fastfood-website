@@ -55,9 +55,11 @@ const HomePage = () => {
   return (
     <div className="home-container">
       <header className="main-header">
+
         <div className="logo-text-group">
           <span className="logo-red">Yum</span><span className="logo-dark">Zone</span>
         </div>
+
       </header>
 
       <div className="hero">

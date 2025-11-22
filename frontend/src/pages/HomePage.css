@@ -20,7 +20,7 @@
   justify-content: center;
   align-items: center;
   gap: 40px;
-  padding: 20px 0;
+  padding: 40px 0;
   background-color: var(--color-primary);
   color: var(--color-secondary);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
@@ -175,7 +175,7 @@
   z-index: 1; 
 }
 
-.sub-headline {
+.logo-text-group .sub-headline {
   font-size: 1.5rem;
   font-weight: 300;
   color: white;
@@ -205,7 +205,7 @@
 }
 
 .menu-button {
-  text-shadow: 0 0 10px var(--color-primary);
+  text-shadow: 0 0 50px var(--color-primary);
 }
 
 .menu-button:hover {
@@ -219,7 +219,7 @@
 }
 
 .order-button {
-  text-shadow: 0 0 10px var(--color-primary);
+  text-shadow: 0 0 50px var(--color-primary);
 }
 
 .order-button:hover {
@@ -233,7 +233,7 @@
 }
 
 .about-button {
-  text-shadow: 0 0 10px var(--color-primary);
+  text-shadow: 0 0 50px var(--color-primary);
 }
 
 .about-button:hover {
