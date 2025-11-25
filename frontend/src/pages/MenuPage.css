@@ -287,19 +287,18 @@
     top: 25px;
     left: 25px;
     padding: 5px 10px;
-    background-color: rgb(255, 136, 0);
-    color: rgb(0, 0, 0);
     text-decoration: none; 
     border-radius: 8px;
     font-size: 0.9rem;
-    font-weight: 700;
+    font-weight: 400;
     z-index: 20; 
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
-    transition: background-color 0.2s, transform 0.2s;
+    border: 1px solid rgb(255, 255, 0);
+    color: rgb(255, 255, 0);
+    text-align: center;
+    background-color: transparent;
 }
 
 .home-button:hover {
-    background-color: rgb(255, 225, 0); 
     transform: scale(1.05);
 }
 

@@ -230,7 +230,7 @@ const MenuPage = () => {
                     style={{
                         left: 'unset',
                         right: '25px',
-                        backgroundColor: 'rgb(255, 255, 0)'
+                        backgroundColor: 'transparent'
                     }}
                 >
                     🛒 ({cartItems.length}) - ${orderTotal.toFixed(2)}
