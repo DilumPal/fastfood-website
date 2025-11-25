@@ -20,14 +20,62 @@
   justify-content: center;
   align-items: center;
   gap: 40px;
-  padding: 40px 0;
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  padding: 20px 0;
+  background: linear-gradient(0deg, rgb(244, 230, 44), rgb(255, 115, 0)); 
+  color: var(--color-primary);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
   position: sticky;
   top: 0;
   z-index: 10;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 34px;
+  font-weight: bold;
+  font-family: sans-serif;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.burger {
+  width: 70px;
+  height: 70px;
+  border-radius: 25%;
+  background: linear-gradient(45deg, red, rgb(255, 174, 0), red);
+  background-size: 300% 300%;
+  animation: flame 4s infinite alternate;
+  border: 2px solid var(--color-primary);
+  position: relative;
+}
+
+@keyframes flame {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/*.burger::before,
+.burger::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 58px;
+  height: 5px;
+  gap: 12px;
+  background: #c93702;
+  border-radius: 5px;
+  border: 2px solid var(--color-primary);
+}*/
+
+.burger::before {
+  top: -12px;
+}
+
+.burger::after {
+  bottom: -12px;
+}
+
 
 .logo-text-group {
   display: inline-flex; 
@@ -37,15 +85,16 @@
 .logo-red {
   font-family:'Poppins',sans-serif;
   font-size:100px;
-  color:#ffe76b;
+  color:var(--color-primary);
   text-transform:uppercase;
   letter-spacing: -0.02em;
+  text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
 }
 
 .logo-dark {
   font-family:'Poppins',sans-serif;
   font-size:70px;
-  color:#ffffff;
+  color:var(--color-primary);
   text-transform:uppercase;
   letter-spacing: -0.02em;
 }
