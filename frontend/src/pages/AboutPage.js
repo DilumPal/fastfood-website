@@ -27,7 +27,7 @@ const AboutPage = () => {
     return (
         <div className="menu-container"> 
         
-            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'var(--color-hot-pink)' }}>
+            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'transparent' }}>
                 &larr; Back to Home
             </Link>
 

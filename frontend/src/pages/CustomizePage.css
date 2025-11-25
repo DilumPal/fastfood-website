@@ -29,9 +29,9 @@
     position: absolute; 
     top: 25px;
     padding: 10px 15px;
-    background-color: rgb(255, 136, 0);
-    color: rgb(0, 0, 0);
-    border: none;
+    background-color: transparent;
+    color: rgb(255, 225, 0);
+    border: 1px solid rgb(255, 225, 0);
     border-radius: 8px;
     font-size: 1rem;
     font-weight: 600;
@@ -41,7 +41,7 @@
 }
 
 .customize-nav-btn:hover {
-    background-color: rgb(255, 225, 0);
+    transform: translateY(-1px);
 }
 
 .customize-grid {

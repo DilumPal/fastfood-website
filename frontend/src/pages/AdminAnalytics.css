@@ -14,7 +14,7 @@
     color: var(--color-secondary);
     min-height: 100vh;
     font-family: 'Poppins', sans-serif;
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
@@ -42,17 +42,16 @@
 
 .nav-button {
     padding: 10px 20px;
-    background-color: var(--color-hot-pink); 
-    color: var(--color-primary);
-    border: none;
+    background-color: transparent; 
+    color: rgb(255, 225, 0);
+    border: 1px solid rgb(255, 225, 0);
     border-radius: 5px;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.2s, transform 0.1s;
 }
 
-.nav-button:hover {
-    background-color: rgb(220, 190, 0); 
+.nav-button:hover { 
     transform: translateY(-2px);
 }
 
