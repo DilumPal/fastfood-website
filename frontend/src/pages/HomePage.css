@@ -58,7 +58,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px 220px 20px; 
+  padding: 80px 20px 200px 20px; 
   text-align: center;
   position: relative; 
 }
@@ -74,29 +74,6 @@
   z-index: 0; 
 }
 
-.top-ui-elements {
-    position: absolute;
-    top: 20px; 
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center; 
-    z-index: 5; 
-    padding: 0 20px;
-}
-
-.welcome-message {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: var(--color-zesty-lime);
-    text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-    background-color: rgba(10, 10, 10, 0.5);
-    padding: 10px 20px;
-    border-radius: 10px;
-}
 
 .auth-corner {
     position: absolute;
@@ -108,21 +85,27 @@
 .auth-corner-button {
     padding: 8px 15px; 
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 200;
     text-decoration: none;
     border-radius: 50px;
     transition: all 0.2s ease; 
     border: none;
     cursor: pointer;
-    color: var(--color-primary);
+    color: var(--color-secondary);
     position: relative; 
     transform: translateY(0); 
 }
 
 .log-in-button {
-    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    --button-shadow-color: #bd0000; 
-    box-shadow: 0 4px 0 var(--button-shadow-color);
+    text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+    background-color: transparent;
 }
 
 .log-in-button:hover{
@@ -136,9 +119,15 @@
 }
 
 .sign-up-button {
-    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    --button-shadow-color: #bd0000; 
-    box-shadow: 0 4px 0 var(--button-shadow-color);
+    text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+    background-color: transparent;
 }
 
 .sign-up-button:hover{
@@ -152,9 +141,15 @@
 }
 
 .log-out-button {
-    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    --button-shadow-color: #bd0000; 
-    box-shadow: 0 4px 0 var(--button-shadow-color);
+    text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
+    border-radius: 50px;
+    border: 1px solid white;
+    text-align: center;
+    background-color: transparent;
 }
 
 .log-out-button:hover{
@@ -172,14 +167,22 @@
   font-weight: 900;
   color: white;
   text-shadow: 0 0 10px var(--color-primary);
+  position: relative;
+  bottom: 80px;
   z-index: 1; 
 }
 
-.logo-text-group .sub-headline {
-  font-size: 1.5rem;
-  font-weight: 300;
-  color: white;
-  text-shadow: 0 0 10px var(--color-primary);
+.sub-headline {
+  font-size: 1.3rem;
+  font-weight: 400;
+  text-shadow: 0 0 8px 0 0 10px var(--color-secondary),
+                       0 0 10px var(--color-secondary),
+                       0 0 10px var(--color-secondary),
+                       0 0 20px var(--color-secondary),
+                       0 0 30px var(--color-secondary);
+  color: var(--color-primary);
+  position: relative;
+  bottom: 110px;
   margin-bottom: 40px;
   z-index: 1;
 }
@@ -191,21 +194,26 @@
 }
 
 .button-group a {
-  padding: 15px 30px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  padding: 15px 80px;
+  font-size: 1.5rem;
+  font-weight: 200;
   text-decoration: none;
   border-radius: 50px;
   transition: all 0.2s ease; 
   border: none;
   cursor: pointer;
   color: var(--color-secondary); 
-  position: relative; 
+  position: relative;
+  top: 30px; 
   transform: translateY(0); 
 }
 
 .menu-button {
-  text-shadow: 0 0 50px var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
 }
 
 .menu-button:hover {
@@ -219,7 +227,11 @@
 }
 
 .order-button {
-  text-shadow: 0 0 50px var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
 }
 
 .order-button:hover {
@@ -233,7 +245,11 @@
 }
 
 .about-button {
-  text-shadow: 0 0 50px var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 10px var(--color-primary),
+               0 0 20px var(--color-primary),
+               0 0 30px var(--color-primary);
 }
 
 .about-button:hover {
