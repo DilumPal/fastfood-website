@@ -20,7 +20,7 @@
     background-color: #1a1a1a;
     padding: 40px;
     border-radius: 15px;
-    box-shadow: 0 0 30px rgb(255, 136, 0);
+    box-shadow: 0 0 15px rgb(255, 136, 0);
     width: 100%;
     max-width: 400px;
     color: var(--color-secondary);
@@ -72,16 +72,15 @@
     font-size: 1.1rem;
     font-weight: 700;
     margin-top: 20px;
-    border: none;
+    border: 1px solid rgb(255, 225, 0);
     border-radius: 50px;
     cursor: pointer;
-    background: linear-gradient(45deg, var(--color-hot-pink), var(--color-zesty-lime));
-    color: var(--color-primary); 
+    background: transparent;
+    color: rgb(255, 225, 0); 
     transition: all 0.3s ease; 
 }
 
 .login-button:hover {
-    background: linear-gradient(45deg, var(--color-zesty-lime), var(--color-hot-pink));
     transform: scale(1.02);
 }
 

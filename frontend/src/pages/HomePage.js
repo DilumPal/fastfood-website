@@ -63,8 +63,8 @@ const HomePage = () => {
       </header>
 
       <div className="hero">
+        <WelcomeMessage />
         <div className="top-ui-elements">
-          <WelcomeMessage />
           <div className="auth-corner">
             <AuthCorner />
           </div>
