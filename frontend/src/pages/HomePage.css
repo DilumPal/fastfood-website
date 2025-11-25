@@ -52,13 +52,13 @@
 
 .hero {
   background-image: url('../../public/images/velocity-hub-bg.png');
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px 40px 20px; 
+  padding: 80px 20px 220px 20px; 
   text-align: center;
   position: relative; 
 }
