@@ -170,7 +170,7 @@ const PaymentPage = () => {
                 {notification.message}
             </div>
 
-             <Link to="/order" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'rgb(255, 136, 0)' }}>
+             <Link to="/order" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'transparent' }}>
                 &larr; Back to Order Summary
             </Link>
 

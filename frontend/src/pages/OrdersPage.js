@@ -110,11 +110,11 @@ const OrdersPage = () => {
 
     return (
         <div className="menu-container"> 
-            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'rgb(255, 136, 0)' }}>
+            <Link to="/" className="home-button" style={{ top: '25px', left: '25px', backgroundColor: 'transparent' }}>
                 &larr; Back to Home
             </Link>
             
-            <Link to="/menu" className="home-button" style={{ top: '25px', right: '25px', left: 'unset', backgroundColor: 'rgb(255, 136, 0)' }}>
+            <Link to="/menu" className="home-button" style={{ top: '25px', right: '25px', left: 'unset', backgroundColor: 'transparent' }}>
                 View Menu
             </Link>
 
