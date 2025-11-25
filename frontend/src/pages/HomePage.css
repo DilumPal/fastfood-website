@@ -77,9 +77,9 @@
 
 .auth-corner {
     position: absolute;
-    right: 20px; 
+    right: 30px; 
     display: flex;
-    gap: 10px;
+    gap: 25px;
 }
 
 .auth-corner-button {
