@@ -70,9 +70,9 @@
 
 .burger::after {
   content: "";
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  border-radius: 25%;
   background: var(--color-primary);
   top: 50%;
   left: 50%;
