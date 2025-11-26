@@ -56,11 +56,14 @@ const HomePage = () => {
     <div className="home-container">
       <header className="main-header">
 
+        <div className="logo">
+          <div className="burger"></div>
+        </div>
         <div className="logo-text-group">
-          <div className="logo">
-            <div class="burger"></div>
-            <span className="logo-red">..Yum</span><span className="logo-dark">Zone..</span>
-          </div>
+          <span className="logo-red">..Yum</span><span className="logo-dark">Zone..</span>
+        </div>
+        <div className="logo">
+          <div className="burger"></div>
         </div>
 
       </header>
